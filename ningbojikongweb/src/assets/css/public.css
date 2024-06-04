@@ -1,0 +1,841 @@
+html,
+body,
+#app,
+.el-container {
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+    position: relative;
+    transform-origin: left top;
+}
+
+*,
+*:focus {
+    outline: none;
+}
+
+@font-face {
+    font-family: 'Noto Sans SC';
+    font-style: normal;
+    font-weight: 100;
+    src: url('../fonts/119_100.woff2') format('woff2');
+    unicode-range: U+20-22, U+27-2a, U+2c-3b, U+3f, U+41-4d, U+4f-5d, U+61-7b, U+7d, U+ab, U+ae, U+b2, U+b7, U+bb, U+df-e5, U+e7-ea, U+ec-ed, U+f1-f4, U+f6, U+f9-fa, U+fc, U+101, U+103, U+113, U+12b, U+148, U+14d, U+16b, U+1ce, U+1d0, U+300-301, U+1ebf, U+1ec7, U+2013-2014, U+2039-203a, U+2122, U+3001-3002, U+3042, U+3044, U+3046, U+3048, U+304a-3055, U+3057, U+3059-305b, U+305d, U+305f-3061, U+3063-306b, U+306d-3073, U+3075-3076, U+3078-3079, U+307b, U+307e-307f, U+3081-308d, U+308f, U+3092-3093, U+30a1-30a4, U+30a6-30bb, U+30bd, U+30bf-30c1, U+30c3-30c4, U+30c6-30cb, U+30cd-30d7, U+30d9-30e1, U+30e3-30e7, U+30e9-30ed, U+30ef, U+30f3, U+30fb-30fc, U+4e00, U+4e2d, U+65b0, U+65e5, U+6708-6709, U+70b9, U+7684, U+7f51, U+ff0c, U+ff0e, U+ff1a;
+}
+
+@font-face {
+    font-family: 'Noto Sans SC';
+    font-style: normal;
+    font-weight: 300;
+    src: url('../fonts/119_300.woff2') format('woff2');
+    unicode-range: U+20-22, U+27-2a, U+2c-3b, U+3f, U+41-4d, U+4f-5d, U+61-7b, U+7d, U+ab, U+ae, U+b2, U+b7, U+bb, U+df-e5, U+e7-ea, U+ec-ed, U+f1-f4, U+f6, U+f9-fa, U+fc, U+101, U+103, U+113, U+12b, U+148, U+14d, U+16b, U+1ce, U+1d0, U+300-301, U+1ebf, U+1ec7, U+2013-2014, U+2039-203a, U+2122, U+3001-3002, U+3042, U+3044, U+3046, U+3048, U+304a-3055, U+3057, U+3059-305b, U+305d, U+305f-3061, U+3063-306b, U+306d-3073, U+3075-3076, U+3078-3079, U+307b, U+307e-307f, U+3081-308d, U+308f, U+3092-3093, U+30a1-30a4, U+30a6-30bb, U+30bd, U+30bf-30c1, U+30c3-30c4, U+30c6-30cb, U+30cd-30d7, U+30d9-30e1, U+30e3-30e7, U+30e9-30ed, U+30ef, U+30f3, U+30fb-30fc, U+4e00, U+4e2d, U+65b0, U+65e5, U+6708-6709, U+70b9, U+7684, U+7f51, U+ff0c, U+ff0e, U+ff1a;
+}
+
+@font-face {
+    font-family: 'Noto Sans SC';
+    font-style: normal;
+    font-weight: 400;
+    src: url('../fonts/119_400.woff2') format('woff2');
+    unicode-range: U+20-22, U+27-2a, U+2c-3b, U+3f, U+41-4d, U+4f-5d, U+61-7b, U+7d, U+ab, U+ae, U+b2, U+b7, U+bb, U+df-e5, U+e7-ea, U+ec-ed, U+f1-f4, U+f6, U+f9-fa, U+fc, U+101, U+103, U+113, U+12b, U+148, U+14d, U+16b, U+1ce, U+1d0, U+300-301, U+1ebf, U+1ec7, U+2013-2014, U+2039-203a, U+2122, U+3001-3002, U+3042, U+3044, U+3046, U+3048, U+304a-3055, U+3057, U+3059-305b, U+305d, U+305f-3061, U+3063-306b, U+306d-3073, U+3075-3076, U+3078-3079, U+307b, U+307e-307f, U+3081-308d, U+308f, U+3092-3093, U+30a1-30a4, U+30a6-30bb, U+30bd, U+30bf-30c1, U+30c3-30c4, U+30c6-30cb, U+30cd-30d7, U+30d9-30e1, U+30e3-30e7, U+30e9-30ed, U+30ef, U+30f3, U+30fb-30fc, U+4e00, U+4e2d, U+65b0, U+65e5, U+6708-6709, U+70b9, U+7684, U+7f51, U+ff0c, U+ff0e, U+ff1a;
+}
+
+@font-face {
+    font-family: 'Noto Sans SC';
+    font-style: normal;
+    font-weight: 500;
+    src: url('../fonts/119_500.woff2') format('woff2');
+    unicode-range: U+20-22, U+27-2a, U+2c-3b, U+3f, U+41-4d, U+4f-5d, U+61-7b, U+7d, U+ab, U+ae, U+b2, U+b7, U+bb, U+df-e5, U+e7-ea, U+ec-ed, U+f1-f4, U+f6, U+f9-fa, U+fc, U+101, U+103, U+113, U+12b, U+148, U+14d, U+16b, U+1ce, U+1d0, U+300-301, U+1ebf, U+1ec7, U+2013-2014, U+2039-203a, U+2122, U+3001-3002, U+3042, U+3044, U+3046, U+3048, U+304a-3055, U+3057, U+3059-305b, U+305d, U+305f-3061, U+3063-306b, U+306d-3073, U+3075-3076, U+3078-3079, U+307b, U+307e-307f, U+3081-308d, U+308f, U+3092-3093, U+30a1-30a4, U+30a6-30bb, U+30bd, U+30bf-30c1, U+30c3-30c4, U+30c6-30cb, U+30cd-30d7, U+30d9-30e1, U+30e3-30e7, U+30e9-30ed, U+30ef, U+30f3, U+30fb-30fc, U+4e00, U+4e2d, U+65b0, U+65e5, U+6708-6709, U+70b9, U+7684, U+7f51, U+ff0c, U+ff0e, U+ff1a;
+}
+
+@font-face {
+    font-family: 'Noto Sans SC';
+    font-style: normal;
+    font-weight: 700;
+    src: url('../fonts/119_700.woff2') format('woff2');
+    unicode-range: U+20-22, U+27-2a, U+2c-3b, U+3f, U+41-4d, U+4f-5d, U+61-7b, U+7d, U+ab, U+ae, U+b2, U+b7, U+bb, U+df-e5, U+e7-ea, U+ec-ed, U+f1-f4, U+f6, U+f9-fa, U+fc, U+101, U+103, U+113, U+12b, U+148, U+14d, U+16b, U+1ce, U+1d0, U+300-301, U+1ebf, U+1ec7, U+2013-2014, U+2039-203a, U+2122, U+3001-3002, U+3042, U+3044, U+3046, U+3048, U+304a-3055, U+3057, U+3059-305b, U+305d, U+305f-3061, U+3063-306b, U+306d-3073, U+3075-3076, U+3078-3079, U+307b, U+307e-307f, U+3081-308d, U+308f, U+3092-3093, U+30a1-30a4, U+30a6-30bb, U+30bd, U+30bf-30c1, U+30c3-30c4, U+30c6-30cb, U+30cd-30d7, U+30d9-30e1, U+30e3-30e7, U+30e9-30ed, U+30ef, U+30f3, U+30fb-30fc, U+4e00, U+4e2d, U+65b0, U+65e5, U+6708-6709, U+70b9, U+7684, U+7f51, U+ff0c, U+ff0e, U+ff1a;
+}
+
+:not([class*='icon']) {
+    font-family: "Noto San Sc" !important;
+}
+
+button {
+    font-size: 12px;
+    font-family: "Noto San Sc";
+}
+
+.el-container {
+    font-size: 12px;
+    min-width: 1024px;
+    font-family: "Noto San Sc";
+    color: #333333;
+    position: relative;
+}
+
+/* 滚动条 */
+.scroll-item,
+.scroll-item-y,
+.el-table__body-wrapper,
+.transfer-main,
+.el-tab-pane,
+.el-dialog__body {
+    position: relative;
+    overflow: hidden !important;
+}
+
+.ps__thumb-x {
+    bottom: 0 !important;
+    height: 12px;
+}
+
+.ps__rail-x:hover,
+.ps__rail-y:hover {
+    opacity: 0.6;
+}
+
+.ps__thumb-y {
+    right: 0 !important;
+    width: 12px !important;
+}
+
+.ps__rail-x {
+    height: 12px !important;
+    z-index: 990;
+    opacity: 1;
+}
+
+.ps__rail-y {
+    width: 12px !important;
+    z-index: 990;
+    opacity: 1;
+}
+
+.ps__rail-x:hover>.ps__thumb-x,
+.ps__rail-x:focus>.ps__thumb-x,
+.ps__rail-x.ps--clicking .ps__thumb-x {
+    height: 12px !important;
+}
+
+.ps__rail-y:hover>.ps__thumb-y,
+.ps__rail-y:focus>.ps__thumb-y,
+.ps__rail-y.ps--clicking .ps__thumb-y {
+    width: 12px !important;
+}
+
+/* 级联radio */
+/* .el-cascader-panel .el-radio__inner {
+    border: 0 !important;
+    background-color: transparent;
+}
+.el-cascader-panel .el-radio.is-checked {
+    background-image: url(../img/icon/icon_yes.png);
+    background-size: contain;
+}
+.el-cascader-panel .el-radio__inner::after {
+    width: 0 !important;
+    height: 0 !important;
+}
+.el-cascader-panel .el-radio.is-checked .el-radio__inner {
+    background-color: transparent;
+}
+.el-cascader-node.is-active {
+    color: #409EFF;
+} */
+.el-form-item__label {
+    font-size: 13px !important;
+    color: #213255 !important;
+}
+
+.suitable-ym .el-form-item__label {
+    color: #100d9f !important;
+}
+
+.suitable-ym-bolder .el-form-item__label {
+    font-weight: bolder;
+    color: #100d9f !important;
+}
+
+.el-table th,
+.el-table thead.is-group th {
+    background-color: #35546f;
+    font-weight: bolder;
+    font-size: 12px !important;
+    color: white;
+    line-height: normal !important;
+}
+
+.el-table {
+    border-radius: 5px 5px 0 0;
+}
+
+/*.el-dropdown-menu.el-popper {
+    display: none !important;
+}*/
+.el-form-item__content {
+    font-size: 12px !important;
+}
+
+.el-input__inner:not(.el-input-number) {
+    /*border-radius: 0 !important;*/
+    height: 32px !important;
+    line-height: 32px !important;
+    padding-right: 30px !important;
+    text-overflow: ellipsis !important;
+    overflow: hidden !important;
+}
+
+.el-pagination__editor.el-input .el-input__inner {
+    height: 24px !important;
+}
+
+.el-dialog .el-transfer-panel__filter .el-input__inner {
+    border-radius: 28px !important;
+}
+
+.el-dialog .el-transfer__buttons {
+    padding: 0 10px !important;
+}
+
+.el-dialog .el-transfer-panel {
+    width: calc(40% - 20px);
+}
+
+.el-dialog {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: 0 !important;
+    transform: translate(-50%, -50%);
+    overflow: hidden !important;
+    font-family: "Noto San Sc";
+    z-index: 2999 !important;
+}
+
+.el-dialog__body {
+    max-height: calc(85vh - 44px);
+    font-size: 16px;
+}
+
+.el-dialog__close.el-icon.el-icon-close {
+    width: 64px;
+    height: 50px;
+    margin-top: -23px;
+    margin-right: -6px;
+    background-image: url(../img/dialog/close_dialog.png);
+    background-size: cover;
+}
+
+.el-dialog__close.el-icon.el-icon-close:before {
+    content: "" !important;
+}
+
+.el-dialog__header {
+    padding: 0 !important;
+    background-image: url(../img/dialog/dialog_header.png);
+    background-size: auto 100%;
+    height: 44px;
+}
+
+.el-dialog__title {
+    font-weight: bolder !important;
+    font-size: 18px !important;
+    margin: 10px 20px 10px 40px;
+    display: inline-block;
+    color: white !important;
+}
+
+.el-message-box {
+    border: 0 !important;
+    border-radius: 8px !important;
+    font-family: "Noto San Sc";
+}
+
+.el-dialog .el-message-box {
+    border: 0 !important;
+    border-radius: 8px !important;
+    font-family: "Noto San Sc";
+}
+
+.el-message-box__header {
+    padding: 0 !important;
+    background-image: url(../img/dialog/dialog_header.png);
+    background-size: auto 100%;
+    height: 44px;
+    border-radius: 8px 8px 0 0 !important;
+}
+
+.el-message-box__title {
+    font-weight: bolder !important;
+    font-size: 18px !important;
+    margin: 0 !important;
+    padding: 15px 20px !important;
+    display: inline-block;
+    color: white !important;
+    justify-content: flex-start !important;
+}
+
+.el-message-box__close.el-icon-close {
+    width: 64px;
+    height: 50px;
+    margin-top: -18px;
+    margin-right: -18px;
+    background-image: url(../img//dialog/close_dialog.png);
+    background-size: cover;
+}
+
+.el-message-box__status:before,
+.el-message-box__close:before {
+    content: "" !important;
+}
+
+.el-message-box__content {
+    padding: 20px 0 !important;
+    color: #333333 !important;
+    font-size: 15px !important;
+    width: calc(100% - 10px) !important;
+    text-align: left !important;
+}
+
+.el-message-box__message {
+    padding: 0 15px !important;
+}
+
+.el-message-box--center .el-message-box__btns {
+    text-align: right !important;
+}
+
+.el-dialog,
+.el-message-box {
+    border-radius: 8px;
+}
+
+.el-form-item.is-success .el-input__inner,
+.el-form-item.is-success .el-input__inner:focus,
+.el-form-item.is-success .el-textarea__inner,
+.el-form-item.is-success .el-textarea__inner:focus {
+    border-color: #DCDFE6;
+}
+
+.el-card {
+    margin: 5px;
+    width: calc(100% - 12px);
+}
+
+.el-dialog :not(.el-transfer) .el-button--primary,
+.el-dialog :not(.el-transfer) .el-button--default {
+    margin-left: 18px;
+}
+
+:not(.el-transfer) .el-button--primary,
+:not(.el-transfer) .el-button--primary:focus,
+:not(.el-transfer) .el-button--primary:hover {
+    cursor: pointer;
+    background-color: #4365e3;
+    border: 1px solid #4365e3;
+    border-radius: 5px;
+    padding: 9px 10px;
+    width: 80px;
+    height: 40px;
+    font-size: 15px !important;
+}
+
+:not(.el-transfer) .el-button--default,
+:not(.el-transfer) .el-button--default:focus,
+:not(.el-transfer) .el-button--default:hover {
+    cursor: pointer;
+    border-radius: 5px;
+    padding: 9px 10px;
+    width: 80px;
+    height: 40px;
+    font-size: 15px !important;
+}
+
+.el-message--error {
+    border-color: #F56C6C !important;
+}
+
+.action-cancel {
+    cursor: pointer;
+    color: #606266;
+    background-color: #fff;
+    border: 1px solid #DCDFE6;
+    border-radius: 5px;
+    padding: 9px 10px;
+    width: 80px;
+    height: 40px;
+    font-size: 15px !important;
+}
+
+.action-enter {
+    cursor: pointer;
+    color: #fff;
+    background-color: #4365e3;
+    border: 1px solid #4365e3;
+    border-radius: 5px;
+    padding: 9px 10px;
+    margin-left: 20px;
+    width: 80px;
+    height: 40px;
+}
+
+.el-radio__input.is-checked+.el-radio__label,
+.el-checkbox__input.is-checked+.el-checkbox__label {
+    color: #2c2d2f !important;
+}
+
+.el-checkbox {
+    color: #2c2d2f;
+    font-weight: 500;
+    font-size: 14px;
+    cursor: pointer;
+    -moz-user-select: none;
+    user-select: none;
+    margin-right: 30px;
+}
+
+.el-cascader-node__postfix {
+    position: relative;
+}
+
+.ss-dialog-fade-leave-to,
+.ss-dialog-fade-enter {
+    opacity: 0;
+    margin-top: -20px;
+}
+
+.ss-dialog-fade-enter-active {
+    transition: all 0.3s;
+}
+
+.el-checkbox__label span {
+    white-space: pre-wrap;
+    word-break: break-all;
+    word-wrap: break-word;
+}
+
+.el-transfer__button {
+    background-color: #4365e3 !important;
+    border-color: #C0C4CC !important;
+}
+
+.el-transfer__button.is-disabled {
+    background-color: white !important;
+}
+
+.el-input input:not([type='number']) {
+    padding-right: 30px !important;
+    text-overflow: ellipsis !important;
+    overflow: hidden !important;
+}
+
+.el-dialog__wrapper {
+    overflow: hidden !important;
+}
+
+.el-tabs--card>.el-tabs__header .el-tabs__item.is-active {
+    border-bottom: 3px solid white !important;
+}
+
+.el-table__header-wrapper th:first-child,
+.el-table__fixed-header-wrapper th:first-child {
+    border-top-left-radius: 5px !important;
+}
+
+.el-table__header-wrapper tr:first-child th:last-child,
+.el-table__fixed-header-wrapper tr:first-child th:last-child {
+    border-top-right-radius: 5px !important;
+}
+
+.el-table__header-wrapper tr:not(:first-child) th,
+.el-table__fixed-header-wrapper tr:not(:first-child) th {
+    border-top: 1px solid #fff !important;
+}
+
+.el-table__header-wrapper tr:nth-last-child(2) th:not(:last-child),
+.el-table__fixed-header-wrapper tr:nth-last-child(2) th:not(:last-child),
+.el-table__header-wrapper tr+tr th:not(:last-child),
+.el-table__fixed-header-wrapper tr+tr th:not(:last-child) {
+    border-right: 1px solid #fff !important;
+}
+
+.el-table__body-wrapper,
+.el-table__fixed-body-wrapper {
+    border-bottom-left-radius: 5px !important;
+    border-bottom-right-radius: 5px !important;
+}
+
+.cursorPointer {
+    cursor: pointer;
+}
+
+.el-pagination__jump {
+    margin-top: -2px;
+}
+
+.el-pagination__jump .el-input__inner {
+    line-height: 26px !important;
+    height: 26px !important;
+    padding-right: 0 !important;
+}
+
+.el-input-number .el-input {
+    margin: 0 auto;
+    width: calc(100% - 82px);
+}
+
+.el-input-number__increase {
+    right: 0;
+}
+
+.el-input-number__decrease {
+    left: 0;
+}
+
+.el-time-panel {
+    width: 140px !important;
+}
+
+.el-range-editor .el-range-input {
+    line-height: 2 !important;
+}
+
+.jc-space {
+    margin-left: 2px;
+    margin-right: 2px;
+}
+
+.el-timeline-item__wrapper {
+    top: 0 !important;
+}
+
+.el-timeline {
+    padding-inline-start: 0;
+    padding-left: 140px;
+}
+
+.el-timeline-item__tail {
+    left: 0;
+    top: 20px;
+}
+
+.el-timeline-item {
+    padding-bottom: 0 !important;
+}
+
+.timeline-completed .el-timeline-item__tail {
+    border-left-color: #23C497 !important;
+}
+
+.text-bold {
+    font-weight: bold;
+}
+
+.el-radio__inner::after,
+.el-checkbox__inner::after {
+    transition: none !important;
+}
+
+.check-label .el-checkbox__label {
+    color: #100d9f !important;
+}
+
+.el-dialog * {
+    transition: none !important;
+}
+
+.ss-fade-leave-to,
+.ss-fade-enter {
+    opacity: 0;
+    transform: scale(0);
+}
+
+.ss-fade-enter-active {
+    transition: all 0.3s;
+}
+
+.ss-fade-leave-active {
+    transition: all 0.2s;
+}
+
+.el-message-box__input {
+    margin-left: 25px;
+}
+
+.el-table--border th,
+.el-table__body-wrapper .el-table--border.is-scrolling-left~.el-table__fixed {
+    border: none;
+}
+
+.el-table--border td {
+    border-left: none;
+    border-right: none;
+}
+
+/*表格一调整间距*/
+.el-table__header-wrapper td,
+.el-table__header-wrapper th {
+    height: 34px !important;
+    padding: 0px !important;
+}
+
+.el-table__empty-block {
+    height: 34px !important;
+    min-height: 34px !important;
+}
+
+.el-table td,
+.el-table th {
+    padding: 0px !important;
+    height: 34px !important;
+}
+
+/*.el-table__header-wrapper tr:first-child th:last-child, .el-table__fixed-header-wrapper tr:first-child th:last-child{
+	padding: 5px 0px !important;
+}*/
+.el-table th.is-leaf {
+    /*border-bottom: none !important;*/
+    height: 34px !important;
+}
+
+.shadow-card {
+    width: calc(100% - 25px) !important;
+}
+
+.disabledBtn .shadow-button-common {
+    background-color: #ccc !important;
+    color: #333 !important;
+    border: 0px !important;
+    cursor: not-allowed !important;
+}
+
+.disabledBtn .shadow-button-reset {
+    background-color: #ccc !important;
+    color: #333 !important;
+    border: 0px !important;
+    cursor: not-allowed !important;
+}
+
+.disabledBg {
+    background-color: #ccc !important;
+    color: #fff !important;
+    border: 0px !important;
+    cursor: not-allowed !important;
+}
+
+pre {
+    white-space: pre-wrap;
+    /* css-3 */
+    white-space: -moz-pre-wrap;
+    /* Mozilla, since 1999 */
+    white-space: -pre-wrap;
+    /* Opera 4-6 */
+    white-space: -o-pre-wrap;
+    /* Opera 7 */
+    word-wrap: break-word;
+    /* Internet Explorer 5.5+ */
+}
+
+/*太长不换行加省略号*/
+.ellipsis-text {
+    text-overflow: ellipsis;
+    /*省略号 */
+    white-space: nowrap;
+    /*溢出时不换行 */
+    overflow: hidden;
+    /*溢出时隐藏 */
+}
+
+/*el-table列表色差间隔区别显示*/
+.el-table--striped .el-table__body tr.el-table__row--striped td {
+    background: #f9faff !important;
+}
+
+/*职业*/
+.job .el-cascader-menu__wrap {
+    height: 295px;
+    font-size: 12px !important;
+}
+
+/*options比较多的select*/
+.el-select-dropdown__wrap {
+    max-height: 370px !important;
+}
+
+/*el-cascader控件点击选择右侧样式*/
+.el-popper.el-cascader__dropdown.cascaderShow .el-cascader-node__label .tag {
+    display: block;
+    width: 100%;
+}
+
+/*el-cascader控件点击选择样式*/
+.el-cascader-node.in-active-path,
+.el-cascader-node.is-selectable.in-checked-path {
+    color: #606266 !important;
+    /*font-weight: 700;*/
+}
+
+/*面板层级 字体不要加粗 BUG【19382】*/
+.el-cascader-node.in-active-path,
+.el-cascader-node.is-active,
+.el-cascader-node.is-selectable.in-checked-path {
+    font-weight: normal !important;
+    color: #409EFF !important;
+}
+
+.maxHeightDialog .el-dialog__body {
+    min-height: 93% !important;
+    padding: 0px !important;
+}
+
+.maxHeightDialog .el-dialog {
+    margin-top: 1vh !important;
+    height: 93% !important;
+}
+
+/*表格列内按钮高度控制*/
+.table-btn {
+    padding: 5px 20px !important;
+}
+
+/*下拉框组件统一修改宽度样式*/
+.el-select,.el-select-dropdown.el-popper {
+    min-width: 200px !important;
+}
+
+.el-select-dropdown .el-select-dropdown__empty,
+.el-select .el-select-dropdown__item {
+    width: auto !important;
+    min-width: 200px !important;
+}
+
+/* 侧栏菜单样式 */
+.el-submenu__title,
+.el-menu-item {
+    font-size: 16px;
+}
+
+.el-button--text {
+    color: #405ada;
+}
+
+/*隐藏浏览器自带密码输入框右侧提示*/
+input::-ms-clear,
+input::-ms-reveal {
+    display: none;
+}
+.vaccination .el-table__header-wrapper tr:last-child th:nth-last-child(2),
+.vaccination .el-table__header-wrapper tr:nth-last-child(2) th:nth-last-child(2),
+.vaccination .el-table__header-wrapper tr+tr th:nth-last-child(2),
+.vaccination .el-table__header-wrapper tr th:not(.is-leaf) {
+  border-right: 1px solid #C0D2EE !important;
+}
+
+.vaccination .el-table__header-wrapper tr th:last-child,
+.vaccination .el-table__header-wrapper tr th:nth-last-child(2) {
+  border-right: none !important
+}
+.vaccination .el-table__fixed-right{
+  right:0!important;
+}
+.vaccination .el-table__fixed-right tr th:last-child,.vaccination .el-table__fixed-right tr th:last-child div{
+  height:102px!important;
+  line-height: 102px;
+}
+.ml_10{
+    margin-left: 10px;
+}
+.mt_10{
+    margin-top: 10px;
+}
+.mb_10 {
+    margin-bottom: 10px;
+}
+/* 打印模板样式 */
+.notice .btn {
+    margin: 100px 100px 20px;
+    text-align: center;
+  }
+  
+  .notice .btn .el-button {
+    background: #4365e3;
+    width: inherit;
+    color: #fff;
+    border-radius: 16px;
+    padding: 0 20px;
+    height: 48px;
+    line-height: 48px;
+    font-size: 16px !important;
+  }
+  
+  .notice .flex {
+    display: flex;
+    font-size: 14px;
+  }
+  
+  .notice .flex span {
+    flex: 1
+  }
+  
+  .notice .labelStyle {
+    background: #ecf0ff !important;
+    border-radius: 6px 6px 0 0;
+  }
+  
+  .notice .edit {
+    min-height: 200px;
+  }
+  
+  .notice .el-descriptions-item__label,
+  .notice tr:first-child th:last-child {
+    height: inherit !important;
+    display: flex;
+  }
+  .notice .el-descriptions-row .el-descriptions-item__content .maincontent{
+    min-height: 400px;
+  }
+  .notice tr:first-child th:last-child .title {
+    flex: 1;
+    color: #2337d8;
+    font-size: 16px;
+    font-weight: bold;
+  }
+  
+  .notice tr:first-child th:last-child .info {
+    color: #333;
+  }
+  
+  .notice .edit .el-textarea {
+    width: 95%;
+  }
+  
+  .notice .edit .el-textarea textarea {
+    border-color: #fff !important;
+    color: red;
+    text-indent: 20px;
+  }
+  
+  .notice .bluetext {
+    color: #4365e3;
+    text-decoration: underline;
+  }
+  
+  .notice .redtext {
+    color: red;
+  }
+  @page {
+    size: auto;
+    margin: 6mm;
+  }
+  
+  @media print {
+    html {
+      background-color: #ffffff;
+      height: auto;
+      margin: 0px;
+    }
+  
+    body {
+      border: solid 1px #ffffff;
+      margin: 10mm 15mm 10mm 15mm;
+    }
+}

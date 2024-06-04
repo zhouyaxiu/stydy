@@ -1,0 +1,345 @@
+@font-face {
+  font-family: 'Noto Sans SC';
+  font-style: normal;
+  font-weight: 100;
+  src: url('../fonts/119_100.woff2') format('woff2');
+  unicode-range: U+20-22, U+27-2a, U+2c-3b, U+3f, U+41-4d, U+4f-5d, U+61-7b, U+7d, U+ab, U+ae, U+b2, U+b7, U+bb, U+df-e5, U+e7-ea, U+ec-ed, U+f1-f4, U+f6, U+f9-fa, U+fc, U+101, U+103, U+113, U+12b, U+148, U+14d, U+16b, U+1ce, U+1d0, U+300-301, U+1ebf, U+1ec7, U+2013-2014, U+2039-203a, U+2122, U+3001-3002, U+3042, U+3044, U+3046, U+3048, U+304a-3055, U+3057, U+3059-305b, U+305d, U+305f-3061, U+3063-306b, U+306d-3073, U+3075-3076, U+3078-3079, U+307b, U+307e-307f, U+3081-308d, U+308f, U+3092-3093, U+30a1-30a4, U+30a6-30bb, U+30bd, U+30bf-30c1, U+30c3-30c4, U+30c6-30cb, U+30cd-30d7, U+30d9-30e1, U+30e3-30e7, U+30e9-30ed, U+30ef, U+30f3, U+30fb-30fc, U+4e00, U+4e2d, U+65b0, U+65e5, U+6708-6709, U+70b9, U+7684, U+7f51, U+ff0c, U+ff0e, U+ff1a;
+}
+
+@font-face {
+  font-family: 'Noto Sans SC';
+  font-style: normal;
+  font-weight: 300;
+  src: url('../fonts/119_300.woff2') format('woff2');
+  unicode-range: U+20-22, U+27-2a, U+2c-3b, U+3f, U+41-4d, U+4f-5d, U+61-7b, U+7d, U+ab, U+ae, U+b2, U+b7, U+bb, U+df-e5, U+e7-ea, U+ec-ed, U+f1-f4, U+f6, U+f9-fa, U+fc, U+101, U+103, U+113, U+12b, U+148, U+14d, U+16b, U+1ce, U+1d0, U+300-301, U+1ebf, U+1ec7, U+2013-2014, U+2039-203a, U+2122, U+3001-3002, U+3042, U+3044, U+3046, U+3048, U+304a-3055, U+3057, U+3059-305b, U+305d, U+305f-3061, U+3063-306b, U+306d-3073, U+3075-3076, U+3078-3079, U+307b, U+307e-307f, U+3081-308d, U+308f, U+3092-3093, U+30a1-30a4, U+30a6-30bb, U+30bd, U+30bf-30c1, U+30c3-30c4, U+30c6-30cb, U+30cd-30d7, U+30d9-30e1, U+30e3-30e7, U+30e9-30ed, U+30ef, U+30f3, U+30fb-30fc, U+4e00, U+4e2d, U+65b0, U+65e5, U+6708-6709, U+70b9, U+7684, U+7f51, U+ff0c, U+ff0e, U+ff1a;
+}
+
+@font-face {
+  font-family: 'Noto Sans SC';
+  font-style: normal;
+  font-weight: 400;
+  src: url('../fonts/119_400.woff2') format('woff2');
+  unicode-range: U+20-22, U+27-2a, U+2c-3b, U+3f, U+41-4d, U+4f-5d, U+61-7b, U+7d, U+ab, U+ae, U+b2, U+b7, U+bb, U+df-e5, U+e7-ea, U+ec-ed, U+f1-f4, U+f6, U+f9-fa, U+fc, U+101, U+103, U+113, U+12b, U+148, U+14d, U+16b, U+1ce, U+1d0, U+300-301, U+1ebf, U+1ec7, U+2013-2014, U+2039-203a, U+2122, U+3001-3002, U+3042, U+3044, U+3046, U+3048, U+304a-3055, U+3057, U+3059-305b, U+305d, U+305f-3061, U+3063-306b, U+306d-3073, U+3075-3076, U+3078-3079, U+307b, U+307e-307f, U+3081-308d, U+308f, U+3092-3093, U+30a1-30a4, U+30a6-30bb, U+30bd, U+30bf-30c1, U+30c3-30c4, U+30c6-30cb, U+30cd-30d7, U+30d9-30e1, U+30e3-30e7, U+30e9-30ed, U+30ef, U+30f3, U+30fb-30fc, U+4e00, U+4e2d, U+65b0, U+65e5, U+6708-6709, U+70b9, U+7684, U+7f51, U+ff0c, U+ff0e, U+ff1a;
+}
+
+@font-face {
+  font-family: 'Noto Sans SC';
+  font-style: normal;
+  font-weight: 500;
+  src: url('../fonts/119_500.woff2') format('woff2');
+  unicode-range: U+20-22, U+27-2a, U+2c-3b, U+3f, U+41-4d, U+4f-5d, U+61-7b, U+7d, U+ab, U+ae, U+b2, U+b7, U+bb, U+df-e5, U+e7-ea, U+ec-ed, U+f1-f4, U+f6, U+f9-fa, U+fc, U+101, U+103, U+113, U+12b, U+148, U+14d, U+16b, U+1ce, U+1d0, U+300-301, U+1ebf, U+1ec7, U+2013-2014, U+2039-203a, U+2122, U+3001-3002, U+3042, U+3044, U+3046, U+3048, U+304a-3055, U+3057, U+3059-305b, U+305d, U+305f-3061, U+3063-306b, U+306d-3073, U+3075-3076, U+3078-3079, U+307b, U+307e-307f, U+3081-308d, U+308f, U+3092-3093, U+30a1-30a4, U+30a6-30bb, U+30bd, U+30bf-30c1, U+30c3-30c4, U+30c6-30cb, U+30cd-30d7, U+30d9-30e1, U+30e3-30e7, U+30e9-30ed, U+30ef, U+30f3, U+30fb-30fc, U+4e00, U+4e2d, U+65b0, U+65e5, U+6708-6709, U+70b9, U+7684, U+7f51, U+ff0c, U+ff0e, U+ff1a;
+}
+
+@font-face {
+  font-family: 'Noto Sans SC';
+  font-style: normal;
+  font-weight: 700;
+  src: url('../fonts/119_700.woff2') format('woff2');
+  unicode-range: U+20-22, U+27-2a, U+2c-3b, U+3f, U+41-4d, U+4f-5d, U+61-7b, U+7d, U+ab, U+ae, U+b2, U+b7, U+bb, U+df-e5, U+e7-ea, U+ec-ed, U+f1-f4, U+f6, U+f9-fa, U+fc, U+101, U+103, U+113, U+12b, U+148, U+14d, U+16b, U+1ce, U+1d0, U+300-301, U+1ebf, U+1ec7, U+2013-2014, U+2039-203a, U+2122, U+3001-3002, U+3042, U+3044, U+3046, U+3048, U+304a-3055, U+3057, U+3059-305b, U+305d, U+305f-3061, U+3063-306b, U+306d-3073, U+3075-3076, U+3078-3079, U+307b, U+307e-307f, U+3081-308d, U+308f, U+3092-3093, U+30a1-30a4, U+30a6-30bb, U+30bd, U+30bf-30c1, U+30c3-30c4, U+30c6-30cb, U+30cd-30d7, U+30d9-30e1, U+30e3-30e7, U+30e9-30ed, U+30ef, U+30f3, U+30fb-30fc, U+4e00, U+4e2d, U+65b0, U+65e5, U+6708-6709, U+70b9, U+7684, U+7f51, U+ff0c, U+ff0e, U+ff1a;
+}
+
+* {
+  font-family: 'Noto Sans SC';
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+  outline: none;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+html,
+body,
+#app,
+.wrapper {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.container {
+  font-size: 16px;
+  color: #ffffff;
+  width: 1920px;
+  height: 1080px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transform-origin: left top;
+  overflow: hidden;
+}
+
+.header {
+  width: 100%;
+  height: 160px;
+  background: url(@/assets/img/track/head.png) no-repeat;
+  background-position: left bottom;
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: space-between;
+  padding-right: 30px;
+}
+
+.header .time {
+  color: #ffffff;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  margin-top: 25px;
+}
+
+.header .time .time-left {
+  font-size: 50px;
+  margin-right: 40px;
+  font-weight: bold;
+  background: linear-gradient(to bottom, #ffffff, #70B4E9);
+  -webkit-background-clip: text;
+  /*将设置的背景颜色限制在文字中*/
+  -webkit-text-fill-color: transparent;
+  /*给文字设置成透明*/
+  transform: skewX(-10deg);
+}
+
+.header .time .time-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.header .time .time-right .date {
+  font-size: 20px;
+  font-weight: 400;
+  font-style: italic;
+}
+
+.header .search {
+  display: flex;
+  align-items: center;
+}
+
+.header .search .item+.item {
+  margin-left: 40px;
+}
+
+.header .search .item {
+  display: flex;
+  align-items: center;
+}
+
+.header .search .item .label {
+  margin-right: 10px;
+}
+
+.header .search .item input {
+  width: 228px;
+  height: 50px;
+  border: 1px solid #3B879A;
+  border-radius: 5px;
+  background-color: #051E38;
+  box-shadow: none;
+  padding: 18px 20px;
+  font-size: 16px;
+  color: #ffffff;
+}
+
+.header .search .el-button {
+  width: 158px;
+  height: 50px;
+  background-color: #3b879a;
+  border: none;
+  font-size: 16px;
+  color: #ffffff;
+}
+
+a {
+  text-decoration: none
+}
+
+
+.flex {
+  display: flex;
+}
+
+.flex1 {
+  flex: 1
+}
+
+.cff {
+  color: #fff;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+/* 滚动条样式 */
+::-webkit-scrollbar {
+  -webkit-appearance: none;
+}
+
+::-webkit-scrollbar:vertical,
+.opg .el-scrollbar__bar.is-vertical {
+  width: 8px;
+  right: 0;
+}
+
+
+::-webkit-scrollbar:horizontal,
+.opg .el-scrollbar__bar.is-horizontal {
+  height: 8px;
+  bottom: 0;
+}
+
+::-webkit-scrollbar-thumb {
+  /*  background-color: #1E385D;
+  border-radius: 6px;*/
+  background: #0C1F49;
+  border-radius: 4px;
+}
+
+.opg::-webkit-scrollbar-thumb {
+  background-color: #00bfd9 !important;
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  border-radius: 4px;
+  background-color: #0C1F49;
+}
+
+.opg::-webkit-scrollbar-track,
+.opg .el-scrollbar__bar.is-vertical {
+  background-color: #002A5C !important;
+}
+
+.opg::-webkit-scrollbar-track,
+.opg .el-scrollbar__bar.is-horizontal {
+  background-color: #002A5C !important;
+}
+
+::-webkit-scrollbar-corner {
+  background-color: #0C1F49;
+}
+
+.scrollbar {
+  /*三角箭头的颜色*/
+  scrollbar-arrow-color: #002A5C;
+  /*滚动条滑块按钮的颜色*/
+  scrollbar-face-color: #002A5C;
+  /*滚动条整体颜色*/
+  scrollbar-highlight-color: #0C1F49;
+  /*滚动条阴影*/
+  scrollbar-shadow-color: #0C1F49;
+  /*滚动条轨道颜色*/
+  scrollbar-track-color: #0C1F49;
+  /*滚动条3d亮色阴影边框的外观颜色——左边和上边的阴影色*/
+  scrollbar-3dlight-color: #0C1F49;
+  /*滚动条3d暗色阴影边框的外观颜色——右边和下边的阴影色*/
+  scrollbar-darkshadow-color: #0C1F49;
+  /*滚动条基准颜色*/
+  scrollbar-base-color: #002A5C;
+}
+
+.scrollbar.opg {
+  scrollbar-face-color: #0049AD !important;
+  scrollbar-track-color: #074475 !important;
+}
+
+.scrollbar::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+  /* background-color: #002A5C; */
+}
+
+.scrollbar::-webkit-scrollbar-track {
+  background-color: #002A5C;
+}
+
+.scrollbar.opg::-webkit-scrollbar-track {
+  background-color: #074475;
+}
+
+::-webkit-scrollbar:vertical,
+.opg .el-scrollbar__bar.is-vertical {
+  width: 8px !important;
+}
+
+::-webkit-scrollbar:horizontal,
+.opg .el-scrollbar__bar.is-horizontal {
+  height: 8px !important;
+}
+
+.scrollbar::-webkit-scrollbar-thumb {
+  border-radius: 4px;
+  background-color: #002A5C;
+  box-shadow: inset 0 0 5px #002A5C;
+}
+
+.scrollbar.opg::-webkit-scrollbar-thumb,
+.opg .el-scrollbar__thumb {
+  background-color: #0049AD !important;
+  box-shadow: inset 0 0 5px #0049AD !important;
+  opacity: 1;
+}
+
+.opg .el-scrollbar__thumb:hover {
+  background-color: #0049AD;
+  box-shadow: inset 0 0 5px #0049AD !important;
+  opacity: 1
+}
+
+.scrollbar::-webkit-scrollbar-button {
+  height: 0;
+  /* background-color: #002A5C; */
+}
+
+/* bg-color */
+.bg-color-fafc50 {
+  background-color: #fafc50 !important;
+}
+
+.bg-color-f95078 {
+  background-color: #f95078 !important;
+}
+
+.bg-color-f0b428 {
+  background-color: #f0b428
+}
+
+/* text-align */
+.text-right {
+  text-align: right;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-left {
+  text-align: left;
+}
+
+.width-100 {
+  width: 100%;
+}
+
+.bg {
+  width: 100vw;
+  height: 100vh;
+  background-color: #041429;
+  overflow: hidden;
+}
+
+
+/*太长不换行加省略号*/
+.ellipsis-text {
+  text-overflow: ellipsis;
+  /*省略号 */
+  white-space: nowrap;
+  /*溢出时不换行 */
+  overflow: hidden;
+  /*溢出时隐藏 */
+}

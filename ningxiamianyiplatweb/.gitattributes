@@ -1,0 +1,7 @@
+# 教你如何修改github上的项目变为vue类型
+
+*.js linguist-language=vue
+
+*.css linguist-language=vue
+
+*.html linguist-language=vue

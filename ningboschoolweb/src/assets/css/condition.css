@@ -1,0 +1,142 @@
+.condition-row {
+	display: flex;
+	line-height: 48px;
+	font-size: 14px;
+	color: #333333;
+}
+.ml_200{
+	margin-left: 200px;
+}
+.condition-row .item {
+	display: flex;
+}
+.condition-row .label .red {
+	color:red;
+	margin-right: 4px;
+}
+.condition-row .mLeft {
+	margin-left: 24px;
+}
+
+.condition-row .label {
+	white-space: nowrap;
+	text-align: right;
+    width: 120px;
+}
+
+.condition-row .el-input input {
+	border-radius: 4px !important;
+	/*height: 32px !important;
+	font-size: 12px !important;*/
+}
+.condition-row .el-form-item{
+	display: flex;
+	align-items: center;
+	height: 48px;
+	margin-bottom: 0;
+}
+
+.condition-row .el-radio {
+	margin-right: 10px !important;
+}
+
+.condition-row .el-checkbox {
+	color: #4B5C8C;
+	margin-right: 10px !important;
+}
+
+.el-input input,
+.el-input__inner:not(.el-input-number) {
+	font-size: 14px !important;
+	padding-right: 8px !important;
+	line-height: 38px !important;
+	height: 38px !important;
+}
+
+.condition-row .el-input,
+.el-checkbox__label,
+.el-select-dropdown__item,
+.el-radio__label {
+	font-size: 14px !important;
+}
+.specForm{
+	margin-bottom: 3px !important;
+}
+.select-btn-row{
+	display: flex;
+    background: #F5F7FA;
+    margin-bottom: 5px;
+    margin-top: -6px;
+}
+.select-text{
+	font-size: 14px;
+	padding: 0 20px;
+	overflow: hidden;
+	color: #606266;
+	height: 34px;
+	line-height: 34px;
+	font-weight: bold;
+	cursor: pointer;
+}
+.select-check-option {
+	float: left;
+	margin-left: 4px;
+	color: #8492a6;
+	font-size: 13px;
+	display: inline-block;
+	width: 120px;
+	position: relative;
+	left: -20px;
+	z-index: 1000;
+	padding-left: 25px;
+}
+.explain-label{
+	color: #697681;
+	line-height: 32px;
+}
+.condition-block{
+	padding-bottom: 20px;
+}
+.condition-row .el-checkbox__input.is-disabled.is-checked .el-checkbox__inner{
+	background: #E6E8EF;
+	border-color:#E6E8EF;
+}
+.condition-row .el-checkbox__input.is-disabled.is-checked .el-checkbox__inner::after{
+	border-color:#fff;
+}
+.el-checkbox__input.is-checked .el-checkbox__inner, .el-checkbox__input.is-indeterminate .el-checkbox__inner{
+	background: #2E5BFF;
+	border-color:#2E5BFF;
+}
+.ml_250{
+  margin-left: 250px;
+}
+.flex{
+	display: flex;
+}
+.mt_-20 {
+  margin-top: -20px;
+}
+.content-area{
+	padding:20px;
+	background: #fff;
+	border-radius: 10px;
+}
+.ml_10 {
+  margin-left: 10px;
+}
+.ml_20 {
+  margin-left: 20px;
+}
+.ml_60 {
+  margin-left: 60px;
+}
+.mt_10 {
+	margin-top: 10px;
+}
+.w_200{
+	width: 200px;
+}
+.fl{
+	float: left;
+}

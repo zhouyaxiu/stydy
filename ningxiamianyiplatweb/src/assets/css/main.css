@@ -1,0 +1,111 @@
+@font-face {
+  font-family: "Source Han Sans";
+  font-style: normal;
+  font-weight: 200;
+  src: url("../fonts/193_200.otf") format("otf");
+}
+
+@font-face {
+  font-family: "Source Han Sans";
+  font-style: normal;
+  font-weight: 300;
+  src: url("../fonts/193_300.otf") format("otf");
+}
+
+@font-face {
+  font-family: "Source Han Sans";
+  font-style: normal;
+  font-weight: 400;
+  src: url("../fonts/193_400.otf") format("otf");
+}
+
+@font-face {
+  font-family: "Source Han Sans";
+  font-style: normal;
+  font-weight: 500;
+  src: url("../fonts/193_500.otf") format("otf");
+}
+
+@font-face {
+  font-family: "Source Han Sans";
+  font-style: normal;
+  font-weight: 700;
+  src: url("../fonts/193_700.otf") format("otf");
+}
+
+@font-face {
+  font-family: "Source Han Sans";
+  font-style: normal;
+  font-weight: 900;
+  src: url("../fonts/193_900.otf") format("otf");
+}
+
+* {
+  font-family: "Source Han Sans";
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+  outline: none;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+html,
+body,
+#app,
+.wrapper {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+a {
+  text-decoration: none;
+}
+
+.content-box {
+  position: absolute;
+  left: 272px;
+  right: 0;
+  top: 64px;
+  bottom: 0;
+  padding-left: 14px;
+  -webkit-transition: left 0.3s ease-in-out;
+  transition: left 0.3s ease-in-out;
+  background: #f0f0f0;
+}
+
+.content {
+  width: auto;
+  height: 100%;
+  padding: 10px;
+  /* overflow-y: scroll; */
+  box-sizing: border-box;
+}
+
+.content-collapse {
+  left: 10px;
+}
+
+.no-click {
+  pointer-events: none;
+  opacity: 0.5;
+  cursor: not-allowed !important;
+}
+
+/**animation for router-change start */
+.ss-animate-leave-to,
+.ss-animate-enter-from {
+  opacity: 0;
+  transform: scale(0);
+}
+
+.ss-animate-enter-active {
+  transition: all 0.3s linear;
+}
+
+.ss-animate-leave-active {
+  transition: all 0.2s linear;
+}
+
+/**animation for router-change end */

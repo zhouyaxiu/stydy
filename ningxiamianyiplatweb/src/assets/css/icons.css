@@ -1,0 +1,65 @@
+.ss-icon-logout {
+	background-image: url(../img/icon/icon_logout.png);
+	width: 16px;
+	height: 17px;
+}
+
+.ss-icon-back {
+	background-image: url(../img/icon/icon_back.png);
+	width: 16px;
+	height: 15px;
+}
+
+.ss-icon-show {
+	background-image: url(../img/icon/icon_show.png);
+}
+
+.ss-icon-hide {
+	background-image: url(../img/icon/icon_hide.png);
+}
+
+.ss-icon-yes {
+	background-image: url(../img/icon/icon_yes.png);
+}
+
+.ss-icon-tshi {
+	background-image: url(../img/icon/icon_tshi.png);
+	width: 14px;
+	height: 14px;
+}
+
+.ss-icon-jzmz {
+	background-image: url(../img/icon/icon_jzmz.png);
+	width: 16px;
+	height: 16px;
+}
+
+.ss-icon-file {
+	background-image: url(../img/icon/icon_file.png);
+	width: 14px;
+	height: 14px;
+}
+
+.ss-icon-cy {
+	background-image: url(../img/icon/icon_cy.png);
+	width: 16px;
+	height: 16px;
+}
+
+.ss-icon-sysManage {
+	background-image: url(../img/icon/icon_sysManage.png);
+	width: 16px;
+	height: 16px;
+}
+
+.ss-icon-userSetting {
+	background-image: url(../img/icon/icon_userSetting.png);
+	width: 16px;
+	height: 16px;
+}
+
+.ss-icon-sysSetting {
+	background-image: url(../img/icon/icon_sysSetting.png);
+	width: 16px;
+	height: 16px;
+}

@@ -1,0 +1,21 @@
+.table-container {
+	padding: 16px;
+	background-color: #ffffff;
+}
+
+.el-table {
+	--el-table-border-color: #B3DDFE !important;
+	--el-table-text-color: #333333 !important;
+	--el-table-header-bg-color: #EEF4FF !important;
+	--el-table-header-text-color: #223B80 !important;
+}
+
+.el-table th.el-table__cell.is-leaf {
+	font-size: 15px;
+	font-weight: bold;
+}
+
+.el-table tr td:last-child,
+.el-table tr:first-child th:last-child {
+	border-right: 0;
+}
