@@ -1,0 +1,9 @@
+module.exports={
+    transform:{
+        '^.+\\.jsx?$':'babel-jest',
+        '^.+\\.vue$':'@vue/jest-transformer'
+    },
+    moduleNameMapper:{
+        '^@/(.*)$':'<rootDir>/src/$1'
+    }
+}

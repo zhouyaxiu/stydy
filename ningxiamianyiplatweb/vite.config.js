@@ -1,3 +1,4 @@
+/// <reference types="vitest" />
 import { defineConfig, loadEnv } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import AutoImport from "unplugin-auto-import/vite";
@@ -70,6 +71,26 @@ export default defineConfig({
     //   targets: ["ie 11"] //兼容ie11
     // })
   ],
+  test:{
+    // 模拟dom环境
+    environment:"happy-dom",
+    coverage:{
+      // 覆盖率提供者
+      provider:"istanbul",
+      reporter:["text","json","html"],
+      // 设置覆盖文件夹
+      reportsDirectory:"./coverage",
+      // 检查每个文件的阈值
+      perFile:true,
+      // 设置代码覆盖率阈值
+      lines:75,
+      functions:75,
+      branches:75,
+      statements:75
+    },
+    open:true,
+    include:["./src/test/**/*.{test,spec}.js"]
+  },
   // 是否自动在浏览器打开
   open: true,
   hmr: true,

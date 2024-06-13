@@ -6,6 +6,7 @@ import gjdc from "./modules/gjdc";
 import hr from "./modules/hr";
 import usersetting from "./modules/usersetting";
 import childrendata from "./modules/childrendata";
+import inoculation from "./modules/inoculation";
 import stat from "./modules/stat";
 import { mainStore } from "@/store/index";
 
@@ -33,6 +34,7 @@ const routes = [
       ...childrendata,
       ...usersetting,
       ...stat,
+      ...inoculation
     ],
   },
   {
