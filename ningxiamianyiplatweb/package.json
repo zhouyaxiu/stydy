@@ -32,11 +32,15 @@
     "@vitest/coverage-istanbul": "^1.6.0",
     "@vue/compiler-sfc": "^3.1.2",
     "@vue/test-utils": "^2.4.6",
+    "@zxcvbn-ts/core": "^3.0.4",
+    "autofit.js": "^3.1.0",
     "crypto-js": "^4.1.1",
     "element-plus-table-dragable": "^1.0.0",
     "eslint": "^9.0.0",
     "eslint-plugin-vue": "^9.24.1",
     "happy-dom": "^14.12.0",
+    "husky": "^8.0.0",
+    "lottie-web": "^5.12.2",
     "md5": "^2.2.1",
     "query-string": "^6.13.1",
     "rollup-plugin-visualizer": "^5.12.0",
@@ -48,8 +52,7 @@
     "vite": "2.6.13",
     "vite-plugin-optimize-persist": "^0.1.2",
     "vite-plugin-package-config": "^0.1.1",
-    "vitest": "^1.6.0",
-    "husky": "^8.0.0"
+    "vitest": "^1.6.0"
   },
   "browserslist": [
     "> 1%",
@@ -62,6 +65,8 @@
         "@element-plus/icons-vue",
         "@vicons/material",
         "@vueuse/core",
+        "@zxcvbn-ts/core",
+        "autofit.js",
         "axios",
         "crypto-js",
         "element-plus",
@@ -105,6 +110,7 @@
         "element-plus/es/utils/index",
         "js-md5",
         "lodash-unified",
+        "lottie-web",
         "md5",
         "moment",
         "pinia",
@@ -117,6 +123,8 @@
     }
   },
   "lint-staged": {
-    "*.{vue,tsx}": ["vitest related --run --coverage"]
+    "*.{vue,tsx}": [
+      "vitest related --run --coverage"
+    ]
   }
 }

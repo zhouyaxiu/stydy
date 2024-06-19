@@ -1,5 +1,6 @@
 <template>
   <div>
+    
     <el-table row-key="cid" border :data="tableData" :span-method="mergeCellsMethod" highlight-current-row
       @cell-mouse-enter="cellMouseEnter" @cell-mouse-leave="cellMouseLeave" :row-class-name="tableRowClassName">
       <el-table-column prop="country" label="国家"></el-table-column>
@@ -13,15 +14,27 @@
         </template>
       </el-table-column>
     </el-table>
+    ksskk
+    <flipPanel :is-back="isBackSide">
+      <template #default>
+        <div class="front-wrap" @click="isBackSide = !isBackSide">正面内容</div>
+      </template>
+      <template #back>
+        <div class="back-wrap" @click="isBackSide = !isBackSide">反面内容</div>
+      </template>
+    </flipPanel>
+
     <detail v-if="editshow" :pwd="edtailencodedCode" :dialogVisible="editshow" @closeEvent="hideEdit"></detail>
   </div>
 </template>
 
 <script>
 import detail from "./detail.vue"
+import flipPanel from "./flipPanel.vue"
 export default {
   components:{
-    detail
+    detail,
+    flipPanel
   },
   data() {
     return {
@@ -32,6 +45,7 @@ export default {
       ],
       editshow:false,
       edtailencodedCode:"",
+      isBackSide:true
     }
   },
   methods: {
