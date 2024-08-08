@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shensu.mybatis.mapper.systemmanage.SysUserMapper">
+    <select id="findByLoginName" resultType="com.shensu.mybatis.entity.systemmanage.SchUser">
+        SELECT
+            ID,
+            su.SCH_ID,
+            LOGIN_NAME,
+            `PASSWORD`,
+            ADD_TIME,
+            UPDATE_TIME,
+            su.INVALID_COUNT,
+            su.INVALID_LASTTIME,
+            ISACCESS,
+            sc.sch_stationcode,
+            sc.sch_stationid,
+            sc.sch_stationname,
+            su.login_count,
+            sc.invalid_status sch_invalid_status,
+            sc.sch_type,
+            sc.sch_name schName,
+            su.FORCE_PWD
+        FROM
+            sch_user su
+                INNER JOIN nur_school sc ON su.sch_id = sc.sch_id
+        where
+            LOGIN_NAME =#{loginName}
+    </select>
+
+
+    <update id="updateUserStatus" >
+        update sch_user set
+        INVALID_COUNT = #{invalidCount}
+        <if test="invalidCount == '5'.toString()">
+            ,ISACCESS = 0
+            ,INVALID_LASTTIME = now()
+        </if>
+        <if test="invalidCount != '5'.toString()">
+            ,ISACCESS = 1
+        </if>
+        <if test="loginName!=null and loginName!='' ">
+            where LOGIN_NAME = #{loginName}
+        </if>
+    </update>
+
+    <update id="updateUserLoginCount">
+        update sch_user set login_count = #{loginCount} where login_name = #{loginName}
+    </update>
+
+    <select id="getIdsForClean"  resultType="java.lang.String">
+        SELECT
+            ID
+        FROM
+            sch_user
+        WHERE
+            INVALID_COUNT > 0
+           OR ISACCESS = 0
+    </select>
+
+    <update id="cleanUserStatus">
+        UPDATE sch_user
+        SET INVALID_COUNT = 0,
+        ISACCESS = 1
+        WHERE ID in
+        <foreach collection="ids" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </update>
+
+    <update id="updateUserPwd" >
+        update sch_user
+        set PASSWORD = #{userPassword},
+            UPDATE_Time= NOW()
+        where LOGIN_NAME = #{loginName}
+    </update>
+
+    <update id="updateUserForcePwd" >
+        update sch_user
+        set FORCE_PWD = '0'
+        where LOGIN_NAME = #{loginName}
+    </update>
+</mapper>

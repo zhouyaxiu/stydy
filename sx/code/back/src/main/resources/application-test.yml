@@ -1,0 +1,117 @@
+server:
+  port: 18890
+  servlet:
+    context-path: /DiseShaoXing
+  max-http-header-size: 100000
+
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+spring:
+  application:
+    name: DiseShaoXing
+  redis:
+    host: 192.168.3.83
+    database: 4
+    port: 26379
+    password: focus123
+    jedis:
+      pool:
+        max-idle: 8
+        min-idle: 0
+        max-wait: -1
+    timeout: 50000
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    dynamic:
+      primary: master
+      strict: false
+      datasource:
+        master:
+          driver-class-name: com.mysql.cj.jdbc.Driver
+          url: jdbc:mysql://192.168.1.14:3307/shaoxing_chayan?serverTimezone=Asia/Shanghai&useSSL=false&autoReconnect=true&autoReconnectForPools=true&allowMultiQueries=true
+          username: root
+          password: Shensu2022)%
+        ningbo:
+          driver-class-name: com.mysql.cj.jdbc.Driver
+          url: jdbc:mysql://192.168.1.14:3307/ningbo_chanyan?serverTimezone=Asia/Shanghai&useSSL=false&autoReconnect=true&autoReconnectForPools=true&allowMultiQueries=true
+          username: root
+          password: Shensu2022)%
+        saas:
+          driver-class-name: com.mysql.cj.jdbc.Driver
+          url: jdbc:mysql://192.168.1.14:3308/shaoxing_saas?serverTimezone=Asia/Shanghai&useSSL=false&autoReconnect=true&autoReconnectForPools=true&allowMultiQueries=true
+          username: root
+          password: Shensu2022)%
+        healthPlatform:
+          driver-class-name: com.mysql.cj.jdbc.Driver
+          url: jdbc:mysql://192.168.1.14:3307/shaoxing_chayan?serverTimezone=Asia/Shanghai&useSSL=false&autoReconnect=true&autoReconnectForPools=true&allowMultiQueries=true
+          username: root
+          password: Shensu2022)%
+    druid:
+      initial-size: 5
+      max-active: 450
+      max-wait: 10000
+      min-evictable-idle-time-millis: 300000
+      min-idle: 5
+      stat-view-servlet:
+        allow: ''
+        enabled: true
+        login-password: epicloud123
+        login-username: admin
+        reset-enable: false
+        url-pattern: /druid/*
+      test-on-borrow: true
+      test-on-return: false
+      test-while-idle: true
+      time-between-eviction-runs-millis: 60000
+      validation-query: SELECT 1 FROM DUAL
+      web-stat-filter:
+        enabled: true
+        exclusions: '*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*'
+  main:
+    allow-bean-definition-overriding: true
+  jta:
+    enabled: true
+  session:
+    store-type: redis
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 100MB
+  jmx:
+    default-domain: DiseNingBo
+
+springfox:
+  documentation:
+    swagger-ui:
+      enabled: true
+
+secure:
+  ignored:
+    urls: #swagger,knife4j路径白名单
+      - /**/swagger-ui.html
+      - /**/swagger-resources/**
+      - /**/swagger-ui/index.html
+      - /**/swagger/**
+      - /**/v*/api-docs
+      - /**/*.js
+      - /**/*.css
+      - /**/*.png
+      - /**/*.ico
+      - /webjars/springfox-swagger-ui/**
+      - /**/doc.html
+#分组大小
+front:
+  server:
+    url: http://192.168.3.91:8088
+
+
+#集成平台登录时，重定向的页面地址
+loginPath: http://localhost:8086/#/
+#集成平台校验用户接口
+jiChengPath: http://www.sssy.online:8017/dev33master/EpiWebCloud/StatPlatform/epiMainProcess.action
+#集成平台参数解密密钥
+ECBKEY: x7K12MhT
+downPath: http://192.168.3.91:8855/DiseShaoDownInterface
+cron: 0 55 10 * * ?

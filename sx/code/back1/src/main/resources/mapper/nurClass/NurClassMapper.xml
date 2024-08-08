@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shensu.mybatis.mapper.nurClass.NurClassMapper">
+
+    <select id="getClassList" resultType="com.shensu.mybatis.entity.nurClass.ClassInfo">
+        select
+        rowkey,
+        cla_name,
+        cla_addtime,
+        cla_linkman,
+        cla_phone,
+        cla_schid,
+        cla_total,
+        cla_updatetime,
+        cla_nameYear,
+        cla_shortName,
+        cla_level
+        FROM
+            nur_class
+        where
+            1=1
+            <if test="claLevel!='' and claLevel!=null">
+                and cla_level=#{claLevel}
+            </if>
+            <if test="claNameYear!='' and claNameYear!=null">
+                and cla_nameYear=#{claNameYear}
+            </if>
+            <if test="claShortName!='' and claShortName!=null">
+                and cla_shortName like concat(concat('%',#{claShortName}),'%')
+            </if>
+            <if test="schId!='' and schId!=null">
+                and cla_schid =#{schId}
+            </if>
+    </select>
+
+
+    <insert id="insertClass">
+        insert into nur_class
+        (cla_name,
+         cla_total,
+         cla_linkman,
+         cla_phone,
+         cla_schid,
+         cla_addtime,
+         cla_updatetime,
+         cla_nameYear,
+         cla_shortName,
+         cla_level)
+        values (#{claName},
+                #{claTotal},
+                #{claLinkman},
+                #{claPhone},
+                #{claSchid},
+                now(),
+                now(),
+                #{claNameYear},
+                #{claShortName},
+                #{claLevel})
+    </insert>
+
+    <select id="getClassById" resultType="com.shensu.mybatis.entity.nurClass.ClassInfo">
+        select
+            rowkey,
+            cla_name,
+            cla_addtime,
+            cla_linkman,
+            cla_phone,
+            cla_schid,
+            cla_total,
+            cla_updatetime,
+            cla_nameYear,
+            cla_shortName,
+            cla_level
+        FROM
+            nur_class
+        where rowkey = #{classId}
+    </select>
+
+
+    <select id="getStudentNumByClassId" resultType="int">
+        select count(rowkey)
+        from nur_stuinfo_high
+        where stu_clacode=#{classCode}
+    </select>
+
+
+    <update id="updateClass">
+        update nur_class
+        set
+            cla_total=#{claTotal},
+            cla_linkman=#{claLinkman},
+            cla_phone=#{claPhone},
+            cla_updatetime=now()
+        where rowkey=#{classId}
+    </update>
+
+
+    <select id="getStudentNumByClassIds" resultType="int">
+        select count(rowkey)
+        from nur_stuinfo_high
+        where stu_clacode in
+        <foreach collection="ids" separator="," item="id"  open="(" close=")">
+            #{id}
+        </foreach>
+    </select>
+
+    <delete id="deleteClassByIds">
+        delete from NUR_CLASS WHERE ROWKEY in
+        <foreach collection="ids" separator="," item="id"  open="(" close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <delete id="deleteStudentByClaCode">
+        delete from nur_stuinfo where stu_clacode in
+        <foreach collection="ids" separator="," item="id"  open="(" close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

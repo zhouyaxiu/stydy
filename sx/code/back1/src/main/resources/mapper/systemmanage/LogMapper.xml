@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shensu.mybatis.mapper.systemmanage.LogMapper">
+    <insert id="insertLog">
+        insert  into
+            sys_log(OPER_TYPE,
+                    OPER_MODULEName,
+                    OPER_USERNAME,
+                    OPER_ACCOUNTNAME,
+                    OPER_TIME,
+                    OPER_OBJECT,
+                    AREACODE,
+                    AREALEVEL)
+        values (
+                   #{operaType},#{modelName},#{userName},#{accountName},#{addTime},#{modelObject},#{areaCode},#{areaLevel})
+    </insert>
+
+</mapper>

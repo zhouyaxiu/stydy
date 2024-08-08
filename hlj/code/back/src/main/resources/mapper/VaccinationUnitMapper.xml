@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shensu.jsjm.mapper.VaccinationUnitMapper">
+    <!--01.儿童接种,02.成人接种,03.产科接种（展示，但不可选）,04.狂犬病预防处置,05.破伤风预防处置,06.新冠疫苗接种-->
+    <select id="getUnitNumByType" resultType="int">
+        SELECT
+            count(1)
+        FROM
+            sys_station ss
+        WHERE
+            ss.table_status = '0'
+          AND ( regexp_like ( ss.organ_code, #{template1} ) OR regexp_like ( ss.organ_code, #{template2} ) )
+          AND ss.JZDWYWLX LIKE '%' || #{type} || '%'
+          and nouse=0
+    </select>
+
+    <select id="getTodayUnitNumByType" resultType="int">
+        SELECT
+            count(DISTINCT sh.NEW_BASECODE)
+        FROM
+            sys_station sh
+            left join EPI_JZJL ej on sh.table_status = '0' and ( regexp_like ( sh.organ_code, #{template1} ) OR regexp_like ( sh.organ_code, #{template2} ) )
+            AND sh.JZDWYWLX LIKE '%' || #{type} || '%'
+            and sh.NOUSE=0 and  ej.FSTATIONCODE=sh.NEW_BASECODE
+        WHERE
+            ej.FCHILDNO is not null
+          and ej.FSHOTDATED = TO_CHAR(SYSDATE, 'YYYY-mm-dd')
+    </select>
+
+    <select id="getTodayIsRabiesUnitNum" resultType="int">
+        select NVL(count(DISTINCT sh.NEW_BASECODE), 0) from sys_station sh
+        left join EPI_JZJL ej on sh.table_status = '0' and ( regexp_like ( sh.organ_code, #{template1} ) OR regexp_like ( sh.organ_code, #{template2} ) )
+            AND sh.israb = #{israb}
+            and sh.NOUSE=0 and  ej.FSTATIONCODE=sh.NEW_BASECODE
+        where ej.FCHILDNO is not null
+          and ej.FSHOTDATED = TO_CHAR(SYSDATE, 'YYYY-mm-dd')
+    </select>
+    <select id="getTodayHosUnitNum" resultType="int">
+        select NVL(count(DISTINCT sh.NEW_BASECODE), 0) from sys_hos sh
+            left join EPI_JZJL ej on ( regexp_like ( sh.HOS_CODE, #{template1} ) OR regexp_like ( sh.HOS_CODE, #{template2} ) )
+             and NOUSE=0 and  ej.FSTATIONCODE=sh.NEW_BASECODE
+        where ej.FCHILDNO is not null
+            and ej.FSHOTDATED = TO_CHAR(SYSDATE, 'YYYY-mm-dd')
+    </select>
+
+    <select id="getUnitNumALL" resultType="int">
+        SELECT
+            count(1)
+        FROM
+            sys_station ss
+        WHERE
+            ss.table_status = '0'
+          AND ( regexp_like ( ss.organ_code, #{template1} ) OR regexp_like ( ss.organ_code, #{template2} ) )
+          and nouse=0
+    </select>
+
+
+    <select id="getTodayUnitNumALL" resultType="int">
+        select NVL(count(DISTINCT sh.NEW_BASECODE), 0) from sys_station sh
+        left join EPI_JZJL ej on sh.table_status = '0' and ( regexp_like ( sh.organ_code, #{template1} ) OR regexp_like ( sh.organ_code, #{template2} ) )
+            and sh.NOUSE=0 and  ej.FSTATIONCODE=sh.NEW_BASECODE
+        where ej.FCHILDNO is not null
+          and ej.FSHOTDATED = TO_CHAR(SYSDATE, 'YYYY-mm-dd')
+    </select>
+</mapper>
+

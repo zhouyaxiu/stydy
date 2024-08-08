@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shensu.mybatis.mapper.school.SchoolMapper">
+    <resultMap id="School" type="com.shensu.mybatis.entity.school.SchoolManageBean">
+        <id property="schId" column="sch_id"/>
+        <result property="schCode" column="sch_code"/>
+        <result property="schName" column="sch_name"/>
+        <result property="schPwd" column="sch_pwd"/>
+        <result property="schType" column="sch_type"/>
+        <result property="schAddress" column="sch_address"/>
+        <result property="schPhone" column="sch_phone"/>
+        <result property="schLinkMan" column="sch_linkman"/>
+        <result property="schStationCode" column="sch_stationcode"/>
+        <result property="schStationId" column="sch_stationid"/>
+        <result property="schIsAccess" column="sch_isaccess"/>
+        <result property="schUpdateTime" column="sch_updatetime"/>
+        <result property="fullCode" column="fullCode"/>
+        <result property="schStationName" column="sch_stationname"/>
+        <result property="invalidCount" column="invalid_count"/>
+        <result property="invalidLastTime" column="invalid_lasttime"/>
+        <result property="invalidStatus" column="invalid_status"/>
+        <result property="supCode" column="supcode"/>
+        <result property="supName" column="supname"/>
+        <result property="countyName" column="countyname"/>
+        <result property="cityName" column="cityname"/>
+    </resultMap>
+
+    <select id="getSchoolList" resultMap="School">
+        SELECT
+        sch.*,
+        area.supcode supcode,
+        area.supname supname,
+        area.cityname cityName,
+        area.countyname countyName
+        FROM
+        nur_school sch
+        INNER JOIN v_sys_station area ON sch.sch_stationcode = area.STATIONCODE
+        WHERE
+        ${columnSql}
+        and  sch.invalid_status !='1'
+        <if test="schType !=null and schType!=''">
+            and  sch.sch_type = #{schType}
+        </if>
+        <if test="schCode !=null and schCode!=''">
+            and  sch.sch_code like concat('%',#{schCode},'%')
+        </if>
+        <if test="schName !=null and schName!=''">
+            and  sch.sch_name like concat('%',#{schName},'%')
+        </if>
+        order by sch_code*1 ASC
+    </select>
+
+    <select id="getSchCounts" resultType="java.util.Map">
+        select
+            count(1) schNum,
+            invalid_status
+        FROM NUR_SCHOOL
+        WHERE SCH_CODE = #{schCode} and sch_stationcode = #{stationCode}
+    </select>
+
+    <select id="getSchCount"  resultType="java.lang.Integer">
+        SELECT COUNT(sch_id) FROM nur_school
+    </select>
+
+    <select id="getIdCounts" resultType="java.lang.Integer">
+        SELECT
+            COUNT(SCH_ID)
+        FROM
+            nur_school
+        WHERE
+            sch_stationcode = #{stationCode}
+    </select>
+
+    <insert id="insertSchool">
+        INSERT INTO nur_school (
+            sch_id,
+            sch_code,
+            sch_name,
+            sch_pwd,
+            sch_type,
+            sch_address,
+            sch_phone,
+            sch_linkman,
+            sch_stationcode,
+            sch_stationid,
+            sch_isaccess,
+            sch_updatetime,
+            fullCode,
+            sch_stationname,
+            invalid_count,
+            invalid_status)
+        values(
+                  #{schId},
+                  #{schCode},
+                  #{schName},
+                  #{schPwd},
+                  #{schType},
+                  #{schAddress},
+                  #{schPhone},
+                  #{schLinkMan},
+                  #{schStationCode},
+                  #{schStationId},
+                  #{schIsAccess},
+                  NOW(),
+                  #{fullCode},
+                  #{schStationName},
+                  '0',
+                  '0'
+              )
+    </insert>
+
+    <select id="getSchoolById" resultMap="School">
+        SELECT
+            sch_id,
+            sch_stationcode,
+            sch_stationname,
+            sch_code,
+            sch_name,
+            sch_type,
+            sch_address,
+            sch_phone,
+            sch_linkman
+        FROM
+            nur_school
+        WHERE
+            sch_id = #{id}
+    </select>
+
+    <update id="updateSchoolById">
+        update nur_school set sch_name=#{schName},sch_type=#{schType},sch_address=#{schAddress},
+                              sch_phone=#{schPhone},sch_linkman=#{schLinkMan},sch_updatetime=NOW()
+        where sch_id=#{schId}
+    </update>
+
+    <update id="delSchoolS">
+        update nur_school set invalid_status='1'
+        where sch_id in
+        <foreach collection="schIds" open="(" close=")" item="schId"  separator=",">
+            #{schId}
+        </foreach>
+    </update>
+
+    <select id="getStuCounts" resultType="java.lang.Integer">
+        SELECT
+            COUNT(rowkey) stuNum
+        FROM
+            nur_stuinfo
+        WHERE
+            schid = #{schId}
+    </select>
+
+    <select id="findAllSchoolByAreaCode" resultMap="School">
+        select
+            sch_id,
+            sch_pwd,
+            sch_address,
+            sch_isaccess,
+            fullCode,
+            sch_stationcode,
+            sch_stationname,
+            sch_stationid,
+            sch_code,
+            sch_name,
+            sch_type,
+            sch_address,
+            sch_phone,
+            sch_linkman
+        from
+            v_sys_station vss
+                inner join nur_school ns on
+                vss.STATIONCODE = ns.sch_stationcode
+        where
+            vss.CITYCODE = #{areaCode}
+    </select>
+
+
+    <select id="findAllSchool" resultMap="School">
+        select
+            sch_id,
+            sch_pwd,
+            sch_address,
+            sch_isaccess,
+            fullCode,
+            sch_stationcode,
+            sch_stationname,
+            sch_stationid,
+            sch_code,
+            sch_name,
+            sch_type,
+            sch_address,
+            sch_phone,
+            sch_linkman
+        from
+            nur_school
+    </select>
+
+
+    <insert id="batchInsertSch">
+        INSERT INTO nur_school (
+            sch_id,
+            sch_code,
+            sch_name,
+            sch_pwd,
+            sch_type,
+            sch_address,
+            sch_phone,
+            sch_linkman,
+            sch_stationcode,
+            sch_stationid,
+            sch_isaccess,
+            sch_updatetime,
+            fullCode,
+            sch_stationname,
+            invalid_count,
+            invalid_status)
+        values
+            <foreach collection="beans" item="bean" separator=",">
+                (
+                #{bean.schId},
+                #{bean.schCode},
+                #{bean.schName},
+                #{bean.schPwd},
+                #{bean.schType},
+                #{bean.schAddress},
+                #{bean.schPhone},
+                #{bean.schLinkMan},
+                #{bean.schStationCode},
+                #{bean.schStationId},
+                #{bean.schIsAccess},
+                NOW(),
+                #{bean.fullCode},
+                #{bean.schStationName},
+                #{bean.invalidCount},
+                #{bean.invalidStatus}
+                )
+            </foreach>
+    </insert>
+
+
+    <delete id="delSchoolBySch">
+        DELETE FROM nur_school
+        where sch_id in
+        <foreach collection="beans" open="(" close=")" item="bean"  separator=",">
+            #{bean.schId}
+        </foreach>
+    </delete>
+
+    <select id="getSchsForHealthPlatform" resultMap="School">
+        SELECT SCH_ID,sch_code,sch_name,sch_type,sch_stationcode FROM nur_school
+        <if test="updateTime !=null and updateTime !=''">
+           where DATE_FORMAT(sch_updatetime,'%Y-%m-%d') = #{updateTime}
+        </if>
+    </select>
+
+
+    <delete id="delSchoolBySchForHealthPlatform">
+        DELETE FROM nur_school
+        where sch_id in
+        <foreach collection="beans" open="(" close=")" item="bean"  separator=",">
+            #{bean.schId}
+        </foreach>
+    </delete>
+
+    <insert id="batchInsertSchForHealthPlatform">
+        INSERT INTO nur_school (
+        sch_id,
+        sch_code,
+        sch_name,
+        sch_type,
+        sch_stationcode)
+        values
+        <foreach collection="beans" item="bean" separator=",">
+            (
+            #{bean.schId},
+            #{bean.schCode},
+            #{bean.schName},
+            #{bean.schType},
+            #{bean.schStationCode}
+            )
+        </foreach>
+    </insert>
+
+
+    <select id="findSchoolByIds" resultType="java.lang.String">
+        select  sch_name from nur_school ns
+        where ns.sch_id =#{shcId}
+    </select>
+
+    <select id="findClasByIds" resultType="java.lang.String">
+        select cla_name  from nur_class nc
+        where nc.rowkey in
+        <foreach collection="claIds" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+</mapper>

@@ -1,0 +1,756 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shensu.mybatis.mapper.student.StudentInputMapper">
+
+    <select id="findStuInfoByNo" resultType="com.shensu.mybatis.entity.check.StudentInfo">
+        select
+            s.rowkey, stu_no, stu_imuno, stu_name, stu_birth, stu_sex, stu_type, stu_parentname, stu_phone,
+            stu_clacode class_id, cla_shortname class_name, cla_level grade, cla_nameyear academic_year, c.sch_name,
+            stu_stationcode, stu_streetcode, stu_countycode, stu_citycode, stu_addtime, stu_updatetime,schid
+        from nur_stuinfo_high s
+                 inner join nur_class n on n.rowkey = s.stu_clacode
+                 inner join nur_school c on s.schid = c.sch_id
+        where stu_no=#{stuNo} and schid=#{schId}
+    </select>
+    <select id="findStuInfoByNos" resultType="com.shensu.mybatis.entity.check.StudentInfo">
+        select
+            s.rowkey, stu_no, stu_imuno, stu_name, stu_birth, stu_sex, stu_type, stu_parentname, stu_phone,
+            stu_clacode class_id, cla_shortname class_name, cla_level grade, cla_nameyear academic_year, c.sch_name,
+            stu_stationcode, stu_streetcode, stu_countycode, stu_citycode, stu_addtime, stu_updatetime,schid
+        from nur_stuinfo_high s
+                 inner join nur_class n on n.rowkey = s.stu_clacode
+                 inner join nur_school c on s.schid = c.sch_id
+        where schid=#{schId}
+    </select>
+
+    <select id="findStuInfoListByNo" resultType="com.shensu.mybatis.entity.check.StudentInfo">
+        select
+            s.rowkey, stu_no, stu_imuno, stu_name, stu_birth, stu_sex, stu_type, stu_parentname, stu_phone,
+            stu_clacode class_id, sch_name,schid,
+            stu_stationcode, stu_streetcode, stu_countycode, stu_citycode, stu_addtime, stu_updatetime,cla_nameyear academicYear,cla_level grade,
+            stu_parentname, stu_phone, stu_belong_stationcode
+        from nur_stuinfo_high s inner join nur_school c on s.schid = c.sch_id inner  join nur_class ns  on ns.rowkey = s.stu_clacode
+        where stu_no=#{stuNo}
+    </select>
+
+    <insert id="insertStuInfo">
+        INSERT INTO nur_stuinfo_high (
+            `stu_no`, `stu_imuno`, `stu_name`, `cid`, `stu_birth`, `stu_sex`, `stu_type`, `stu_phone`, `stu_clacode`, `schid`,
+            `stu_stationcode`, `stu_streetcode`, `stu_countycode`, `stu_citycode`, `stu_belong_stationcode`, `stu_addtime`, `stu_updatetime`,
+            `f_reside_addr`, `stu_mothername`, `stu_fathername`, `stu_parentname`, `stu_father_phone`, `stu_mother_phone`,
+            `mmr`, `mmr_id`, `var_one`, `var_one_id`, `var_two`, `var_two_id`, `flu_one`, `flu_one_id`, `flu_two`, `flu_two_id`
+        ) VALUES (
+           #{stuNo,jdbcType=VARCHAR},
+           #{stuImuno,jdbcType=VARCHAR},
+           #{stuName,jdbcType=VARCHAR},
+           #{cid,jdbcType=VARCHAR},
+           #{stuBirth,jdbcType=VARCHAR},
+           #{stuSex,jdbcType=VARCHAR},
+           #{stuType,jdbcType=VARCHAR},
+           #{stuPhone,jdbcType=VARCHAR},
+           #{classId,jdbcType=VARCHAR},
+           #{schid,jdbcType=VARCHAR},
+           #{stuStationcode,jdbcType=VARCHAR},
+           #{stuStreetcode,jdbcType=VARCHAR},
+           #{stuCountycode,jdbcType=VARCHAR},
+           #{stuCitycode,jdbcType=VARCHAR},
+           #{stuBelongStationCode,jdbcType=VARCHAR},
+           NOW(),
+           NOW(),
+           #{fResideAddr,jdbcType=VARCHAR},
+           #{stuMothername,jdbcType=VARCHAR},
+           #{stuFathername,jdbcType=VARCHAR},
+           #{stuParentname,jdbcType=VARCHAR},
+           #{stuFatherPhone,jdbcType=VARCHAR},
+           #{stuMotherPhone,jdbcType=VARCHAR},
+           #{measles,jdbcType=VARCHAR},
+           #{measlesId,jdbcType=VARCHAR},
+           #{varFir,jdbcType=VARCHAR},
+           #{varFirId,jdbcType=VARCHAR},
+           #{varSec,jdbcType=VARCHAR},
+           #{varSecId,jdbcType=VARCHAR},
+           #{fluFir,jdbcType=VARCHAR},
+           #{fluFirId,jdbcType=VARCHAR},
+           #{fluSec,jdbcType=VARCHAR},
+           #{fluSecId,jdbcType=VARCHAR}
+       )
+    </insert>
+
+    <update id="updateStuInfo">
+        update nur_stuinfo_high
+        set
+            `stu_no`=#{stuNo,jdbcType=VARCHAR},
+            `stu_imuno`=#{stuImuno,jdbcType=VARCHAR},
+            `stu_name`=#{stuName,jdbcType=VARCHAR},
+            `cid`=#{cid,jdbcType=VARCHAR},
+            `stu_birth`=#{stuBirth,jdbcType=VARCHAR},
+            `stu_sex`=#{stuSex,jdbcType=VARCHAR},
+            `stu_type`=#{stuType,jdbcType=VARCHAR},
+            `stu_phone`=#{stuPhone,jdbcType=VARCHAR},
+            `stu_clacode`=#{classId,jdbcType=VARCHAR},
+            `schid`=#{schid,jdbcType=VARCHAR},
+            `stu_stationcode`=#{stuStationcode,jdbcType=VARCHAR},
+            `stu_streetcode`=#{stuStreetcode,jdbcType=VARCHAR},
+            `stu_countycode`=#{stuCountycode,jdbcType=VARCHAR},
+            `stu_citycode`=#{stuCitycode,jdbcType=VARCHAR},
+            `stu_belong_stationcode`=#{stuBelongStationCode,jdbcType=VARCHAR},
+            `stu_updatetime`=NOW(),
+            `f_reside_addr`=#{fResideAddr,jdbcType=VARCHAR},
+            `stu_mothername`=#{stuMothername,jdbcType=VARCHAR},
+            `stu_fathername`=#{stuFathername,jdbcType=VARCHAR},
+            `stu_parentname`=#{stuParentname,jdbcType=VARCHAR},
+            `stu_father_phone`=#{stuFatherPhone,jdbcType=VARCHAR},
+            `stu_mother_phone`=#{stuMotherPhone,jdbcType=VARCHAR},
+            `mmr`=#{measles,jdbcType=VARCHAR},
+            `mmr_id`=#{measlesId,jdbcType=VARCHAR},
+            `var_one`=#{varFir,jdbcType=VARCHAR},
+            `var_one_id`=#{varFirId,jdbcType=VARCHAR},
+            `var_two`=#{varSec,jdbcType=VARCHAR},
+            `var_two_id`=#{varSecId,jdbcType=VARCHAR},
+            `flu_one`=#{fluFir,jdbcType=VARCHAR},
+            `flu_one_id`=#{fluFirId,jdbcType=VARCHAR},
+            `flu_two`=#{fluSec,jdbcType=VARCHAR},
+            `flu_two_id`=#{fluSecId,jdbcType=VARCHAR}
+        where rowkey=#{rowkey}
+    </update>
+
+
+
+    <select id="findStusByNo" resultType="com.shensu.mybatis.entity.check.Student">
+        select
+        st.rowkey,
+        stu_no,
+        stu_imuno,
+        stu_name,
+        stu_birth,
+        stu_sex,
+        stu_type,
+        stu_isjzz,
+        stu_isbjzz,
+        stu_parentname,
+        stu_phone,
+        stu_clacode,
+        stu_stationcode,
+        stu_streetcode,
+        stu_countycode,
+        stu_citycode,
+        stu_addtime,
+        stu_updatetime,
+        stu_sourceid,
+        stu_isjz,
+        stu_isfull,
+        stu_isjz_origin,
+        stu_isfull_origin,
+        stu_parentname,stu_phone as stu_otherphone,
+        ns.sch_name as schname,clazz_name as clazzName,grade ,academic_year as academicYear  ,rounds ,
+        b001, b063, b064, b065, b009, b010, b011, b012,
+        b015, b016, b017, b018, b037, b093, b094, b040, b041, b045, b046,
+        b032, b033, b034, b035, b036, b069, b070, b071, b072, b050,
+        b132, b169, b170, b171, b172, b163, b164, b165, b166, b157,
+        b158, b159, b160, b027, b028, b029, b030, b031, b138, b139,
+        b140, b141, b147, b148, b073, b074, b075, b076, b133, b327,
+        b155, b059, b060, b089, b090, b096, b097,
+        d001,
+        d063,d064,d065,
+        d009,d010,d011,d012,
+        d015,d016,d017,d018,
+        d037,
+        d059,d060,
+        d040,d041,
+        d045,d046,
+        d032,d033,
+        d073,d074,
+        d050,d132
+        from nur_stuinfo st  inner join nur_school  ns  on st.schid = ns.sch_id
+        where stu_no =#{stuNo}
+
+    </select>
+    <select id="findStuByNo" resultType="com.shensu.mybatis.entity.check.Student">
+        select
+            rowkey,
+            stu_no,
+            stu_imuno,
+            stu_name,
+            stu_birth,
+            stu_sex,
+            stu_type,
+            stu_isjzz,
+            stu_isbjzz,
+            stu_parentname,
+            stu_phone,
+            stu_clacode,
+            stu_stationcode,
+            stu_streetcode,
+            stu_countycode,
+            stu_citycode,
+            stu_addtime,
+            stu_updatetime,
+            stu_sourceid,
+            stu_isjz,
+            stu_isfull,
+            stu_isjz_origin,
+            stu_isfull_origin,
+            stu_parentname,stu_phone as stu_otherphone,
+            ns.sch_name as schname,clazz_name as clazzName,grade ,academic_year as academicYear  ,rounds ,
+            b001, b063, b064, b065, b009, b010, b011, b012,
+            b015, b016, b017, b018, b037, b093, b094, b040, b041, b045, b046,
+            b032, b033, b034, b035, b036, b069, b070, b071, b072, b050,
+            b132, b169, b170, b171, b172, b163, b164, b165, b166, b157,
+            b158, b159, b160, b027, b028, b029, b030, b031, b138, b139,
+            b140, b141, b147, b148, b073, b074, b075, b076, b133, b327,
+            b155, b059, b060, b089, b090, b096, b097,
+            d001,
+            d063,d064,d065,
+            d009,d010,d011,d012,
+            d015,d016,d017,d018,
+            d037,
+            d059,d060,
+            d040,d041,
+            d045,d046,
+            d032,d033,
+            d073,d074,
+            d050,d132
+        from nur_stuinfo st  inner join nur_school  ns  on st.schid = ns.sch_id
+        where stu_no =#{stuNo} and schid=#{schId}
+
+    </select>
+
+
+    <update id="updateCheckInfo">
+        update nur_stuinfo
+        set stu_sex=#{stuSex},stu_imuno=#{stuImuno},stu_type=#{stuType},stu_sourceid=#{stuSourceid},f_reside_addr=#{fResideAddr},
+        stu_parentname=#{stuParentname},
+        stu_fathername=#{stuFathername},
+        stu_mothername=#{stuMothername},
+        stu_father_phone=#{stuFatherPhone},
+        stu_mother_phone=#{stuMotherPhone},
+        stu_phone=#{stuPhone},
+        stu_name=#{stuName},
+        stu_updatetime=SYSDATE(),
+        last_stu_smrq=#{lastStuSmrq},
+        academic_year=#{academicYear},rounds=#{rounds},grade=#{grade},clazz_name=#{clazzName},stu_stationcode=#{stuStationcode},
+        stu_birth=#{stuBirth},stu_isjzz=#{stuIsjzz},stu_isbjzz=#{stuIsbjzz},
+        stu_isjz=#{stuIsjz},stu_isfull=#{stuIsfull},
+        <if test="stuIsjzOrigin != '' and stuIsjzOrigin != null">
+            stu_isjz_origin=#{stuIsjzOrigin},
+            stu_isfull_origin=#{stuIsfullOrigin},
+        </if>
+        B001=#{b001},B063=#{b063},B064=#{b064},B065=#{b065},B009=#{b009},B010=#{b010},B011=#{b011},B012=#{b012},
+        B015=#{b015},B016=#{b016},B017=#{b017},B018=#{b018},B037=#{b037},B093=#{b093},B094=#{b094},B040=#{b040},
+        B041=#{b041},B045=#{b045},B046=#{b046},B032=#{b032},B033=#{b033},B069=#{b069},B050=#{b050},B169=#{b169},
+        B170=#{b170},B171=#{b171},B172=#{b172},B163=#{b163},B164=#{b164},B165=#{b165},B166=#{b166},B157=#{b157},
+        B158=#{b158},B159=#{b159},B160=#{b160},B027=#{b027},B028=#{b028},B029=#{b029},B030=#{b030},B138=#{b138},
+        B139=#{b139},B140=#{b140},B141=#{b141},B147=#{b147},B148=#{b148},B073=#{b073},B133=#{b133},B155=#{b155},
+        B059=#{b059},B060=#{b060},B089=#{b089},B090=#{b090},B096=#{b096},B097=#{b097},B132=#{b132},B074=#{b074},
+        B031=#{b031},B034=#{b034},B035=#{b035},B036=#{b036},B070=#{b070},B071=#{b071},B072=#{b072},B075=#{b075},
+        B076=#{b076},B327=#{b327},
+        D001=#{d001},
+        D063=#{d063}, D064=#{d064}, D065=#{d065}, D001=#{d001}, D009=#{d009}, D010=#{d010}, D011=#{d011}, D012=#{d012},
+        D015=#{d015}, D016=#{d016}, D017=#{d017}, D018=#{d018}, D037=#{d037}, D059=#{d059}, D060=#{d060}, D040=#{d040},
+        D041=#{d041}, D045=#{d045}, D046=#{d046}, D032=#{d032}, D033=#{d033}, D073=#{d073},D074=#{d074}, D050=#{d050}, D132=#{d132},
+        B063State=#{b063State},
+        B064State=#{b064State},
+        B065State=#{b065State},
+        B001State=#{b001State},
+        B009State=#{b009State},
+        B010State=#{b010State},
+        B011State=#{b011State},
+        B012State=#{b012State},
+        B015State=#{b015State},
+        B016State=#{b016State},
+        B017State=#{b017State},
+        B018State=#{b018State},
+        B037State=#{b037State},
+        B059State=#{b059State},
+        B060State=#{b060State},
+        B040State=#{b040State},
+        B041State=#{b041State},
+        B045State=#{b045State},
+        B046State=#{b046State},
+        B032State=#{b032State},
+        B033State=#{b033State},
+        B073State=#{b073State},
+        B074State=#{b074State},
+        B050State=#{b050State},
+        B132State=#{b132State},
+        B050StateAfter=#{b050StateAfter},
+        B132StateAfter=#{b132StateAfter},
+        B063StateAfter=#{b063StateAfter},
+        B064StateAfter=#{b064StateAfter},
+        B065StateAfter=#{b065StateAfter},
+        B001StateAfter=#{b001StateAfter},
+        B009StateAfter=#{b009StateAfter},
+        B010StateAfter=#{b010StateAfter},
+        B011StateAfter=#{b011StateAfter},
+        B012StateAfter=#{b012StateAfter},
+        B015StateAfter=#{b015StateAfter},
+        B016StateAfter=#{b016StateAfter},
+        B017StateAfter=#{b017StateAfter},
+        B018StateAfter=#{b018StateAfter},
+        B037StateAfter=#{b037StateAfter},
+        B059StateAfter=#{b059StateAfter},
+        B060StateAfter=#{b060StateAfter},
+        B040StateAfter=#{b040StateAfter},
+        B041StateAfter=#{b041StateAfter},
+        B045StateAfter=#{b045StateAfter},
+        B046StateAfter=#{b046StateAfter},
+        B032StateAfter=#{b032StateAfter},
+        B033StateAfter=#{b033StateAfter},
+        B073StateAfter=#{b073StateAfter},
+        B074StateAfter=#{b074StateAfter},
+        cid=#{cid},
+        stu_belong_stationcode=#{stuBelongStationcode}
+        where rowkey=#{rowkey}
+    </update>
+
+
+
+    <insert id="insertStudent">
+        INSERT INTO nur_stuinfo (stu_no, stu_imuno, stu_name, stu_birth,
+        stu_sex, stu_type,f_reside_addr, stu_isjzz, stu_isbjzz, stu_parentname, stu_fathername,stu_mothername,last_stu_schname,last_stu_smrq,
+        stu_phone,stu_father_phone,stu_mother_phone,stu_stationcode,   stu_addtime, stu_updatetime,
+        stu_sourceid, stu_isjz, stu_isfull, B001, B063, B064, B065, B009, B010, B011, B012, B015, B016, B017, B018,
+        B037, B093, B094, B040, B041, B045, B046, B032, B033, B069, B050, B169, B170, B171, B172, B163, B164, B165,
+        B166, B157, B158, B159, B160, B027, B028, B029, B030, B138, B139, B140, B141, B147, B148, B073, B133, B155,
+        B059, B060, B089, B090, B096, B097, B063State, B064State, B065State, B001State, B009State, B010State, B011State,
+        B012State, B015State, B016State, B017State, B018State, B037State, B059State, B060State, B040State, B041State, B045State,
+        B046State, B032State, B033State, B073State,B074State, FPPDW, FPPDH, isbzoper, schid,B132,B327,B074,
+        D001,D063,D064,D065,D009,D010,D011,D012,D015,D016,D017,D018,D037,D059,D060,D040,D041,D045,D046,
+        D032,D033,D073,D074,D050,D132,STU_ISJZ_ORIGIN,STU_ISFULL_ORIGIN,academic_year,rounds,grade,clazz_name,first_stu_smrq,cid,b132State,b050State,stu_belong_stationcode
+        )
+        VALUES(
+            #{stuNo,jdbcType=VARCHAR}, #{stuImuno,jdbcType=VARCHAR},#{stuName,jdbcType=VARCHAR},#{stuBirth,jdbcType=VARCHAR},
+            #{stuSex,jdbcType=VARCHAR},#{stuType,jdbcType=VARCHAR}, #{fResideAddr,jdbcType=VARCHAR},#{stuIsjzz,jdbcType=VARCHAR},
+            #{stuIsbjzz,jdbcType=VARCHAR},
+            #{stuParentname,jdbcType=VARCHAR},#{stuFathername,jdbcType=VARCHAR}, #{stuMothername,jdbcType=VARCHAR},
+            #{lastStuSchname,jdbcType=VARCHAR},#{lastStuSmrq,jdbcType=VARCHAR},
+            #{stuPhone,jdbcType=VARCHAR}, #{stuFatherPhone,jdbcType=VARCHAR},   #{stuMotherPhone,jdbcType=VARCHAR},
+            #{stuStationcode,jdbcType=VARCHAR},NOW(),NOW(), #{stuSourceid,jdbcType=VARCHAR},#{stuIsjz,jdbcType=VARCHAR},#{stuIsfull,jdbcType=VARCHAR},
+            #{b001,jdbcType=VARCHAR},#{b063,jdbcType=VARCHAR}, #{b064,jdbcType=VARCHAR},#{b065,jdbcType=VARCHAR},
+            #{b009,jdbcType=VARCHAR},#{b010,jdbcType=VARCHAR},#{b011,jdbcType=VARCHAR},#{b012,jdbcType=VARCHAR},
+            #{b015,jdbcType=VARCHAR}, #{b016,jdbcType=VARCHAR},#{b017,jdbcType=VARCHAR},#{b018,jdbcType=VARCHAR}, #{b037,jdbcType=VARCHAR},
+            #{b093,jdbcType=VARCHAR}, #{b094,jdbcType=VARCHAR},#{b040,jdbcType=VARCHAR},#{b041,jdbcType=VARCHAR},#{b045,jdbcType=VARCHAR},
+            #{b046,jdbcType=VARCHAR},#{b032,jdbcType=VARCHAR}, #{b033,jdbcType=VARCHAR},#{b069,jdbcType=VARCHAR},#{b050,jdbcType=VARCHAR},
+            #{b169,jdbcType=VARCHAR}, #{b170,jdbcType=VARCHAR},#{b171,jdbcType=VARCHAR},#{b172,jdbcType=VARCHAR},#{b163,jdbcType=VARCHAR},
+            #{b164,jdbcType=VARCHAR},#{b165,jdbcType=VARCHAR},#{b166,jdbcType=VARCHAR},#{b157,jdbcType=VARCHAR},#{b158,jdbcType=VARCHAR},
+            #{b159,jdbcType=VARCHAR},#{b160,jdbcType=VARCHAR},#{b027,jdbcType=VARCHAR},#{b028,jdbcType=VARCHAR}, #{b029,jdbcType=VARCHAR},
+            #{b030,jdbcType=VARCHAR},#{b138,jdbcType=VARCHAR},#{b139,jdbcType=VARCHAR},#{b140,jdbcType=VARCHAR},#{b141,jdbcType=VARCHAR},
+            #{b147,jdbcType=VARCHAR},#{b148,jdbcType=VARCHAR},#{b073,jdbcType=VARCHAR},#{b133,jdbcType=VARCHAR},#{b155,jdbcType=VARCHAR},#{b059,jdbcType=VARCHAR},
+            #{b060,jdbcType=VARCHAR},#{b089,jdbcType=VARCHAR},#{b090,jdbcType=VARCHAR},#{b096,jdbcType=VARCHAR},#{b097,jdbcType=VARCHAR},
+            #{b063State,jdbcType=VARCHAR},
+            #{b064State,jdbcType=VARCHAR},
+            #{b065State,jdbcType=VARCHAR},
+            #{b001State,jdbcType=VARCHAR},
+            #{b009State,jdbcType=VARCHAR},
+            #{b010State,jdbcType=VARCHAR},
+            #{b011State,jdbcType=VARCHAR},
+            #{b012State,jdbcType=VARCHAR},
+            #{b015State,jdbcType=VARCHAR},
+            #{b016State,jdbcType=VARCHAR},
+            #{b017State,jdbcType=VARCHAR},
+            #{b018State,jdbcType=VARCHAR},
+            #{b037State,jdbcType=VARCHAR},
+            #{b059State,jdbcType=VARCHAR},
+            #{b060State,jdbcType=VARCHAR},
+            #{b040State,jdbcType=VARCHAR},
+            #{b041State,jdbcType=VARCHAR},
+            #{b045State,jdbcType=VARCHAR},
+            #{b046State,jdbcType=VARCHAR},
+            #{b032State,jdbcType=VARCHAR},
+            #{b033State,jdbcType=VARCHAR},
+            #{b073State,jdbcType=VARCHAR},
+            #{b074State,jdbcType=VARCHAR},
+            #{FPPDW,jdbcType=VARCHAR},
+            #{FPPDH,jdbcType=VARCHAR},
+            #{isbzoper,jdbcType=VARCHAR},
+            #{schid,jdbcType=VARCHAR},
+            #{b132,jdbcType=VARCHAR},
+            #{b327,jdbcType=VARCHAR},
+            #{b074,jdbcType=VARCHAR},
+            #{d001,jdbcType=VARCHAR},
+            #{d063,jdbcType=VARCHAR},
+            #{d064,jdbcType=VARCHAR},
+            #{d065,jdbcType=VARCHAR},
+            #{d009,jdbcType=VARCHAR},
+            #{d010,jdbcType=VARCHAR},
+            #{d011,jdbcType=VARCHAR},
+            #{d012,jdbcType=VARCHAR},
+            #{d015,jdbcType=VARCHAR},
+            #{d016,jdbcType=VARCHAR},
+            #{d017,jdbcType=VARCHAR},
+            #{d018,jdbcType=VARCHAR},
+            #{d037,jdbcType=VARCHAR},
+            #{d059,jdbcType=VARCHAR},
+            #{d060,jdbcType=VARCHAR},
+            #{d040,jdbcType=VARCHAR},
+            #{d041,jdbcType=VARCHAR},
+            #{d045,jdbcType=VARCHAR},
+            #{d046,jdbcType=VARCHAR},
+            #{d032,jdbcType=VARCHAR},
+            #{d033,jdbcType=VARCHAR},
+            #{d073,jdbcType=VARCHAR},
+            #{d074,jdbcType=VARCHAR},
+            #{d050,jdbcType=VARCHAR},
+            #{d132,jdbcType=VARCHAR},
+            #{stuIsjzOrigin,jdbcType=VARCHAR},
+            #{stuIsfullOrigin,jdbcType=VARCHAR},
+            #{academicYear},
+            #{rounds},
+            #{grade},
+            #{clazzName},
+            #{firstStuSmrq},
+            #{cid},
+            #{b132State},#{b050State},#{stuBelongStationcode}
+            )
+    </insert>
+
+
+
+    <select id="queryAllClass" resultType="java.lang.String">
+        select  clazz_name
+        from nur_stuinfo ns
+        where 1=1
+        <if test="grade != '' and grade != null"> and grade=#{grade}</if>
+        <if test="classYear != '' and classYear != null">and academic_year=#{classYear}</if>
+        <if test="lunci != '' and lunci != null">  and rounds=#{lunci}</if>
+        <if test="schId != '' and schId != null"> and schid =#{schId}</if>
+        group by clazz_name
+    </select>
+
+
+    <select id="queryAllHighClass" resultType="com.shensu.mybatis.entity.nurClass.ClassInfo">
+        select  rowkey,cla_shortname
+        from nur_class
+        where 1=1
+        <if test="schId != '' and schId != null">
+          and cla_schId =#{schId}
+        </if>
+        <if test="claYear != '' and claYear != null">
+          and cla_nameyear=#{claYear}
+        </if>
+        <if test="claLevel != '' and claLevel != null">
+          and cla_level=#{claLevel}
+        </if>
+        group by cla_name
+    </select>
+
+    <select id="findHighClassYear" resultType="com.shensu.mybatis.entity.nurClass.ClassInfo">
+        select  rowkey,cla_nameyear as claNameYear
+        from nur_class
+        where 1=1
+        <if test="schId != '' and schId != null">
+            and cla_schId =#{schId}
+        </if>
+        <if test="claYear != '' and claYear != null">
+            and cla_nameyear=#{claYear}
+        </if>
+        <if test="claLevel != '' and claLevel != null">
+            and cla_level=#{claLevel}
+        </if>
+        group by cla_nameyear
+       order by cla_nameyear  desc
+    </select>
+
+
+    <select id="findHighClassYears" resultType="com.shensu.mybatis.entity.nurClass.ClassInfo">
+        select  rowkey,cla_nameyear as claNameYear
+        from nur_class
+        where 1=1
+        <if test="schIds != '' and schIds != null">
+           and  cla_schId in
+            <foreach collection="schIds" item="id" separator="," open="(" close=")">
+                #{id}
+            </foreach>
+        </if>
+        <if test="claYear != '' and claYear != null">
+            and cla_nameyear=#{claYear}
+        </if>
+        <if test="claLevels != '' and claLevels != null">
+            and   cla_level in
+            <foreach collection="claLevels" item="id" separator="," open="(" close=")">
+                #{id}
+            </foreach>
+        </if>
+        order by cla_nameyear  desc
+    </select>
+    <select id="findStudentBySchId" resultType="com.shensu.mybatis.entity.check.Student">
+        select * from nur_stuinfo ns
+        where ns.schid =#{schId}
+    </select>
+    <select id="findStudentCountBySchId" resultType="java.lang.Long">
+        select count(*) from nur_stuinfo ns
+        where ns.schid =#{schId}
+    </select>
+
+
+    <insert id="bachInsertStudents" >
+        insert  into  nur_stuinfo
+        (stu_no,cid,stu_imuno,stu_name,stu_birth,stu_sex,stu_type,stu_isjzz,stu_isbjzz,stu_parentname,stu_phone,academic_year,rounds,grade,clazz_name,
+         stu_citycode,stu_countycode,stu_streetcode,stu_stationcode,stu_belong_stationcode,stu_addtime,stu_updatetime, stu_sourceid,stu_isjz,stu_isfull,
+         stu_isjz_origin,stu_isfull_origin,last_stu_schname,first_stu_smrq,last_stu_smrq,FPPDW,FPPDH,isbzoper,schid,stu_mothername,stu_fathername,
+         stu_mother_phone,stu_father_phone,f_reside_addr,B001,B063,B064,B065,B009,B010,B011,B012,B015,B016,B017,B018, B165,B166,B157,B158,B159,B160,
+          B037,B093,B094,B040,B041,B045,B046,B032,B033,B034,B035,B036,B069,B070,B071,B072,B050,B132,B169,B170,B171,B172,B163,B164,
+          B027,B028,B029,B030,B031,B138,B139,B140,B141,B147,B148, B073,B074,B075,B076,B133,B327,B155,B059,B060,B089,B090,B096,B097,
+          B063State,B064State,B065State,B001State,B009State,B010State,B011State,B012State,B015State,B016State,B017State,B018State,
+          B037State,B059State,B060State,B040State,B041State,
+          B045State,B046State,B032State,B033State,B073State,B074State,B050State,B132State,
+          B069State,B034State,B031State,B035State,B036State,B070State,B072State,B075State,B076State,
+          B063StateAfter,B064StateAfter,B065StateAfter,B001StateAfter,
+          B009StateAfter,B010StateAfter,B011StateAfter,B012StateAfter,
+          B015StateAfter,B016StateAfter,B017StateAfter,B018StateAfter,
+          B037StateAfter,B038StateAfter,B039StateAfter,B059StateAfter,B060StateAfter,
+          B040StateAfter,B041StateAfter,B045StateAfter,B046StateAfter,
+          B032StateAfter,B033StateAfter,B073StateAfter,B074StateAfter,
+          B050StateAfter,B132StateAfter,
+          B069StateAfter,B034StateAfter,B031StateAfter,B035StateAfter,B036StateAfter,B070StateAfter,B071StateAfter,B076StateAfter,
+          D063,D064,D065,D001,D009,D010,D011,D012,D015,D016,D017,D018,D037,D059,D060,D040,D041,
+          D045,D046,D032,D033,D069,D050,D132,D073,D074
+        ) values
+  <foreach collection="list" item="bean" separator=",">
+      (
+      #{bean.stuNo,jdbcType=VARCHAR},#{bean.cid,jdbcType=VARCHAR},#{bean.stuImuno,jdbcType=VARCHAR},#{bean.stuName,jdbcType=VARCHAR},#{bean.stuBirth,jdbcType=VARCHAR},
+      #{bean.stuSex,jdbcType=VARCHAR},#{bean.stuType,jdbcType=VARCHAR}, #{bean.stuIsjzz,jdbcType=VARCHAR},#{bean.stuIsbjzz,jdbcType=VARCHAR},
+      #{bean.stuParentname,jdbcType=VARCHAR}, #{bean.stuPhone,jdbcType=VARCHAR}, #{bean.academicYear,jdbcType=VARCHAR}, #{bean.rounds,jdbcType=VARCHAR},
+      #{bean.grade,jdbcType=VARCHAR},#{bean.clazzName,jdbcType=VARCHAR},#{bean.stuCitycode,jdbcType=VARCHAR},#{bean.stuCountycode,jdbcType=VARCHAR},
+      #{bean.stuStreetcode,jdbcType=VARCHAR},#{bean.stuStationcode,jdbcType=VARCHAR},#{bean.stuBelongStationcode,jdbcType=VARCHAR},#{bean.stuAddtime,jdbcType=VARCHAR},
+      #{bean.stuUpdatetime,jdbcType=VARCHAR},#{bean.stuSourceid,jdbcType=VARCHAR},#{bean.stuIsjz,jdbcType=VARCHAR},#{bean.stuIsfull,jdbcType=VARCHAR},#{bean.stuIsjzOrigin,jdbcType=VARCHAR},
+      #{bean.stuIsfullOrigin,jdbcType=VARCHAR},#{bean.lastStuSchname,jdbcType=VARCHAR},#{bean.firstStuSmrq,jdbcType=VARCHAR},#{bean.lastStuSmrq,jdbcType=VARCHAR},#{bean.FPPDW,jdbcType=VARCHAR},
+      #{bean.FPPDH,jdbcType=VARCHAR},#{bean.isbzoper,jdbcType=VARCHAR},#{bean.schid,jdbcType=VARCHAR},#{bean.stuMothername,jdbcType=VARCHAR},#{bean.stuFathername,jdbcType=VARCHAR},
+      #{bean.stuMotherPhone,jdbcType=VARCHAR},#{bean.stuFatherPhone,jdbcType=VARCHAR},#{bean.fResideAddr,jdbcType=VARCHAR},
+      #{bean.b001,jdbcType=VARCHAR},#{bean.b063,jdbcType=VARCHAR},#{bean.b064,jdbcType=VARCHAR},#{bean.b065,jdbcType=VARCHAR},#{bean.b009,jdbcType=VARCHAR},#{bean.b010,jdbcType=VARCHAR},#{bean.b011,jdbcType=VARCHAR},#{bean.b012,jdbcType=VARCHAR},
+      #{bean.b015,jdbcType=VARCHAR},#{bean.b016,jdbcType=VARCHAR},#{bean.b017,jdbcType=VARCHAR},#{bean.b018,jdbcType=VARCHAR},
+      #{bean.b165,jdbcType=VARCHAR},#{bean.b166,jdbcType=VARCHAR},#{bean.b157,jdbcType=VARCHAR},#{bean.b158,jdbcType=VARCHAR},#{bean.b159,jdbcType=VARCHAR},#{bean.b160,jdbcType=VARCHAR},
+      #{bean.b037,jdbcType=VARCHAR},#{bean.b093,jdbcType=VARCHAR},#{bean.b094,jdbcType=VARCHAR},#{bean.b040,jdbcType=VARCHAR},#{bean.b041,jdbcType=VARCHAR},
+      #{bean.b045,jdbcType=VARCHAR},#{bean.b046,jdbcType=VARCHAR},#{bean.b032,jdbcType=VARCHAR},#{bean.b033,jdbcType=VARCHAR},#{bean.b034,jdbcType=VARCHAR},#{bean.b035,jdbcType=VARCHAR},#{bean.b036,jdbcType=VARCHAR},
+      #{bean.b069,jdbcType=VARCHAR},#{bean.b070,jdbcType=VARCHAR},#{bean.b071,jdbcType=VARCHAR},#{bean.b072,jdbcType=VARCHAR},#{bean.b050,jdbcType=VARCHAR},#{bean.b132,jdbcType=VARCHAR},
+      #{bean.b169,jdbcType=VARCHAR},#{bean.b170,jdbcType=VARCHAR},#{bean.b171,jdbcType=VARCHAR},#{bean.b172,jdbcType=VARCHAR},#{bean.b163,jdbcType=VARCHAR},#{bean.b164,jdbcType=VARCHAR},
+      #{bean.b027,jdbcType=VARCHAR},#{bean.b028,jdbcType=VARCHAR},#{bean.b029,jdbcType=VARCHAR},#{bean.b030,jdbcType=VARCHAR},#{bean.b031,jdbcType=VARCHAR},
+      #{bean.b138,jdbcType=VARCHAR},#{bean.b139,jdbcType=VARCHAR},#{bean.b140,jdbcType=VARCHAR},#{bean.b141,jdbcType=VARCHAR},#{bean.b147,jdbcType=VARCHAR},#{bean.b148,jdbcType=VARCHAR},
+      #{bean.b073,jdbcType=VARCHAR},#{bean.b074,jdbcType=VARCHAR},#{bean.b075,jdbcType=VARCHAR},#{bean.b076,jdbcType=VARCHAR},
+      #{bean.b133,jdbcType=VARCHAR},#{bean.b327,jdbcType=VARCHAR},#{bean.b155,jdbcType=VARCHAR},#{bean.b059,jdbcType=VARCHAR},#{bean.b060,jdbcType=VARCHAR},#{bean.b089,jdbcType=VARCHAR},
+      #{bean.b090,jdbcType=VARCHAR},#{bean.b096,jdbcType=VARCHAR},#{bean.b097,jdbcType=VARCHAR},
+      #{bean.b063State,jdbcType=VARCHAR},#{bean.b064State,jdbcType=VARCHAR},
+      #{bean.b065State,jdbcType=VARCHAR},#{bean.b001State,jdbcType=VARCHAR},#{bean.b009State,jdbcType=VARCHAR},#{bean.b010State,jdbcType=VARCHAR},#{bean.b011State,jdbcType=VARCHAR},
+      #{bean.b012State,jdbcType=VARCHAR},#{bean.b015State,jdbcType=VARCHAR},#{bean.b016State,jdbcType=VARCHAR},#{bean.b017State,jdbcType=VARCHAR},#{bean.b018State,jdbcType=VARCHAR},
+      #{bean.b037State,jdbcType=VARCHAR},#{bean.b059State,jdbcType=VARCHAR},#{bean.b060State,jdbcType=VARCHAR}, #{bean.b040State,jdbcType=VARCHAR},#{bean.b041State,jdbcType=VARCHAR},
+      #{bean.b045State,jdbcType=VARCHAR},#{bean.b046State,jdbcType=VARCHAR},#{bean.b032State,jdbcType=VARCHAR},#{bean.b033State,jdbcType=VARCHAR},#{bean.b073State,jdbcType=VARCHAR},
+      #{bean.b074State,jdbcType=VARCHAR},#{bean.b050State,jdbcType=VARCHAR},#{bean.b132State,jdbcType=VARCHAR},#{bean.b069State,jdbcType=VARCHAR},#{bean.b034State,jdbcType=VARCHAR},
+      #{bean.b031State,jdbcType=VARCHAR},#{bean.b035State,jdbcType=VARCHAR},#{bean.b036State,jdbcType=VARCHAR},#{bean.b070State,jdbcType=VARCHAR},#{bean.b072State,jdbcType=VARCHAR},
+      #{bean.b075State,jdbcType=VARCHAR},#{bean.b076State,jdbcType=VARCHAR},#{bean.b063StateAfter,jdbcType=VARCHAR},#{bean.b064StateAfter,jdbcType=VARCHAR},#{bean.b065StateAfter,jdbcType=VARCHAR},
+      #{bean.b001StateAfter,jdbcType=VARCHAR},#{bean.b009StateAfter,jdbcType=VARCHAR},#{bean.b010StateAfter,jdbcType=VARCHAR},#{bean.b011StateAfter,jdbcType=VARCHAR},
+      #{bean.b012StateAfter,jdbcType=VARCHAR},#{bean.b015StateAfter,jdbcType=VARCHAR},#{bean.b016StateAfter,jdbcType=VARCHAR},#{bean.b017StateAfter,jdbcType=VARCHAR},
+      #{bean.b018StateAfter,jdbcType=VARCHAR},#{bean.b037StateAfter,jdbcType=VARCHAR},#{bean.b038StateAfter,jdbcType=VARCHAR},#{bean.b039StateAfter,jdbcType=VARCHAR},
+      #{bean.b059StateAfter,jdbcType=VARCHAR},#{bean.b060StateAfter,jdbcType=VARCHAR},#{bean.b040StateAfter,jdbcType=VARCHAR},#{bean.b041StateAfter,jdbcType=VARCHAR},
+      #{bean.b045StateAfter,jdbcType=VARCHAR},#{bean.b046StateAfter,jdbcType=VARCHAR},#{bean.b032StateAfter,jdbcType=VARCHAR},#{bean.b033StateAfter,jdbcType=VARCHAR},
+      #{bean.b073StateAfter,jdbcType=VARCHAR},#{bean.b074StateAfter,jdbcType=VARCHAR},#{bean.b050StateAfter,jdbcType=VARCHAR}, #{bean.b132StateAfter,jdbcType=VARCHAR},
+      #{bean.b069StateAfter,jdbcType=VARCHAR},#{bean.b034StateAfter,jdbcType=VARCHAR},#{bean.b031StateAfter,jdbcType=VARCHAR}, #{bean.b035StateAfter,jdbcType=VARCHAR},
+      #{bean.b036StateAfter,jdbcType=VARCHAR},#{bean.b070StateAfter,jdbcType=VARCHAR},#{bean.b071StateAfter,jdbcType=VARCHAR},#{bean.b076StateAfter,jdbcType=VARCHAR},
+      #{bean.d063,jdbcType=VARCHAR},#{bean.d064,jdbcType=VARCHAR},#{bean.d065,jdbcType=VARCHAR},#{bean.d001,jdbcType=VARCHAR},#{bean.d009,jdbcType=VARCHAR},#{bean.d010,jdbcType=VARCHAR},
+      #{bean.d011,jdbcType=VARCHAR},#{bean.d012,jdbcType=VARCHAR},#{bean.d015,jdbcType=VARCHAR},#{bean.d016,jdbcType=VARCHAR},#{bean.d017,jdbcType=VARCHAR},#{bean.d018,jdbcType=VARCHAR},
+      #{bean.d037,jdbcType=VARCHAR},#{bean.d059,jdbcType=VARCHAR},#{bean.d060,jdbcType=VARCHAR},#{bean.d040,jdbcType=VARCHAR},#{bean.d041,jdbcType=VARCHAR},#{bean.d045,jdbcType=VARCHAR},
+      #{bean.d046,jdbcType=VARCHAR},#{bean.d032,jdbcType=VARCHAR},#{bean.d033,jdbcType=VARCHAR},#{bean.d069,jdbcType=VARCHAR},#{bean.d050,jdbcType=VARCHAR},#{bean.d132,jdbcType=VARCHAR},
+      #{bean.d073,jdbcType=VARCHAR}, #{bean.d074,jdbcType=VARCHAR}
+      )
+        </foreach>
+    </insert>
+
+
+    <select id="queryStudentBySchIdAnySource" resultType="com.shensu.mybatis.entity.check.Student">
+        select * from nur_stuinfo ns
+        where ns.schid =#{schId}
+    </select>
+
+    <insert id="bachInsertHealthPlatformStus" >
+        INSERT INTO nur_stuinfo (
+        rowkey,
+        schid,
+        academic_year,
+        grade,
+        rounds,
+        clazz_name,
+        stu_no,
+        stu_phone,
+        stu_name,
+        stu_birth,
+        stu_sex,
+        stu_isjzz,
+        stu_isbjzz,
+        stu_imuno,
+        stu_type,
+        first_stu_smrq,
+        cid,
+        D001,
+        D063,
+        D064,
+        D065,
+        D009,
+        D010,
+        D011,
+        D012,
+        D015,
+        D016,
+        D017,
+        D018,
+        D037,
+        D059,
+        D060,
+        D040,
+        D041,
+        D045,
+        D046,
+        D032,
+        D033,
+        D073,
+        D074,
+        D050,
+        D132,
+        B063State,
+        B064State,
+        B065State,
+        B001State,
+        B009State,
+        B010State,
+        B011State,
+        B012State,
+        B015State,
+        B016State,
+        B017State,
+        B018State,
+        B037State,
+        B059State,
+        B060State,
+        B040State,
+        B041State,
+        B045State,
+        B046State,
+        B032State,
+        B033State,
+        B073State,
+        B074State,
+        B050State,
+        B132State,
+        B063StateAfter,
+        B064StateAfter,
+        B065StateAfter,
+        B001StateAfter,
+        B009StateAfter,
+        B010StateAfter,
+        B011StateAfter,
+        B012StateAfter,
+        B015StateAfter,
+        B016StateAfter,
+        B017StateAfter,
+        B018StateAfter,
+        B037StateAfter,
+        B059StateAfter,
+        B060StateAfter,
+        B040StateAfter,
+        B041StateAfter,
+        B045StateAfter,
+        B046StateAfter,
+        B032StateAfter,
+        B033StateAfter,
+        B073StateAfter,
+        B074StateAfter,
+        B050StateAfter,
+        B132StateAfter
+        )
+        VALUES
+        <foreach collection="list" item="bean" separator=",">
+            (
+                #{bean.rowkey},
+                #{bean.schid},
+                #{bean.academicYear},
+                #{bean.grade},
+                #{bean.rounds},
+                #{bean.clazzName},
+                #{bean.stuNo},
+                #{bean.stuPhone},
+                #{bean.stuName},
+                #{bean.stuBirth},
+                #{bean.stuSex},
+                #{bean.stuIsjzz},
+                #{bean.stuIsbjzz},
+                #{bean.stuImuno},
+                #{bean.stuType},
+                #{bean.firstStuSmrq},
+                #{bean.cid},
+                #{bean.d001},
+                #{bean.d063},
+                #{bean.d064},
+                #{bean.d065},
+                #{bean.d009},
+                #{bean.d010},
+                #{bean.d011},
+                #{bean.d012},
+                #{bean.d015},
+                #{bean.d016},
+                #{bean.d017},
+                #{bean.d018},
+                #{bean.d037},
+                #{bean.d059},
+                #{bean.d060},
+                #{bean.d040},
+                #{bean.d041},
+                #{bean.d045},
+                #{bean.d046},
+                #{bean.d032},
+                #{bean.d033},
+                #{bean.d073},
+                #{bean.d074},
+                #{bean.d050},
+                #{bean.d132},
+                #{bean.b063State,jdbcType=VARCHAR},
+                #{bean.b064State,jdbcType=VARCHAR},
+                #{bean.b065State,jdbcType=VARCHAR},
+                #{bean.b001State,jdbcType=VARCHAR},
+                #{bean.b009State,jdbcType=VARCHAR},
+                #{bean.b010State,jdbcType=VARCHAR},
+                #{bean.b011State,jdbcType=VARCHAR},
+                #{bean.b012State,jdbcType=VARCHAR},
+                #{bean.b015State,jdbcType=VARCHAR},
+                #{bean.b016State,jdbcType=VARCHAR},
+                #{bean.b017State,jdbcType=VARCHAR},
+                #{bean.b018State,jdbcType=VARCHAR},
+                #{bean.b037State,jdbcType=VARCHAR},
+                #{bean.b059State,jdbcType=VARCHAR},
+                #{bean.b060State,jdbcType=VARCHAR},
+                #{bean.b040State,jdbcType=VARCHAR},
+                #{bean.b041State,jdbcType=VARCHAR},
+                #{bean.b045State,jdbcType=VARCHAR},
+                #{bean.b046State,jdbcType=VARCHAR},
+                #{bean.b032State,jdbcType=VARCHAR},
+                #{bean.b033State,jdbcType=VARCHAR},
+                #{bean.b073State,jdbcType=VARCHAR},
+                #{bean.b074State,jdbcType=VARCHAR},
+                #{bean.b050State,jdbcType=VARCHAR},
+                #{bean.b132State,jdbcType=VARCHAR},
+                #{bean.b063StateAfter,jdbcType=VARCHAR},
+                #{bean.b064StateAfter,jdbcType=VARCHAR},
+                #{bean.b065StateAfter,jdbcType=VARCHAR},
+                #{bean.b001StateAfter,jdbcType=VARCHAR},
+                #{bean.b009StateAfter,jdbcType=VARCHAR},
+                #{bean.b010StateAfter,jdbcType=VARCHAR},
+                #{bean.b011StateAfter,jdbcType=VARCHAR},
+                #{bean.b012StateAfter,jdbcType=VARCHAR},
+                #{bean.b015StateAfter,jdbcType=VARCHAR},
+                #{bean.b016StateAfter,jdbcType=VARCHAR},
+                #{bean.b017StateAfter,jdbcType=VARCHAR},
+                #{bean.b018StateAfter,jdbcType=VARCHAR},
+                #{bean.b037StateAfter,jdbcType=VARCHAR},
+                #{bean.b059StateAfter,jdbcType=VARCHAR},
+                #{bean.b060StateAfter,jdbcType=VARCHAR},
+                #{bean.b040StateAfter,jdbcType=VARCHAR},
+                #{bean.b041StateAfter,jdbcType=VARCHAR},
+                #{bean.b045StateAfter,jdbcType=VARCHAR},
+                #{bean.b046StateAfter,jdbcType=VARCHAR},
+                #{bean.b032StateAfter,jdbcType=VARCHAR},
+                #{bean.b033StateAfter,jdbcType=VARCHAR},
+                #{bean.b073StateAfter,jdbcType=VARCHAR},
+                #{bean.b074StateAfter,jdbcType=VARCHAR},
+                #{bean.b050StateAfter,jdbcType=VARCHAR},
+                #{bean.b132StateAfter,jdbcType=VARCHAR}
+            )
+        </foreach>
+    </insert>
+</mapper>

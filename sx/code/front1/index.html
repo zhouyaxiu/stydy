@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+	<meta http-equiv="Pragma" content="no-cache" />
+	<meta http-equiv="Expires" content="0" />
+	<meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+	<!-- <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> -->
+	<meta name="renderer" content="webkit" />
+	<link rel="shortcut icon" href="./favicon.ico" type="image/vnd.microsoft.icon">
+	<link rel="icon" href="./favicon.ico" type="image/vnd.microsoft.icon">
+	<script src="./paths.js"></script>
+	<script src="./electron.js"></script>
+	<title>儿童入托入学预防接种证查验信息系统</title>
+</head>
+
+<body>
+	<div id="app"></div>
+	<script>
+		setTimeout('document.title = "' + window.systemTitle + '"', 500);
+		let winWidth = document.body.clientWidth;
+		let winHeight = document.body.clientHeight;
+		let scale = winWidth / 1680;
+		// 用firefox变量表示火狐代理
+		var firefox = navigator.userAgent.indexOf('Firefox') != -1
+		if (scale < 1 && !firefox) {
+			window.scale = scale;
+			window.winWidth = winWidth / scale;
+			window.winHeight = winHeight / scale;
+			document.getElementsByTagName("body")[0].style.zoom = scale;
+			document.getElementsByTagName("body")[0].style.width = window.winWidth + "px";
+			document.getElementsByTagName("body")[0].style.height = window.winHeight + "px";
+			document.documentElement.style.overflow = "hidden";
+			document.getElementsByTagName("body")[0].style.overflow = "hidden";
+			document.getElementById("app").style.overflow = "hidden";
+			if (isIE()) {
+				document.documentElement.style.width = "100vw";
+				document.documentElement.style.height = "100vh";
+			}
+		} else {
+			window.scale = 1;
+			window.winWidth = winWidth;
+			window.winHeight = winHeight;
+		}
+		function isIE() { //ie?
+			if (!!window.ActiveXObject || "ActiveXObject" in window)
+				return true;
+			else
+				return false;
+		}
+	</script>
+</body>
+
+</html>

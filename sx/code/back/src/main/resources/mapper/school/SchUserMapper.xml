@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shensu.mybatis.mapper.school.SchUserMapper">
+    <resultMap id="SchUser" type="com.shensu.mybatis.entity.school.SchUserBean">
+        <id property="id" column="ID"/>
+        <result property="schId" column="SCH_ID"/>
+        <result property="loginName" column="LOGIN_NAME"/>
+        <result property="password" column="PASSWORD"/>
+        <result property="addTime" column="ADD_TIME"/>
+        <result property="updateTime" column="UPDATE_TIME"/>
+        <result property="invalidCount" column="INVALID_COUNT"/>
+        <result property="isaccess" column="ISACCESS"/>
+        <result property="loginCount" column="LOGIN_COUNT"/>
+        <result property="forcePwd" column="FORCE_PWD"/>
+    </resultMap>
+
+    <select id="getSchUserBySchId" resultMap="SchUser">
+        select * from sch_user where sch_id = #{schId}
+    </select>
+
+    <select id="getSchUserNumBySchId" resultType="java.lang.Integer">
+        SELECT COUNT(ID) FROM sch_user WHERE sch_id = #{schId}
+    </select>
+
+    <insert id="insertOneSchUser">
+        INSERT INTO sch_user ( SCH_ID, LOGIN_NAME, PASSWORD, ADD_TIME, UPDATE_TIME, INVALID_COUNT, ISACCESS,LOGIN_COUNT,FORCE_PWD )
+        VALUES
+            (#{schId},#{loginName},#{password},now(),now(),'0','1','0','1')
+    </insert>
+
+    <update id="resetSchUser">
+        UPDATE sch_user
+        SET PASSWORD = #{password},
+            UPDATE_TIME = NOW(),
+            INVALID_COUNT = '0',
+            ISACCESS = '1'
+        WHERE
+            ID = #{id}
+    </update>
+
+    <select id="getSchUserBySchIdFromNingBo" resultMap="SchUser">
+        select * from sch_user where sch_id = #{schId}
+    </select>
+
+    <delete id="delSchUserByIds">
+        DELETE
+        FROM
+            sch_user
+        WHERE
+            ID IN
+        <foreach collection="beans" separator="," item="bean" open="(" close=")">
+            #{bean.id}
+        </foreach>
+    </delete>
+
+
+    <insert id="batchInsertSChUSer">
+        INSERT INTO sch_user ( ID,SCH_ID, LOGIN_NAME, PASSWORD, ADD_TIME, UPDATE_TIME, INVALID_COUNT, ISACCESS,LOGIN_COUNT,FORCE_PWD )
+        VALUES
+           <foreach collection="beans" separator="," item="bean">
+               (#{bean.id},#{bean.schId},#{bean.loginName},#{bean.password},now(),now(),#{bean.invalidCount},#{bean.isaccess},#{bean.loginCount},#{bean.forcePwd})
+           </foreach>
+    </insert>
+</mapper>

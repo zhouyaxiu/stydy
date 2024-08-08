@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shensu.mybatis.mapper.taskMapper.TaskMapper">
+   <update id="truncatStuInfoBak">
+       truncate table  ${tableName}
+   </update>
+   <insert id="insertBakStuInfo">
+       insert into nur_stuinfo_bak
+       select * from  nur_stuinfo
+   </insert>
+
+    <insert id="insertBakNotice">
+        insert into nur_notice_bak
+        select * from  nur_notice
+    </insert>
+
+    <insert id="insertStuLogData" parameterType="com.shensu.mybatis.entity.check.Student">
+        INSERT INTO  nur_stuinfo_log (schId, stationCode, addtime, errMess,isSuccess)
+        VALUES (#{schId},  #{stationCode}, now(),#{errMess} ,#{isSuccess})
+
+    </insert>
+
+    <insert id="insertNoticeError" parameterType="com.shensu.mybatis.entity.notice.NoticeMess">
+        INSERT INTO  nur_notice_log(schId, addtime, errMess,isSuccess)  VALUES
+           (#{schId}, now(),#{errMess},#{isSuccess} )
+
+
+    </insert>
+
+    <select id="getSchCount"  resultType="java.lang.Integer">
+        SELECT COUNT(sch_id) FROM nur_school
+    </select>
+
+    <insert id="insertAreaLog">
+        insert into sys_areaandstation_log values(now(),#{issuccess},#{errMess})
+    </insert>
+
+
+    <update id="truncatStuForHealthPlatform">
+        truncate  ${tableName}
+    </update>
+    <insert id="insertBakStuForhealthPlatform">
+        insert into nur_stuinfo_bak
+        select * from  nur_stuinfo
+    </insert>
+</mapper>

@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shensu.mybatis.mapper.systemmanage.SysUserMapper">
+    <sql id="Base_Column_List">
+        ID,
+        Login_name loginName,
+        USER_NAME userName,
+        area_id areaId,
+        ON_OFF onOff,
+        UPDATE_DATE updateDate,
+        UPDATE_USER updateUser,
+        TABLE_STATUS tableStatus,
+        USER_PASSWORD userPassword,
+        USER_STYLE userStyle,
+        USER_TYPE userType,
+        ifnull((
+            SELECT
+                area_code
+            FROM
+                sys_area
+            WHERE
+                sys_user.area_id = sys_area.id
+			),(
+            SELECT
+                organ_code
+            FROM
+                sys_station
+            WHERE
+                sys_user.area_id = sys_station.id
+            )) AS areacode,
+	ifnull((
+		SELECT
+			SUP_ID
+		FROM
+			sys_area
+		WHERE
+			sys_user.area_id = sys_area.id
+			),(
+		SELECT
+			area_id
+		FROM
+			sys_station
+		WHERE
+			sys_user.area_id = sys_station.id
+		)) AS supAreaId,
+	ifnull((
+		SELECT
+			area_name
+		FROM
+			sys_area
+		WHERE
+			sys_user.area_id = sys_area.id
+			),(
+		SELECT
+			organ_name
+		FROM
+			sys_station
+		WHERE
+			sys_user.area_id = sys_station.id
+		)) AS areaname
+    </sql>
+
+
+    <select id="findByLoginName" resultType="com.shensu.mybatis.entity.systemmanage.SysUser">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_user
+        where BINARY login_name = #{loginName}
+    </select>
+
+    <select id="findUserAreaName" resultType="java.util.Map">
+        SELECT
+            ID areaId,
+            AREA_NAME areaName
+        FROM sys_area
+        WHERE AREA_CODE = #{areaCode}
+        UNION
+        SELECT
+            ID areaId,
+            ORGAN_NAME areaName
+        FROM sys_station
+        WHERE ORGAN_CODE = #{areaCode}
+    </select>
+
+    <select id="getUsersByArea" resultType="com.shensu.mybatis.entity.systemmanage.SysUser">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_user
+        where AREA_ID = #{areaId}
+        <if test="loginName !=null and loginName!=''">
+            and LOGIN_NAME = #{loginName}
+        </if>
+        <if test="userName != null and userName!=''">
+            and USER_NAME = #{userName}
+        </if>
+    </select>
+
+    <insert id="insertUser">
+        INSERT INTO sys_user ( ID, LOGIN_NAME, USER_NAME, AREA_ID, ON_OFF, UPDATE_DATE, UPDATE_USER, TABLE_STATUS,USER_PASSWORD,user_type )
+        VALUES(#{id},#{loginName},#{userName},#{areaId},'1',now(),#{updateUser},'0',#{userPassword},#{userType})
+    </insert>
+
+    <select id="getUserMaxId" resultType="java.lang.String">
+        SELECT
+            Max(
+                    cast( id AS signed ))
+        FROM
+            sys_user
+    </select>
+
+
+    <update id="updateUser">
+        update sys_user set LOGIN_NAME=#{loginName},USER_NAME=#{userName},UPDATE_DATE=now(),
+                            UPDATE_USER=#{updateUser},USER_PASSWORD=#{password},USER_TYPE=#{userType}
+        where ID=#{id}
+    </update>
+
+    <delete id="delUser">
+        DELETE FROM sys_user WHERE ID = #{id}
+    </delete>
+</mapper>

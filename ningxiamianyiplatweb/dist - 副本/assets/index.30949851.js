@@ -1,0 +1,1 @@
+import{_ as a}from"./index.143fdacc.js";import{c as e,e as r}from"./vendor.cc783c3b.js";const c={class:"indexPage"};var d=a({},[["render",function(a,d){return e(),r("div",c)}],["__scopeId","data-v-352895d2"]]);export{d as default};

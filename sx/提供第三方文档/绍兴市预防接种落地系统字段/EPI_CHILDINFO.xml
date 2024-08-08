@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mapping name="EPI_CHILDINFO">
+    <table name="EPI_CHILDINFO" type="oracle">
+        <!--        <result column="ID" property="ID" remark="唯一键"/>-->
+        <result column="FCHILDNO" property="CASE_CODE" remark="个案编码" key="FCHILDNO"/>
+        <result column="FIDCARDTYPE" property="ID_TYPE_CODE"
+                remark="身份证件类别代码"/>
+        <result column="CID" property="RECIPIENT_ID_NUMBER"
+                remark="受种者身份证件号码"/>
+        <result column="NAME" property="RECIPIENT_NAME" remark="受种者姓名"/>
+        <result column="BIRTH" property="BIRTH_TIME" remark="出生日期" type="date" format="yyyy-MM-dd HH:mm:ss"/>
+        <result column="BIRTHNO" property="BIRTH_NUMBER" remark="出生证编号"/>
+        <result column="BIRTHHOS" property="BIRTH_HOSPITAL"
+                remark="出生医院"/>
+        <result column="WEIGHT" property="BIRTH_WEIGHT" remark="出生体重"/>
+        <result column="FGESTATIONALWEEKS" property="GESTATIONAL_AGE"
+                remark="孕周"/>
+        <result column="FNATIONCODE" property="NATIONAL_CODE"
+                remark="民族代码"/>
+        <result column="FPARITY" property="CHILD_TIME" remark="胎次"/>
+        <result column="FHUKOUCOUNTYCODE_CN" property="HOUSEHOLD_COUNTY_GB"
+                remark="户籍县国标"/>
+        <result column="REGADDR" property="HOUSEHOLD_ADDRESS"
+                remark="户籍地址"/>
+        <result column="FHuKouCode_CN"
+                property="HOUSEHOLD_VILLAGE_GB" remark="户籍村级国标"/>
+        <result column="FResidenceTypeText31" property="LIVING_STATE"
+                remark="居住状态"/>
+        <result column="DWELLADDR" property="RESIDENTIAL_ADDRESS"
+                remark="居住地址"/>
+        <result column="FResideCode_CN"
+                property="RESIDENTIAL_VILLAGE_GB" remark="居住村级国标"/>
+        <result column="COMADDR" property="CORRESPONDENCE_ADDRESS"
+                remark="通讯地址"/>
+        <result column="OTHERPHONE" property="LANDLINE"
+                remark="固定电话（家庭电话）"/>
+        <result column="MOBPHONE" property="MOBILE_PHONE" remark="移动电话"/>
+        <result column="FCREATEUSER" property="INPUT_PERSON"
+                remark="建档人"/>
+        <!--        <result column="FCreateCode_CN" property="INPUT_UNIT"-->
+        <!--                remark="建档单位" baseMap="tran10Map"/>-->
+        <result column="FCreateCode_CN" property="INPUT_UNIT"
+                remark="建档单位"/>
+        <result column="INPUT_VILLAGE_GB" property="INPUT_VILLAGE_GB"
+                remark="建档县国标"/>
+        <result column="carddate" property="INPUT_DATE" remark="建档日期" type="date" format="yyyy-MM-dd"/>
+        <result column="bookingdate" property="INPUT_DATE" remark="建档日期" type="date" format="yyyy-MM-dd"/>
+        <!--        <result column="FUPDATESTATIONCODE_CN" property="UPDATE_UNIT"-->
+        <!--                remark="更新单位" baseMap="tran10Map"/>-->
+        <result column="FUPDATESTATIONCODE_CN" property="UPDATE_UNIT"
+                remark="更新单位"/>
+        <result column="FMOTHERIDCARDTYPETEXT"
+                property="MOTHER_ID_TYPE" remark="母亲身份证件类型名称" baseMap="typeId"/>
+        <result column="FMOTHERIDCARDTYPE" property="MOTHER_ID_TYPE"
+                remark="母亲身份证件类型"/>
+        <result column="MOTHERID" property="MOTHER_ID_NUMBER"
+                remark="母亲证件号码"/>
+        <result column="MOTHERNAME" property="MOTHER_NAME"
+                remark="母亲姓名"/>
+        <result column="FMOTHERMOBILE" property="MOTHER_CALL"
+                remark="母亲电话"/>
+        <result column="MHBSAG" property="MOTHER_HBV_SURFACE_ANTIGEN"
+                remark="母亲乙型肝炎（乙肝） 病毒表面抗原" baseMap="hbsag"/>
+        <result column="FFATHERIDCARDTYPETEXT"
+                property="FATHER_ID_TYPE" remark="父亲身份证件类型名称" baseMap="typeId"/>
+        <result column="FFATHERIDCARDTYPE" property="FATHER_ID_TYPE"
+                remark="父亲身份证件类型"/>
+        <result column="FATHERID" property="FATHER_ID_NUMBER"
+                remark="父亲证件号码"/>
+        <result column="FATHERNAME" property="FATHER_NAME"
+                remark="父亲姓名"/>
+        <result column="FFATHERMOBILE" property="FATHER_CALL"
+                remark="父亲电话"/>
+        <result column="FOTHERGUARD" property="OTHER_GUARDIANS"
+                remark="其他监护人"/>
+        <result column="FTABUCODE_CN" property="CONTRAINDICATED"
+                remark="禁忌证"/>
+        <result column="FALLERGYHIST_CN" property="ALLERGY"
+                remark="过敏史"/>
+        <result column="FDISEASE_CN" property="INFECTION_HISTORY"
+                remark="传染病史"/>
+        <result column="FREACTION_CN" property="VACCINATION_EXCEPTION_HISTORY" remark="预防接种异常反应史"/>
+
+        <result column="TRANSTIME" property="START_MANAGE_DATE"
+                remark="起始管理日期" type="date" format="yyyy-MM-dd"/>
+        <result column="CURRENT_MANAGEMENT_AREA" property="CURRENT_MANAGEMENT_AREA"
+                remark="现管理地区"/>
+        <result column="IMUNO"
+                property="INFORMATION_MEDIA_CODE" remark="信息介质识别码"/>
+        <result column="FHEALTHRECORDID"
+                property="HEALTH_RECORD_NUMBER" remark="健康档案编号"/>
+        <result column="FNETHEALTHID" property="HEALTH_CARD_NUMBER"
+                remark="健康卡编号"/>
+        <result column="FNATIONALITYCODE" property="NATIONALITY"
+                remark="国籍代码"/>
+        <result column="FMARITALSTATUS_CN" property="MARITAL_STATUS"
+                remark="婚姻状况代码"/>
+        <result column="FCROWDKINDCODE"
+                property="POPULATION_DIVISION_CODE" remark="人群分类代码"/>
+        <result column="feducationdegree_cn"
+                property="EDUCATION_DEGREE" remark="学历代码"/>
+        <result column="FOTHERGUARDRELCODE"
+                property="OTHER_GUARDIANS_RELATION" remark="其他监护人与受种者关系代码"/>
+        <result column="FCAREERCODE_CN" property="CAREER_CODE"
+                remark="职业类别代码"/>
+        <result column="FADULTHBSAG" property="ADULT_HBS_AG"
+                remark="受种者乙肝表面抗原" baseMap="hbsag"/>
+        <result column="FADULTHBSAB" property="ADULT_HBS_AB"
+                remark="受种者乙肝表面抗体" baseMap="hbsag"/>
+        <result column="fstatus" property="REGISTERED_STATE" remark="在册状态"/>
+        <result column="UPDATETIME" property="UPDATE_TIME" remark="更新时间" type="date" format="yyyy-MM-dd HH:mm:ss"/>
+
+        <result column="stationcode" property="CURRENT_MANAGEMENT_UNIT"
+                remark="接种单位" baseMap="stationcodeMap"/>
+        <result column="supcode" property="stationcode"
+                remark="现管理地区" baseMap="supcodeMap"/>
+        <result column="countycode" property="supcode"
+                remark="现管理地区" baseMap="countycodeMap"/>
+        <result column="citycode" property="countycode"
+                remark="现管理地区" baseMap="citycodeMap"/>
+        <result column="UNITNAME" property="CURRENT_MANAGEMENT_UNIT" remark="街道名" baseMap="UNITNAME"/>
+
+        <result column="FIDCARDTYPETEXT" property="ID_TYPE_CODE" remark="身份证件类别" baseMap="typeId"/>
+        <result column="SEX" property="GENDER_CODE" remark="性别代码" baseMap="sex"/>
+        <result column="regtype" property="HOUSEHOLD_TYPE" remark="户籍类型" baseMap="regtype"/>
+        <result column="status" property="REGISTERED_STATE" remark="在册状态" />
+
+        <result column="FCHILDUNITNAME" property="ADULT_DEPT" remark="工作单位/学校名称"/>
+
+        <result column="GXSJ" property="GXSJ" type="date" remark="数据更新时间" format="yyyy-MM-dd HH:mm:ss"/>
+        <result column="serverupdatetime" property="xxx" remark="表更新时间" value="now()"/>
+    </table>
+
+</mapping>
+
+

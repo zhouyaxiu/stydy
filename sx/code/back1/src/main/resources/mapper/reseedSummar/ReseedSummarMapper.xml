@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shensu.mybatis.mapper.reseedSummar.ReseedSummarMapper">
+
+   <select id="queryList" resultType="com.shensu.mybatis.entity.reseedSummar.StaticInforInspectionBean">
+       SELECT
+           cla.cla_name claName,
+           count(stu.rowkey) stuTotal,
+           -- 麻腮风应种
+           SUM(CASE WHEN stu.stu_type IN ('1','3','4')  THEN 1 ELSE 0 END) thisProvinceYz,
+           SUM(CASE WHEN stu.stu_type IN('5','6') THEN 1 ELSE 0 END) outProvinceYz,
+           -- 麻腮风实种
+           SUM(CASE WHEN stu.stu_type IN ('1','3','4') AND res.FirstDose = '0'  THEN 1 ELSE 0 END) thisProvinceSz,
+           SUM(CASE WHEN stu.stu_type IN ('5','6') AND res.FirstDose = '0' THEN 1 ELSE 0 END) outProvinceSz,
+           -- 水痘
+           SUM(CASE WHEN res.FirstDose = '0'  THEN 1 ELSE 0 END) varOneSz,
+           SUM(CASE WHEN res.secondDose = '0' THEN 1 ELSE 0 END) varTwoSz,
+           -- 流感
+           SUM(CASE WHEN res.FirstDose = '0' THEN 1 ELSE 0 END) fluSz
+       FROM
+           nur_class cla
+               LEFT JOIN nur_stuinfo_high stu ON cla.rowkey = stu.stu_clacode
+               INNER JOIN nur_stucheck_result res ON stu.stu_no = res.stu_no
+       where
+           res.roundId = #{roundId}
+       and cla.rowkey in
+       <foreach collection="claIds" item="id" separator="," open="(" close=")">
+           #{id}
+       </foreach>
+       GROUP BY cla.rowkey
+   </select>
+
+
+    <select id="getClaIdBySchIdAndYearAndLevel" resultType="java.lang.String">
+        SELECT
+            rowkey
+        FROM
+            nur_class
+        WHERE
+            cla_schid = #{schId}
+        <if test="year != null and year !=''">
+            and cla_nameyear = #{year}
+        </if>
+        <if test="level != null and level !=''">
+            and cla_level = #{level}
+        </if>
+    </select>
+</mapper>

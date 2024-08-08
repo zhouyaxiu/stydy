@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shensu.mybatis.mapper.systemmanage.LogMapper">
+   <insert id="insertLog">
+       insert  into
+        sys_log(OPER_TYPE,
+                OPER_MODULEName,
+                OPER_USERNAME,
+                OPER_ACCOUNTNAME,
+                OPER_TIME,
+                OPER_OBJECT,
+                AREACODE,
+                AREALEVEL)
+       values (
+                  #{operaType},#{modelName},#{userName},#{accountName},#{addTime},#{modelObject},#{areaCode},#{areaLevel})
+   </insert>
+
+    <select id="findLogs" resultType="com.shensu.mybatis.entity.systemmanage.SysLog">
+          select  CASE sl.OPER_TYPE
+                       WHEN  '0' THEN '登录'
+                       WHEN  '1' THEN '添加'
+                       WHEN  '2' THEN '修改'
+                       WHEN  '3' THEN '删除'
+                       WHEN  '4' THEN '查询'
+                       WHEN  '5' THEN '打印'
+                       WHEN  '6' THEN '导出'
+                       ELSE '无'  END operaType,
+                   sl.OPER_MODULEName modelName , sl.OPER_USERNAME loginName,sl.areaCode,
+                   sl.OPER_ACCOUNTNAME accountName,   sl.OPER_TIME logTime,
+                   CASE  OPER_OBJECT   WHEN  '0' THEN '疾控端'  WHEN  '1' THEN '门诊端' WHEN '2' THEN '学校端' ELSE '无' END modelObject
+          from  sys_log sl
+        <if test="areaLevel!=null and areaLevel!='' and areaLevel &gt; 0">
+             inner join  ${temp} on sl.areaCode = temp.areaCode
+        </if>
+          where 1=1
+        <if test="opertimeStrat!=null and opertimeStrat !='' and opertimeEnd!=null and opertimeEnd !=''">
+           and  OPER_TIME between  #{opertimeStrat} and #{opertimeEnd}
+        </if>
+      <if test="operaTypes!=null and operaTypes.length>0">
+            and OPER_TYPE in
+            <foreach collection="operaTypes" item="operaType" separator="," open="(" close=")">
+                #{operaType}
+            </foreach>
+        </if>
+        <if test="operaObject!=null and operaObject !=''">
+            and  OPER_OBJECT = #{operaObject}
+        </if>
+
+        order by OPER_TIME desc
+    </select>
+</mapper>

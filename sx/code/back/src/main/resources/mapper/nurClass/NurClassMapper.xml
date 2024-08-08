@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shensu.mybatis.mapper.nurClass.NurClassMapper">
+
+    <select id="getClassList" resultType="com.shensu.mybatis.entity.nurClass.ClassInfo">
+        select
+        vs.supname,
+        vs.stationname,
+        sch.sch_name,
+        rowkey,
+        cla_name,
+        cla_addtime,
+        cla_linkman,
+        cla_phone,
+        cla_schid,
+        cla_total,
+        cla_updatetime,
+        cla_nameYear,
+        cla_shortName,
+        cla_level
+        FROM
+            v_sys_station vs
+            INNER JOIN nur_school sch ON vs.STATIONCODE = sch.sch_stationcode
+            INNER JOIN nur_class cla ON sch.sch_id = cla.cla_schId
+        where
+            1=1
+            <if test="claLevel!='' and claLevel!=null">
+                and cla_level=#{claLevel}
+            </if>
+            <if test="claNameYear!='' and claNameYear!=null">
+                and cla_nameYear=#{claNameYear}
+            </if>
+            <if test="claShortName!='' and claShortName!=null">
+                and cla_shortName like concat(concat('%',#{claShortName}),'%')
+            </if>
+            <if test="schId!='' and schId!=null">
+                and cla_schid =#{schId}
+            </if>
+    </select>
+
+
+    <insert id="insertClass">
+        insert into nur_class
+        (cla_name,
+         cla_total,
+         cla_linkman,
+         cla_phone,
+         cla_schid,
+         cla_addtime,
+         cla_updatetime,
+         cla_nameYear,
+         cla_shortName,
+         cla_level)
+        values (#{claName},
+                #{claTotal},
+                #{claLinkman},
+                #{claPhone},
+                #{claSchid},
+                now(),
+                now(),
+                #{claNameYear},
+                #{claShortName},
+                #{claLevel})
+    </insert>
+
+    <select id="getClassById" resultType="com.shensu.mybatis.entity.nurClass.ClassInfo">
+        select
+            vs.stationcode,
+            sch.sch_type,
+            sch.sch_name,
+            rowkey,
+            cla_name,
+            cla_addtime,
+            cla_linkman,
+            cla_phone,
+            cla_schid,
+            cla_total,
+            cla_updatetime,
+            cla_nameYear,
+            cla_shortName,
+            cla_level
+        FROM
+            v_sys_station vs
+                INNER JOIN nur_school sch ON vs.STATIONCODE = sch.sch_stationcode
+                INNER JOIN nur_class cla ON sch.sch_id = cla.cla_schId
+        where rowkey = #{classId}
+    </select>
+
+
+    <select id="getStudentNumByClassId" resultType="int">
+        select count(rowkey)
+        from nur_stuinfo_high
+        where stu_clacode=#{classCode}
+    </select>
+
+
+    <update id="updateClass">
+        update nur_class
+        set
+            cla_total=#{claTotal},
+            cla_linkman=#{claLinkman},
+            cla_phone=#{claPhone},
+            cla_updatetime=now()
+        where rowkey=#{classId}
+    </update>
+
+
+    <select id="getStudentNumByClassIds" resultType="int">
+        select count(rowkey)
+        from nur_stuinfo_high
+        where stu_clacode in
+        <foreach collection="ids" separator="," item="id"  open="(" close=")">
+            #{id}
+        </foreach>
+    </select>
+
+    <delete id="deleteClassByIds">
+        delete from NUR_CLASS WHERE ROWKEY in
+        <foreach collection="ids" separator="," item="id"  open="(" close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <delete id="deleteStudentByClaCode">
+        delete from nur_stuinfo where stu_clacode in
+        <foreach collection="ids" separator="," item="id"  open="(" close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+
+    <insert id="backUpClass">
+        create table nur_class_bak_${bakTabelName} select * from nur_class;
+    </insert>
+
+    <insert id="backUpStu">
+        create table nur_stuinfo_high_bak_${bakTabelName} select * from nur_stuinfo_high;
+    </insert>
+
+    <select id="getAllClass" resultType="com.shensu.mybatis.entity.nurClass.ClassInfo">
+        SELECT
+            sch_type,
+            cla_level,
+            nur_class.rowkey
+        FROM
+            nur_class
+                LEFT JOIN nur_school ON cla_schId = sch_id
+    </select>
+
+
+    <update id="batchUpdateClassLevel">
+        update nur_class cla inner join nur_school sch on cla.cla_schId = sch.sch_id
+        set cla_level=(cla_level+1),
+            cla_updatetime=now()
+        where NOT ((sch_type IN ('2','3') AND cla_level = '6') OR (sch_type ='4' AND cla_level = '7') OR cla_level IN ('3','9'))
+    </update>
+
+    <update id="batchUpdateClassName">
+        UPDATE nur_class SET cla_name=
+                                 (
+                                     CASE
+                                         WHEN cla_level = -1 THEN CONCAT(cla_nameYear, '学前班', cla_shortName)
+                                         WHEN cla_level = 0 THEN CONCAT(cla_nameYear, '幼儿园托班', cla_shortName)
+                                         WHEN cla_level = 1 THEN CONCAT(cla_nameYear, '幼儿园小班', cla_shortName)
+                                         WHEN cla_level = 2 THEN CONCAT(cla_nameYear, '幼儿园中班', cla_shortName)
+                                         WHEN cla_level = 3 THEN CONCAT(cla_nameYear, '幼儿园大班', cla_shortName)
+                                         WHEN cla_level = 4 THEN CONCAT(cla_nameYear, '一年级', cla_shortName)
+                                         WHEN cla_level = 5 THEN CONCAT(cla_nameYear, '二年级', cla_shortName)
+                                         WHEN cla_level = 6 THEN CONCAT(cla_nameYear, '三年级', cla_shortName)
+                                         WHEN cla_level = 7 THEN CONCAT(cla_nameYear, '四年级', cla_shortName)
+                                         WHEN cla_level = 8 THEN CONCAT(cla_nameYear, '五年级', cla_shortName)
+                                         WHEN cla_level = 9 THEN CONCAT(cla_nameYear, '六年级', cla_shortName)
+                                         END
+                                     )
+    </update>
+
+    <select id="getFinishCla" resultType="java.lang.String">
+        SELECT
+            cla.rowkey
+        FROM
+            nur_class cla
+                INNER JOIN nur_school sch ON cla.cla_schId = sch.sch_id
+        where  ((sch_type IN ('2','3') AND cla_level = '6') OR (sch_type ='4' AND cla_level = '7') OR cla_level IN ('3','9'))
+    </select>
+</mapper>

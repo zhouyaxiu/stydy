@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shensu.mybatis.mapper.reseedSummar.ReseedSummarMapper">
+
+   <select id="queryList" resultType="com.shensu.mybatis.entity.reseedSummar.StaticInforInspectionBean">
+       SELECT
+           cla.cla_name claName,
+           count(stu.rowkey) stuTotal,
+           -- 麻腮风应种
+           SUM(CASE WHEN stu.stu_type IN ('1','3','4')  THEN 1 ELSE 0 END) thisProvinceYz,
+           SUM(CASE WHEN stu.stu_type IN('5','6') THEN 1 ELSE 0 END) outProvinceYz,
+           -- 麻腮风实种
+           SUM(CASE WHEN stu.stu_type IN ('1','3','4') AND res.FirstDose = '0'  THEN 1 ELSE 0 END) thisProvinceSz,
+           SUM(CASE WHEN stu.stu_type IN ('5','6') AND res.FirstDose = '0' THEN 1 ELSE 0 END) outProvinceSz,
+           -- 水痘
+           SUM(CASE WHEN res.FirstDose = '0'  THEN 1 ELSE 0 END) varOneSz,
+           SUM(CASE WHEN res.secondDose = '0' THEN 1 ELSE 0 END) varTwoSz,
+           -- 流感
+           SUM(CASE WHEN res.FirstDose = '0' THEN 1 ELSE 0 END) fluSz
+       FROM
+           nur_class cla
+               LEFT JOIN nur_stuinfo_high stu ON cla.rowkey = stu.stu_clacode
+               INNER JOIN nur_stucheck_result res ON stu.stu_no = res.stu_no
+       where
+           res.roundId = #{roundId}
+       and cla.rowkey in
+       <foreach collection="claIds" item="id" separator="," open="(" close=")">
+           #{id}
+       </foreach>
+       GROUP BY cla.rowkey
+   </select>
+
+
+    <select id="getClaIdBySchIdAndYearAndLevel" resultType="java.lang.String">
+        SELECT
+            rowkey
+        FROM
+            nur_class
+        WHERE
+            cla_schid = #{schId}
+        <if test="year != null and year !=''">
+            and cla_nameyear = #{year}
+        </if>
+        <if test="level != null and level !=''">
+            and cla_level = #{level}
+        </if>
+    </select>
+
+
+    <select id="queryListOne" resultType="com.shensu.mybatis.entity.reseedSummar.StaticInforInspectionBeanOne">
+        SELECT
+        ${selectNameSql},
+        COUNT(stu.rowkey) virtualStudentCount,
+        COUNT(stu.rowkey) studentCount,
+        SUM(CASE WHEN (stu_isjzz ='1' or stu_isjz_origin='2' or stu_isjz_origin is null  ) THEN 1 ELSE 0 END) hasNotCard,
+        SUM(CASE WHEN (stu_isjzz ='1' or stu_isjz_origin='2' or stu_isjz_origin is null )  and stu_isbjzz = '0'  THEN 1 ELSE 0 END) needCard,
+        SUM(CASE WHEN stu_isjz_origin = '1'  THEN 1 ELSE 0 END) needReplant,
+        SUM(CASE WHEN stu_isjz_origin = '1' and stu_isfull = '0' THEN 1 ELSE 0 END) needReplantFull,
+
+        SUM(CASE WHEN B001State ='1' THEN 1 ELSE 0 END) B001NeedReplant,
+        SUM(CASE WHEN B001State ='1'  AND B001StateAfter ='11' THEN 1 ELSE 0 END) B001HasReplant,
+
+        SUM(CASE WHEN B063State ='1' THEN 1 ELSE 0 END) B063NeedReplant,
+        SUM(CASE WHEN B063State ='1'  AND B063StateAfter ='11' THEN 1 ELSE 0 END) B063HasReplant,
+        SUM(CASE WHEN B064State ='1' THEN 1 ELSE 0 END) B064NeedReplant,
+        SUM(CASE WHEN B064State ='1'  AND B064StateAfter ='11' THEN 1 ELSE 0 END) B064HasReplant,
+        SUM(CASE WHEN B065State ='1' THEN 1 ELSE 0 END) B065NeedReplant,
+        SUM(CASE WHEN B065State ='1'  AND B065StateAfter ='11' THEN 1 ELSE 0 END) B065HasReplant,
+
+        SUM(CASE WHEN B009STATE ='1' THEN 1 ELSE 0 END) B009NeedReplant,
+        SUM(CASE WHEN B009STATE ='1'  AND B009STATEAFTER ='11' THEN 1 ELSE 0 END) B009HasReplant,
+        SUM(CASE WHEN B010STATE ='1' THEN 1 ELSE 0 END) B010NeedReplant,
+        SUM(CASE WHEN B010STATE ='1'  AND B010STATEAFTER ='11' THEN 1 ELSE 0 END) B010HasReplant,
+        SUM(CASE WHEN B011STATE ='1' THEN 1 ELSE 0 END) B011NeedReplant,
+        SUM(CASE WHEN B011STATE ='1'  AND B011STATEAFTER ='11' THEN 1 ELSE 0 END) B011HasReplant,
+        SUM(CASE WHEN B012STATE ='1' THEN 1 ELSE 0 END) B012NeedReplant,
+        SUM(CASE WHEN B012STATE ='1'  AND B012STATEAFTER ='11' THEN 1 ELSE 0 END) B012HasReplant,
+
+        SUM(CASE WHEN B015STATE ='1' THEN 1 ELSE 0 END) B015NeedReplant,
+        SUM(CASE WHEN B015STATE ='1'  AND B015STATEAFTER ='11' THEN 1 ELSE 0 END) B015HasReplant,
+        SUM(CASE WHEN B016STATE ='1' THEN 1 ELSE 0 END) B016NeedReplant,
+        SUM(CASE WHEN B016STATE ='1'  AND B016STATEAFTER ='11' THEN 1 ELSE 0 END) B016HasReplant,
+        SUM(CASE WHEN B017STATE ='1' THEN 1 ELSE 0 END) B017NeedReplant,
+        SUM(CASE WHEN B017STATE ='1'  AND B017STATEAFTER ='11' THEN 1 ELSE 0 END) B017HasReplant,
+        SUM(CASE WHEN B018STATE ='1' THEN 1 ELSE 0 END) B018NeedReplant,
+        SUM(CASE WHEN B018STATE ='1'  AND B018STATEAFTER ='11' THEN 1 ELSE 0 END) B018HasReplant,
+
+        SUM(CASE WHEN B037STATE ='1' THEN 1 ELSE 0 END) B037NeedReplant,
+        SUM(CASE WHEN B037STATE ='1'  AND B037STATEAFTER ='11' THEN 1 ELSE 0 END) B037HasReplant,
+        '0' B038NeedReplant,
+        SUM(CASE WHEN B038STATEAFTER ='11' THEN 1 ELSE 0 END) B038HasReplant,
+        '0' B039NeedReplant,
+        SUM(CASE WHEN B038STATEAFTER ='11' THEN 1 ELSE 0 END) B039HasReplant,
+
+        SUM(CASE WHEN B059STATE ='1' THEN 1 ELSE 0 END) B059NeedReplant,
+        SUM(CASE WHEN B059STATE ='1'  AND B059STATEAFTER ='11' THEN 1 ELSE 0 END) B059HasReplant,
+        SUM(CASE WHEN B060STATE ='1' THEN 1 ELSE 0 END) B060NeedReplant,
+        SUM(CASE WHEN B060STATE ='1'  AND B060STATEAFTER ='11' THEN 1 ELSE 0 END) B060HasReplant,
+
+        SUM(CASE WHEN B040STATE ='1' THEN 1 ELSE 0 END) B040NeedReplant,
+        SUM(CASE WHEN B040STATE ='1'  AND B040STATEAFTER ='11' THEN 1 ELSE 0 END) B040HasReplant,
+        SUM(CASE WHEN B041STATE ='1' THEN 1 ELSE 0 END) B041NeedReplant,
+        SUM(CASE WHEN B041STATE ='1'  AND B041STATEAFTER ='11' THEN 1 ELSE 0 END) B041HasReplant,
+
+        SUM(CASE WHEN B045STATE ='1' THEN 1 ELSE 0 END) B045NeedReplant,
+        SUM(CASE WHEN B045STATE ='1'  AND B045STATEAFTER ='11' THEN 1 ELSE 0 END) B045HasReplant,
+        SUM(CASE WHEN B046STATE ='1' THEN 1 ELSE 0 END) B046NeedReplant,
+        SUM(CASE WHEN B046STATE ='1'  AND B046STATEAFTER ='11' THEN 1 ELSE 0 END) B046HasReplant,
+
+        SUM(CASE WHEN B032STATE ='1' THEN 1 ELSE 0 END) B032NeedReplant,
+        SUM(CASE WHEN B032STATE ='1'  AND B032STATEAFTER ='11' THEN 1 ELSE 0 END) B032HasReplant,
+        SUM(CASE WHEN B033STATE ='1' THEN 1 ELSE 0 END) B033NeedReplant,
+        SUM(CASE WHEN B033STATE ='1'  AND B033STATEAFTER ='11' THEN 1 ELSE 0 END) B033HasReplant,
+
+        SUM(CASE WHEN B073STATE ='1' THEN 1 ELSE 0 END) B073NeedReplant,
+        SUM(CASE WHEN B073STATE ='1'  AND B073STATEAFTER ='11' THEN 1 ELSE 0 END) B073HasReplant,
+        SUM(CASE WHEN B074STATE ='1' THEN 1 ELSE 0 END) B074NeedReplant,
+        SUM(CASE WHEN B074STATE ='1'  AND B074STATEAFTER ='11' THEN 1 ELSE 0 END) B074HasReplant,
+
+        SUM(CASE WHEN B050STATE ='1' THEN 1 ELSE 0 END) B050NeedReplant,
+        SUM(CASE WHEN B050STATE ='1'  AND B050STATEAFTER ='11' THEN 1 ELSE 0 END) B050HasReplant,
+        SUM(CASE WHEN B132STATE ='1' THEN 1 ELSE 0 END) B132NeedReplant,
+        SUM(CASE WHEN B132STATE ='1'  AND B132STATEAFTER ='11' THEN 1 ELSE 0 END) B132HasReplant
+
+        from  v_sys_station vs
+        inner join  nur_school sch ON sch.sch_stationcode = vs.stationcode
+        inner  join nur_stuinfo stu on sch.sch_id = stu.schid
+        where
+        ${areaSql}
+        <if test="schId != null and schId !=''">
+            and sch.sch_id = #{schId}
+        </if>
+        <choose>
+            <when test="schType != null and schType !=''">
+                and sch.sch_type = #{schType}
+            </when>
+            <otherwise>
+                and sch.sch_type in ('0','1')
+            </otherwise>
+        </choose>
+        <if test="year != null and year !=''">
+            and stu.academic_year = #{year}
+        </if>
+        <if test="grade != null and grade !=''">
+            and stu.grade = #{grade}
+        </if>
+        <if test="round != null and round !=''">
+            and stu.rounds = #{round}
+        </if>
+        <if test="className != null and className !=''">
+            and stu.clazz_name = #{className}
+        </if>
+        and sch.invalid_status != '1'
+        group by ${groupBySql}
+    </select>
+
+
+
+    <select id="querySchNumOne" resultType="com.shensu.mybatis.entity.reseedSummar.StaticInforInspectionBeanOne">
+        SELECT
+        ${selectNameSql},
+        COUNT(DISTINCT sch.sch_id) schoolCount
+        from  v_sys_station vs
+        inner join  nur_school sch ON sch.sch_stationcode = vs.stationcode
+        inner  join nur_stuinfo stu on sch.sch_id = stu.schid
+        where ${areaSql}
+        <if test="schId != null and schId !=''">
+            and sch.sch_id = #{schId}
+        </if>
+        <if test="schType != null and schType !=''">
+            and sch.sch_type = #{schType}
+        </if>
+        <if test="year != null and year !=''">
+            and stu.academic_year = #{year}
+        </if>
+        <if test="grade != null and grade !=''">
+            and stu.grade = #{grade}
+        </if>
+        <if test="round != null and round !=''">
+            and stu.rounds = #{round}
+        </if>
+        <if test="className != null and className !=''">
+            and stu.clazz_name = #{className}
+        </if>
+        and sch.invalid_status != '1'
+        group by ${groupBySql}
+    </select>
+</mapper>

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mapping name="epi_jzjl">
+    <table name="epi_jzjl" type="oracle">
+        <result column="FShotGuid" property="ID" remark="" key="FShotGuid"/>
+        <result column="FCHILDNO" property="CASE_CODE" remark="个案编码"/>
+        <result column="JZRQ" property="VACCINATION_DATE_TIME" remark="接种日期时间" type="date" format="yyyy-MM-dd HH:mm:ss"/>
+        <result column="FSHOTDATED" property="VACCINATION_DATE_TIME" remark="接种日期时间" type="date" format="yyyy-MM-dd"/>
+        <result column="FPLACECODE" property="VACCINATION_SITE" remark="接种部位"/>
+        <result column="VACCINATION" property="VACCINATION" remark="接种疫苗"/>
+        <result column="VACCINATION_TIME" property="VACCINATION_TIME" remark="接种剂次"/>
+        <result column="FBACTID" property="BACTID" remark="疫苗剂次编码" baseMap="bactIdMap"/>
+        <result column="FSHOTSPEC" property="DOSE" remark="剂量"/>
+        <result column="FVaccTypeCode" property="VACCINATION_TYPE" remark="接种类型"/>
+        <result column="FENTERPNO" property="VACCINE_PRODUCER" remark="疫苗生产企业"/>
+        <result column="YMPH" property="VACCINE_BATCH" remark="疫苗批号"/>
+        <result column="FBATCHEXPIRYDATE" property="VACCINE_EFFECTIVE" remark="疫苗效期" type="date" format="yyyy-MM-dd"/>
+        <result column="FMONITORCODE" property="VACCINE_MIN_PACK_UNIT" remark="疫苗最小包装单位识别 信息"/>
+        <result column="VACCINATION_COUNTY_GB" property="VACCINATION_COUNTY_GB" remark="接种县国标"/>
+        <result column="FStationCode_CN" property="VACCINATION_UNIT" remark="接种单位" />
+        <result column="FOperateStationCode_CN" property="INTO_UNIT" remark="录入单位" />
+        <result column="FInputDateTime" property="INTO_DATE" remark="录入日期" type="date" format="yyyy-MM-dd HH:mm:ss"/>
+        <result column="FINPUTDATE" property="INTO_DATE" remark="录入日期" type="date" format="yyyy-MM-dd"/>
+        <result column="FUpdateDateTime" property="MODIFY_DATE" remark="修改日期" type="date"
+                format="yyyy-MM-dd HH:mm:ss"/>
+        <result column="FLASTEDITDATETIME" property="MODIFY_DATE" remark="修改日期" type="date"
+                format="yyyy-MM-dd HH:mm:ss"/>
+        <result column="FUpdateStationCode_CN" property="MODIFY_UNIT" remark="修改单位"/>
+        <result column="UPLOAD_DATE" property="UPLOAD_DATE" remark="上传日期" type="date" format="yyyy-MM-dd"/>
+        <result column="JZYS" property="VACCINATION_DOCTOR" remark="接种医生"/>
+<!--        <result column="RECORD_STATE" property="RECORD_STATE" remark="记录状态"/>-->
+        <result column="FPROPERTYCODE" property="VACCINE_PROPERTY" remark="疫苗属性"/>
+        <result column="YMJG" property="VACCINE_PRICE" remark="疫苗价格"/>
+        <result column="fbactpaymode_cn" property="PAY_METHOD" remark="支付方式"/>
+        <result column="TABU_CODE" property="TABU_CODE" remark="禁忌证编码"/>
+        <result column="FSHOTWAYCODE" property="VACCINATION_WAY" remark="接种途径"/>
+        <result column="FSOURCE" property="SOURCE" remark="数据来源"/>
+        <result column="FPRODUCTNO" property="VACCINATION" remark="类型" baseMap="VACCINATION"/>
+        <result column="FSTATIONNAME" property="XXX" remark="接种单位名" baseMap="unitNameMap"/>
+        <result column="FSTATIONCODE" property="XXX" remark="接种单位CODE" baseMap="unitCodeMap"/>
+        <result column="FOPERATESTATIONCODE" property="XXX" remark="录入单位" baseMap="unitCodeMap"/>
+        <result column="FOPERATESTATIONNAME" property="XXX" remark="录入单位" baseMap="unitNameMap"/>
+        <result column="FUPDATESTATIONCODE" property="XXX" remark="修改单位" baseMap="unitCodeMap"/>
+        <result column="FUPDATESTATIONNAME" property="XXX" remark="修改单位" baseMap="unitNameMap"/>
+<!--        <result column="USTATIONCODE" property="CURRENT_MANAGEMENT_UNIT" remark="现管理单位" baseMap="stationcodeMap"/>-->
+        <result column="GXSJ" property="GXSJ" type="date" remark="数据更新时间" format="yyyy-MM-dd HH:mm:ss"/>
+        <result column="serverupdatetime" property="xxx" remark="表更新时间" value="now()"/>
+    </table>
+
+    <table name="epi_xg_jzjl">
+        <result column="GSD_CITYCODE" property="GSD_CITYCODE" remark="" />
+        <result column="GSD_COUNTYCODE" property="GSD_COUNTYCODE" remark="" />
+        <result column="GSD_SUPCODE" property="GSD_SUPCODE" remark="" />
+        <result column="GSD_STATIONCODE" property="GSD_STATIONCODE" remark="" />
+        <result column="JZD_CITYCODE" property="JZD_CITYCODE" remark="" />
+        <result column="JZD_COUNTYCODE" property="JZD_COUNTYCODE" remark="" />
+        <result column="JZD_SUPCODE" property="JZD_SUPCODE" remark="" />
+        <result column="JZD_STATIONCODE" property="JZD_STATIONCODE" remark="" />
+        <result column="BIRTH" property="BIRTH" remark="" />
+        <result column="fcrowdkindcode" property="fcrowdkindcode" remark="" />
+    </table>
+</mapping>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shensu.jsjm.mapper.InventoryMapper">
+    <insert id="insert">
+        INSERT into SCREEN_YM_STOCK (GBCODE,GBNAME,GOODSSORTCODE,GOODSTYPE,EXCEEDTYPE,STORENUM,UPDATETIME)
+        VALUES
+        <foreach collection ="list" item="item" separator =",">
+            (concat(#{item.GBCODE}, "00"), #{item.GBNAME}, #{item.GOODSSORTCODE}, #{item.GOODSTYPE}, #{item.EXCEEDTYPE}, #{item.STORENUM}, SYSDATE)
+        </foreach >
+    </insert>
+
+    <select id="getInventory" resultType="com.shensu.jsjm.model.Inventory">
+        SELECT sys.GBCODE , sys.GBNAME , sys.GOODSSORTCODE , sys.GOODSTYPE , sys.EXCEEDTYPE , SUM(sys.STORENUM) STORENUM  FROM SCREEN_YM_STOCK sys
+                 WHERE sys.GOODSSORTCODE = #{vaccineId}
+                   AND sys.GBCODE IN (SELECT sa.AREA_CODE  FROM SYS_AREA sa
+                                          WHERE sa.SUP_ID = (SELECT id FROM SYS_AREA sa2 WHERE SA2.AREA_CODE = #{areaCode}))
+        GROUP BY sys.GBCODE , sys.GBNAME , sys.GOODSSORTCODE , sys.GOODSTYPE , sys.EXCEEDTYPE
+    </select>
+</mapper>

@@ -1,0 +1,179 @@
+很绕，代码取那个字段，然后在sql里找对应字段
+
+if (epiStatAge != null) {
+            if (ageMonth == 2) {
+                bean.setSz_012(-1);
+                bean.setSz_061(-1);
+                bean.setSz_033(-1);
+                bean.setSz_045(-1);
+                bean.setSz_046(-1);
+                bean.setSz_045_all(-1);
+                bean.setSz_037(-1);
+            } else if (ageMonth == 3) {
+                bean.setSz_012(-1);
+                bean.setSz_061(-1);
+                bean.setSz_045(-1);
+                bean.setSz_046(-1);
+                bean.setSz_045_all(-1);
+                bean.setSz_037(-1);
+            } else if (ageMonth == 4) {
+                bean.setSz_012(-1);
+                bean.setSz_061(-1);
+                bean.setSz_046(-1);
+                bean.setSz_037(-1);
+            } else if (ageMonth == 5 || ageMonth == 6) {
+                bean.setSz_061(-1);
+                bean.setSz_046(-1);
+                bean.setSz_037(-1);
+            }
+            bean.setChildCount(epiStatAge.getChildCount());
+            bean.setSz_001(epiStatAge.getSzB001());
+            bean.setSz_009(epiStatAge.getSzOPV1());
+            bean.setSz_010(epiStatAge.getSzOPV2());
+            bean.setSz_011(epiStatAge.getSzOPV3());
+            bean.setSz_012(epiStatAge.getSzOPV4());
+            bean.setSz_015(epiStatAge.getSzDPT1());
+            bean.setSz_016(epiStatAge.getSzDPT2());
+            bean.setSz_017(epiStatAge.getSzDPT3());
+            bean.setSz_018(epiStatAge.getSzDPT4());
+            bean.setSz_059(epiStatAge.getSzMV1());
+            bean.setSz_060(epiStatAge.getSzMV2());
+            bean.setSz_061(epiStatAge.getSzMV3());
+            bean.setSz_063(epiStatAge.getSzB063());
+            bean.setSz_064(epiStatAge.getSzB064());
+            bean.setSz_065(epiStatAge.getSzB065());
+            bean.setSz_032(epiStatAge.getSzB032());
+            bean.setSz_033(epiStatAge.getSzB033());
+            bean.setSz_040(epiStatAge.getSzB040());
+            bean.setSz_041(epiStatAge.getSzB041());
+            bean.setSz_045(epiStatAge.getSzB045());
+            bean.setSz_046(epiStatAge.getSzB046());
+            bean.setSz_069(epiStatAge.getSzB069());
+            bean.setSz_037(epiStatAge.getSzB037());
+            bean.setSz_063_all(epiStatAge.getSzAllHEPB());
+            bean.setSz_040_all(epiStatAge.getSzAllMENA());
+            if (ageMonth == 2) {
+                bean.setSz_012(-1);
+                bean.setSz_009_all(epiStatAge.getSzAllOPV());
+                bean.setSz_015_all(epiStatAge.getSzAllDPT4());
+                bean.setSz_061(-1);
+                bean.setSz_059_all(epiStatAge.getSzAllMV2());
+                bean.setSz_033(-1);
+                bean.setSz_032_all(epiStatAge.getSzB032());
+                bean.setSz_045(-1);
+                bean.setSz_046(-1);
+                bean.setSz_045_all(-1);
+                bean.setSz_037(-1);
+                bean.setSz_five(epiStatAge.getSzAllFive1());
+                bean.setSz_eight(epiStatAge.getSzAllEight1());
+            } else if (ageMonth == 3) {
+                bean.setSz_012(-1);
+                bean.setSz_009_all(epiStatAge.getSzAllOPV());
+                bean.setSz_015_all(epiStatAge.getSzAllDPT4());
+                bean.setSz_061(-1);
+                bean.setSz_059_all(epiStatAge.getSzAllMV2());
+                bean.setSz_032_all(epiStatAge.getSzAllJEV2());
+                bean.setSz_045(-1);
+                bean.setSz_046(-1);
+                bean.setSz_045_all(-1);
+                bean.setSz_037(-1);
+                bean.setSz_five(epiStatAge.getSzAllFive1());
+                bean.setSz_eight(epiStatAge.getSzAllEight2());
+            } else if (ageMonth == 4) {
+                bean.setSz_012(-1);
+                bean.setSz_009_all(epiStatAge.getSzAllOPV());
+                bean.setSz_015_all(epiStatAge.getSzAllDPT4());
+                bean.setSz_061(-1);
+                bean.setSz_059_all(epiStatAge.getSzAllMV2());
+                bean.setSz_032_all(epiStatAge.getSzAllJEV2());
+                bean.setSz_046(-1);
+                bean.setSz_045_all(epiStatAge.getSzB045());
+                bean.setSz_037(-1);
+                bean.setSz_five(epiStatAge.getSzAllFive1());
+                bean.setSz_eight(epiStatAge.getSzAllEight2());
+            } else if (ageMonth == 5 || ageMonth == 6) {
+                bean.setSz_009_all(epiStatAge.getSzAllOPV4());
+                bean.setSz_015_all(epiStatAge.getSzAllDPT4());
+                bean.setSz_061(-1);
+                bean.setSz_059_all(epiStatAge.getSzAllMV2());
+                bean.setSz_032_all(epiStatAge.getSzAllJEV2());
+                bean.setSz_046(-1);
+                bean.setSz_045_all(epiStatAge.getSzB045());
+                bean.setSz_037(-1);
+                bean.setSz_five(epiStatAge.getSzAllFive2());
+                bean.setSz_eight(epiStatAge.getSzAllEight3());
+            } else if (ageMonth == 7 || ageMonth == 8) {
+                bean.setSz_009_all(epiStatAge.getSzAllOPV4());
+                bean.setSz_015_all(epiStatAge.getSzAllDPT4());
+                bean.setSz_059_all(epiStatAge.getSzAllMV3());
+                bean.setSz_032_all(epiStatAge.getSzAllJEV2());
+                bean.setSz_045_all(epiStatAge.getSzAllMENAC2());
+                bean.setSz_five(epiStatAge.getSzAllFive3());
+                bean.setSz_eight(epiStatAge.getSzAllEight4());
+            }
+            //计算百分比
+            bean.calcRate();
+        }
+		
+		
+sql
+SELECT
+            SUM( CHILD_COUNT ) childCount,
+            sum( SZ_B001 ) szB001,
+            sum( SZ_OPV_1 ) szOPV1,
+            sum( SZ_OPV_2 ) szOPV2,
+            sum( SZ_OPV_3 ) szOPV3,
+            sum( SZ_OPV_4 ) szOPV4,
+            sum( SZ_DPT_1 ) szDPT1,
+            sum( SZ_DPT_2 ) szDPT2,
+            sum( SZ_DPT_3 ) szDPT3,
+            sum( SZ_DPT_4 ) szDPT4,
+            sum( SZ_MV_1 ) szMV1,
+            sum( SZ_MV_2 ) szMV2,
+            sum( SZ_MV_3 ) szMV3,
+            sum( SZ_B063 ) szB063,
+            sum( SZ_B064 ) szB064,
+            sum( SZ_B065 ) szB065,
+            sum( SZ_B032 ) szB032,
+            sum( SZ_B033 ) szB033,
+            sum( SZ_B040 ) szB040,
+            sum( SZ_B041 ) szB041,
+            sum( SZ_B045 ) szB045,
+            sum( SZ_B046 ) szB046,
+            sum( SZ_B069 ) szB069,
+            sum( SZ_B037 ) szB037,
+            sum( CASE WHEN MONTHS_BETWEEN < 3 THEN SZ_OPV_1 
+			WHEN MONTHS_BETWEEN < 4 THEN SZ_ALL_OPV_2 ELSE SZ_ALL_OPV_3 END ) szAllOPV,
+            sum( SZ_ALL_OPV_4 ) szAllOPV4,
+            sum( CASE WHEN MONTHS_BETWEEN < 4 THEN SZ_DPT_1 
+			WHEN MONTHS_BETWEEN < 5 THEN SZ_ALL_DPT_2 ELSE SZ_ALL_DPT_3 END ) szAllDPT,
+            sum( SZ_ALL_DPT_4 ) szAllDPT4,
+            sum( SZ_ALL_MV_2 ) szAllMV2,
+            sum( SZ_ALL_MV_3 ) szAllMV3,
+            sum( SZ_ALL_JEV_2 ) szAllJEV2,
+            sum( CASE WHEN MONTHS_BETWEEN < 1 THEN SZ_B063 
+			WHEN MONTHS_BETWEEN < 6 THEN SZ_ALL_HEPB_2 ELSE SZ_ALL_HEPB_3 END ) szAllHEPB,
+            sum( CASE WHEN MONTHS_BETWEEN < 9 THEN SZ_B040 ELSE SZ_ALL_MENA END ) szAllMENA,
+            sum( SZ_ALL_MENAC_2 ) szAllMENAC2,
+            sum(
+            CASE WHEN MONTHS_BETWEEN < 1 THEN SZ_ALL_FIVE_LT_1
+            WHEN MONTHS_BETWEEN < 3 THEN SZ_ALL_FIVE_LT_3
+            WHEN MONTHS_BETWEEN < 4 THEN SZ_ALL_FIVE_LT_4
+            WHEN MONTHS_BETWEEN < 5 THEN SZ_ALL_FIVE_LT_5
+            WHEN MONTHS_BETWEEN < 6 THEN SZ_ALL_FIVE_LT_6 
+			ELSE SZ_ALL_FIVE
+            END ) szAllFive,
+            sum( SZ_ALL_FIVE_1 ) szAllFive1,
+            sum( SZ_ALL_FIVE_2 ) szAllFive2,
+            sum( SZ_ALL_FIVE_3 ) szAllFive3,
+            sum( SZ_ALL_EIGHT_1 ) szAllEight1,
+            sum( CASE WHEN MONTHS_BETWEEN < 36 THEN SZ_ALL_EIGHT_1 
+			WHEN MONTHS_BETWEEN < 48 THEN SZ_ALL_EIGHT_5 
+			ELSE SZ_ALL_EIGHT_2 END ) szAllEight2,
+            sum( SZ_ALL_EIGHT_3 ) szAllEight3,
+            sum( SZ_ALL_EIGHT_4 ) szAllEight4
+        FROM
+            EPI_STAT_HGBHG_AGE_RPT_CITY
+        WHERE
+            AGE_MONTH = 2
+            AND fisadult = '0';

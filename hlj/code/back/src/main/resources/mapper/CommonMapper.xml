@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shensu.jsjm.mapper.CommonMapper">
+
+    <select id="getVaccineType" resultType="com.shensu.jsjm.model.VaccineType">
+        select  CLASSCODE  as value,CLASSNAME  as label ,CLASSCODE AS code
+        from SYS_BACTINFO_CLASS
+    </select>
+
+    <insert id="saveNeonateYearCount">
+        insert into SCREEN_STATISTICS_YEAR (CITYCODE,CITYNAME,RPT_YEAR,COUNT,UPDATE_TIME)
+        SELECT b.CITYCODE,b.CITYNAME,#{yearStr} AS rpt_year, count(a.FCHILDNO) AS TOTAL,SYSDATE
+        from V_SYS_STATION b LEFT JOIN  epi_childinfo a on a.STATIONCODE = b.STATIONCODE
+        and a.BIRTH &gt;= TO_DATE(CONCAT(#{yearStr}, '-01-01 00:00:00'), 'YYYY-mm-dd HH24:mi:ss')
+        and  a.BIRTH &lt;= TO_DATE(CONCAT(#{yearStr}, '-12-31 23:59:59'),'YYYY-mm-dd HH24:mi:ss')
+        GROUP BY b.CITYCODE,b.CITYNAME
+    </insert>
+
+    <insert id="saveNeonateMonthCount">
+        insert into SCREEN_STATISTICS_MONTH (CITYCODE,CITYNAME,RPT_YEAR,RPT_MONTH,COUNT,UPDATE_TIME)
+        SELECT
+        b.CITYCODE,
+        b.CITYNAME,
+        SUBSTR(#{dateStartStr}, 1, 4) AS rpt_year,
+        SUBSTR(#{dateStartStr}, 6, 2) AS rpt_month,
+        COUNT(a.FCHILDNO) AS TOTAL,
+        SYSDATE
+        FROM
+        V_SYS_STATION b
+        LEFT JOIN
+        epi_childinfo a ON a.STATIONCODE = b.STATIONCODE
+        AND a.BIRTH &gt;= TO_DATE(CONCAT(#{dateStartStr}, ' 00:00:00'), 'YYYY-mm-dd HH24:mi:ss')
+        AND a.BIRTH &lt;= TO_DATE(CONCAT(#{dateEndStr}, ' 23:59:59'),'YYYY-mm-dd HH24:mi:ss')
+        GROUP BY
+        b.CITYCODE, b.CITYNAME
+    </insert>
+
+    <delete id="deleteNeonateMonth">
+        delete from SCREEN_STATISTICS_MONTH
+    </delete>
+
+    <delete id="deleteNeonateYear">
+        delete from SCREEN_STATISTICS_YEAR
+    </delete>
+
+    <select id="getWisdomBirthYear" resultType="com.shensu.jsjm.model.WisdomBirthYear">
+        SELECT RPT_YEAR as BirthYear,SUM(COUNT) as count FROM SCREEN_STATISTICS_YEAR
+        <where><if test="areaCode != null and areaCode != ''">CITYCODE =#{areaCode}</if></where>
+        GROUP BY RPT_YEAR
+        ORDER BY RPT_YEAR
+    </select>
+
+    <select id="getWisdomBirthMonth" resultType="com.shensu.jsjm.model.WisdomBirthMonth">
+        SELECT RPT_MONTH as BirthMonth,SUM(COUNT) as count FROM SCREEN_STATISTICS_MONTH
+        <where><if test="areaCode != null and areaCode != ''">CITYCODE =#{areaCode}</if></where>
+        GROUP BY RPT_MONTH
+        ORDER BY RPT_MONTH
+    </select>
+</mapper>
+

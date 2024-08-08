@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shensu.mybatis.mapper.InforInspectionMapper.InforInspectionMapper">
+    <sql id="diqu">
+        <if test="areaCode != null and areaCode != '' and areaLevel != null and areaLevel != ''">
+            <if test="areaLevel == 1">
+                and   c.stu_citycode =#{areaCode}
+            </if>
+            <if test="areaLevel == 2">
+                and   c.stu_countycode =#{areaCode}
+            </if>
+            <if test="areaLevel == 3">
+                and   c.stu_streetcode = #{areaCode}
+            </if>
+            <if test="areaLevel == 4">
+                and    c.stu_stationcode = #{areaCode}
+            </if>
+        </if>
+    </sql>
+    <sql id="rxrtStateNumcondition">
+        <!--学年-->
+        <if test="year != null and year != ''">
+            AND c.academic_year = #{year, jdbcType=VARCHAR}
+        </if>
+        <!--查验类型（下拉选择，默认全选、入园儿童、入学儿童）-->
+        <if test="checkType != null and checkType != ''">
+            AND s.sch_type = #{checkType,jdbcType=VARCHAR}
+        </if>
+        <if test="lunci != null and lunci != ''">
+            AND  c.rounds =#{lunci,jdbcType=VARCHAR}
+        </if>
+    </sql>
+    <sql id="showArea">
+        <if test="areaCode != null and areaCode != '' and areaLevel != null and areaLevel != ''">
+            <if test="areaLevel == 0">
+                vs.cityName  as  areaName,vs.cityCode as areaCode,
+            </if>
+            <if test="areaLevel == 1">
+                vs.COUNTYNAME as areaName,vs.countyCode as areaCode,
+            </if>
+            <if test="areaLevel == 2">
+                vs.supName as  areaName, vs.supCode as  areaCode,
+            </if>
+            <if test="areaLevel == 3">
+                vs.stationName as areaName,vs.stationCode as areaCode,
+            </if>
+            <if test="areaLevel == 4">
+                s.sch_name as areaName,s.sch_id as areaCode,
+            </if>
+        </if>
+    </sql>
+    <sql id="showCode">
+        <if test="areaCode != null and areaCode != '' and areaLevel != null and areaLevel != ''">
+            <if test="areaLevel == 0">
+             c.stu_cityCode as areaCode,
+            </if>
+            <if test="areaLevel == 1">
+                c.stu_countyCode as areaCode,
+            </if>
+            <if test="areaLevel == 2">
+               c.stu_streetcode as  areaCode,
+            </if>
+            <if test="areaLevel == 3">
+             c.stu_StationCode as areaCode,
+            </if>
+            <if test="areaLevel == 4">
+                c.stu_StationCode as areaCode,
+            </if>
+        </if>
+    </sql>
+    <select id="inforInspectionQuery" resultType="com.shensu.mybatis.entity.inforInspection.InforInspectionBean">
+        select
+        <include refid="showArea"></include>
+        count( c.rowkey ) allStuNum,
+        count( c.rowkey ) checkStuNum,
+        sum( CASE WHEN c.stu_isjzz = '0' THEN 1 ELSE 0 END ) hasCard,/*有预防接种证的人数*/
+        sum( CASE WHEN (c.stu_isjzz ='1' or c.stu_isjz_origin='2' or c.stu_isjz_origin is null) and  c.stu_isbjzz='0' THEN 1 ELSE 0 END ) needCard,/*补证儿童数*/
+        sum( CASE WHEN  c.stu_isjz_origin = '1'   THEN 1 ELSE 0 END ) needReplant,/*需补种疫苗儿童数*/
+        sum( CASE WHEN  c.stu_isjz_origin = '0' THEN 1 ELSE 0 END ) qcjzCount,/*种全儿童数*/
+        sum( CASE WHEN  c.stu_isjz_origin = '1' AND c.stu_isfull = '0' THEN 1 ELSE 0 END) hasReplant,/*需补种儿童中完成全程接种人数*/
+        sum( CASE WHEN  c.B001State = '1'  THEN 1 ELSE 0 END )  B001NeedReplant,/*卡介苗需补种剂次*/
+        sum( CASE WHEN  c.B001State = '1' AND c.B001StateAfter = '11'  THEN 1 ELSE 0 END ) B001HasReplant,/*卡介苗已补种剂次*/
+        sum( CASE WHEN  c.B063State = '1' THEN   1 ELSE 0 END ) B063NeedReplant,/*乙肝1需补种剂次*/
+        sum( CASE WHEN  c.B064State = '1' THEN   1 ELSE 0 END ) B064NeedReplant,/*乙肝2需补种剂次*/
+        sum( CASE WHEN  c.B065State = '1' THEN   1 ELSE 0 END ) B065NeedReplant,/*乙肝3需补种剂次*/
+        sum( CASE WHEN  c.B063State = '1' AND  c.B063StateAfter = '11'   THEN    1 ELSE 0  END )  B063HasReplant,/*乙肝1补种剂次*/
+        sum( CASE WHEN  c.B064State = '1' AND  c.B064StateAfter = '11'    THEN    1 ELSE 0  END )  B064HasReplant,/*乙肝2补种剂次*/
+        sum( CASE WHEN  c.B065State = '1' AND  c.B065StateAfter = '11'    THEN    1 ELSE 0  END )  B065HasReplant,/*乙肝3补种剂次*/
+        sum( CASE WHEN  c.B009State = '1' THEN 1 ELSE 0 END) B009NeedReplant,/*脊灰1需补种剂次*/
+        sum( CASE WHEN  c.B010State = '1' THEN 1 ELSE 0 END) B010NeedReplant,/*脊灰2需补种剂次*/
+        sum( CASE WHEN  c.B011State = '1' THEN 1 ELSE 0 END) B011NeedReplant,/*脊灰3需补种剂次*/
+        sum( CASE WHEN  c.B012State = '1' THEN 1 ELSE 0 END) B012NeedReplant,/*脊灰4需补种剂次*/
+        sum( CASE WHEN c.B009State = '1'  AND  c.B009StateAfter = '11'   THEN  1 ELSE 0 END )  B009HasReplant ,/*脊灰1已补种剂次*/
+        sum( CASE WHEN c.B010State = '1'  AND  c.B010StateAfter = '11'   THEN  1 ELSE 0 END )  B010HasReplant ,/*脊灰2已补种剂次*/
+        sum( CASE WHEN c.B011State = '1'  AND  c.B011StateAfter = '11'   THEN  1 ELSE 0 END )  B011HasReplant ,/*脊灰3已补种剂次*/
+        sum( CASE WHEN c.B012State = '1'  AND  c.B012StateAfter = '11'   THEN  1 ELSE 0 END )  B012HasReplant ,/*脊灰4已补种剂次*/
+        sum( CASE WHEN c.B015State = '1'  THEN  1 ELSE 0   END ) B015NeedReplant,/*百白破1需补种剂次*/
+        sum( CASE WHEN c.B016State = '1'  THEN  1 ELSE 0   END ) B016NeedReplant,/*百白破2需补种剂次*/
+        sum( CASE WHEN c.B017State = '1'  THEN  1 ELSE 0   END ) B017NeedReplant,/*百白破3需补种剂次*/
+        sum( CASE WHEN c.B018State = '1'  THEN  1 ELSE 0   END ) B018NeedReplant,/*百白破需4补种剂次*/
+        sum( CASE WHEN c.B015State = '1'  AND  c.B015StateAfter = '11' THEN  1 ELSE 0 END ) B015HasReplant ,/*百白破1已补种剂次*/
+        sum( CASE WHEN c.B016State = '1'  AND  c.B016StateAfter = '11' THEN  1 ELSE 0 END ) B016HasReplant ,/*百白破2已补种剂次*/
+        sum( CASE WHEN c.B017State = '1'  AND  c.B017StateAfter = '11' THEN  1 ELSE 0 END ) B017HasReplant ,/*百白破3已补种剂次*/
+        sum( CASE WHEN c.B018State = '1'  AND  c.B018StateAfter = '11' THEN  1 ELSE 0 END ) B018HasReplant ,/*百白破4已补种剂次*/
+        sum( CASE WHEN c.B037State = '1' THEN 1 ELSE 0 END ) B037NeedReplant,/*白破需补种剂次,只有B037*/
+        sum( CASE WHEN c.B037State = '1' AND c.B037StateAfter = '11'   THEN  1 ELSE 0  END  ) B037HasReplant ,/*白破已补种剂次*/
+        sum( CASE WHEN c.B059State = '1' THEN  1 ELSE 0   END  ) B059NeedReplant,/*麻疹1需补种剂次*/
+        sum( CASE WHEN c.B060State = '1' THEN  1 ELSE 0   END  ) B060NeedReplant,/*麻疹2需补种剂次*/
+        sum( CASE WHEN c.B059State = '1' AND  c.B059StateAfter = '11'  THEN  1 ELSE 0 END ) B059HasReplant ,/*麻疹1补种剂次*/
+        sum( CASE WHEN c.B060State = '1' AND  c.B060StateAfter = '11' THEN  1 ELSE 0 END ) B060HasReplant ,/*麻疹2补种剂次*/
+        sum( CASE WHEN c.B040State = '1' THEN 1 ELSE 0   END ) B040NeedReplant ,/*A群流脑1需补种剂次*/
+        sum( CASE WHEN c.B041State = '1' THEN 1 ELSE 0   END ) B041NeedReplant ,/*A群流脑2需补种剂次*/
+        sum( CASE WHEN c.B040State = '1' AND  c.B040StateAfter = '11'  THEN   1 ELSE 0   END  ) B040HasReplant,/*A群流脑1补种剂次*/
+        sum( CASE WHEN c.B041State = '1' AND  c.B041StateAfter = '11'  THEN   1 ELSE 0   END  ) B041HasReplant,/*A群流脑2补种剂次*/
+        sum( CASE WHEN c.B045State = '1' THEN 1 ELSE 0   END   ) B045NeedReplant,/*A群C群流脑1需补种剂次*/
+        sum( CASE WHEN c.B046State = '1' THEN 1 ELSE 0   END   ) B046NeedReplant,/*A群C群流脑2需补种剂次*/
+        sum( CASE WHEN c.B045State = '1' AND  c.B045StateAfter = '11'   THEN  1 ELSE 0  END   )  B045HasReplant ,/*A群C群流脑1补种剂次*/
+        sum( CASE WHEN c.B046State = '1' AND  c.B046StateAfter = '11'  THEN  1 ELSE 0  END   )  B046HasReplant ,/*A群C群流脑2补种剂次*/
+        sum( CASE WHEN c.B032State = '1' THEN   1 ELSE 0   END ) B032NeedReplant,/*乙脑需补种剂次*/
+        sum( CASE WHEN c.B033State = '1' THEN   1 ELSE 0   END ) B033NeedReplant,/*乙脑需补种剂次*/
+        sum( CASE WHEN c.B032State = '1' AND  c.B032StateAfter = '11'  THEN 1 ELSE 0 END  ) B032HasReplant ,/*乙脑补种剂次*/
+        sum( CASE WHEN c.B033State = '1' AND  c.B033StateAfter = '11'   THEN 1 ELSE 0 END  ) B033HasReplant ,/*乙脑补种剂次*/
+        sum( CASE WHEN c.B073State = '1' THEN 1 ELSE 0 END ) B073NeedReplant ,/*甲肝需补种剂次*/
+        sum( CASE WHEN c.B073State = '1' AND  c.B073StateAfter = '11'   THEN 1 ELSE 0 END )   B073HasReplant,/*甲肝补种剂次*/
+        sum( CASE WHEN c.B074State = '1' THEN 1 ELSE 0 END ) B074NeedReplant ,/*甲肝需补种剂次*/
+        sum( CASE WHEN c.B074State = '1' AND  c.B074StateAfter = '11'   THEN 1 ELSE 0 END )   B074HasReplant/*甲肝补种剂次*/
+        from  nur_school s
+        inner  join nur_stuinfo c on c.schId = s.sch_id
+        inner join  v_sys_station vs on  vs.STATIONCODE = s.sch_stationcode
+        where invalid_status !='1'
+        <include refid="diqu"></include>
+        <include refid="rxrtStateNumcondition"></include>
+        GROUP BY
+        <if test="areaCode != null and areaCode != '' and areaLevel != null and areaLevel != ''">
+            <if test="areaLevel == 0">
+                c.stu_cityCode
+            </if>
+            <if test="areaLevel == 1">
+                c.stu_countyCode
+            </if>
+            <if test="areaLevel == 2">
+                c.stu_streetcode
+            </if>
+            <if test="areaLevel == 3">
+                c.stu_StationCode
+            </if>
+            <if test="areaLevel == 4">
+                s.sch_id
+            </if>
+        </if>
+    </select>
+
+    <select id="findSchStu"  resultType="com.shensu.mybatis.entity.inforInspection.SchoolNumBean">
+        select  <include refid="showArea"></include> count( c.rowkey ) stuCount
+        from    nur_school s
+        inner join nur_stuinfo c ON c.schId  = s.sch_id
+        inner join  v_sys_station vs on  vs.STATIONCODE = s.sch_stationcode
+        where invalid_status !='1'
+        <include refid="diqu"></include>
+        <include refid="rxrtStateNumcondition"></include>
+        GROUP BY  s.sch_id ,s.sch_name,
+        <if test="areaCode != null and areaCode != '' and areaLevel != null and areaLevel != ''">
+            <if test="areaLevel == 0">
+                c.stu_cityCode
+            </if>
+            <if test="areaLevel == 1">
+                c.stu_countyCode
+            </if>
+            <if test="areaLevel == 2">
+                c.stu_streetcode
+            </if>
+            <if test="areaLevel == 3">
+                c.stu_StationCode
+            </if>
+            <if test="areaLevel == 4">
+                s.sch_id
+            </if>
+        </if>
+
+    </select>
+
+
+    <select id="findStudentReplate" resultType="com.shensu.mybatis.entity.check.Student">
+        select
+            st.schid  as schId ,
+            ns.sch_name,st.clazz_name clazzName ,st.grade grade ,st.rowkey,st.stu_name,st.stu_birth,
+            st.stu_isjz,
+            st.stu_isfull,
+            st.stu_isjz_origin,
+            st.stu_isfull_origin,
+        B063State,
+        B064State,
+        B065State,
+        B001State,
+        B009State,
+        B010State,
+        B011State,
+        B012State,
+        B015State,
+        B016State,
+        B017State,
+        B018State,
+        B037State,
+        B059State,
+        B060State,
+        B040State,
+        B041State,
+        B045State,
+        B046State,
+        B032State,
+        B033State,
+        B073State,
+        B074State,
+        B063StateAfter,
+        B064StateAfter,
+        B065StateAfter,
+        B001StateAfter,
+        B009StateAfter,
+        B010StateAfter,
+        B011StateAfter,
+        B012StateAfter,
+        B015StateAfter,
+        B016StateAfter,
+        B017StateAfter,
+        B018StateAfter,
+        B037StateAfter,
+        B038StateAfter,
+        B039StateAfter,
+        B059StateAfter,
+        B060StateAfter,
+        B040StateAfter,
+        B041StateAfter,
+        B045StateAfter,
+        B046StateAfter,
+        B032StateAfter,
+        B033StateAfter,
+        B073StateAfter,
+        B074StateAfter,
+            d001,
+            d063,d064,d065,
+            d009,d010,d011,d012,
+            d015,d016,d017,d018,
+            d037,
+            d059,d060,
+            d040,d041,
+            d045,d046,
+            d032,d033,
+            d073, d074,
+            d050,d132
+        from  v_sys_station vs left join  nur_school ns on vs.STATIONCODE=ns.sch_stationcode
+                               left join nur_stuinfo st on st.schid=ns.sch_id
+        where
+          vs.STATIONCODE=#{areaCode}   and        invalid_status !='1'
+        <if test="checkType != null and checkType != ''">and ns.sch_type=#{checkType}</if>
+        <if test="schId != null and schId != ''"> and ns.sch_id=#{schId}</if>
+        <if test="classYear != null and classYear != ''">  and st.academic_year=#{classYear}</if>
+        <if test="lunci != null and lunci != ''"> and st.rounds=#{lunci}</if>
+        <if test="className != null and className != ''">  and st.clazz_name=#{className}</if>
+        <if test="grade != null and  grade != ''">  and st.grade=#{grade}</if>
+         and(
+        B001State = '1' and B001StateAfter =  '11' or
+        B009State = '1' and B009StateAfter =  '11' or
+        B010State = '1' and B010StateAfter =  '11' or
+        B011State = '1' and B011StateAfter =  '11' or
+        B012State = '1' and B012StateAfter =  '11' or
+        B015State = '1' and B015StateAfter =  '11' or
+        B016State = '1' and B016StateAfter =  '11' or
+        B017State = '1' and B017StateAfter =  '11' or
+        B018State = '1' and B018StateAfter =  '11' or
+        B032State = '1' and B032StateAfter =  '11' or
+        B033State = '1' and B033StateAfter =  '11' or
+        B037State = '1' and B037StateAfter =  '11' or
+        B040State = '1' and B040StateAfter =  '11' or
+        B041State = '1' and B041StateAfter =  '11' or
+        B045State = '1' and B045StateAfter =  '11' or
+        B046State = '1' and B046StateAfter =  '11' or
+        B059State = '1' and B059StateAfter =  '11' or
+        B060State = '1' and B060StateAfter =  '11' or
+        B063State = '1' and B063StateAfter =  '11' or
+        B064State = '1' and B064StateAfter =  '11' or
+        B065State = '1' and B065StateAfter =  '11' or
+        B033State = '1' and B033StateAfter =  '11' or
+        B073State = '1' and B073StateAfter =  '11'
+        )
+
+
+    </select>
+</mapper>

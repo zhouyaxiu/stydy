@@ -1,0 +1,192 @@
+.comm-table {
+	color: #717e89;
+	font-size: 12px;
+	box-shadow: 0 2px 8px 2px rgb(0 0 0 / 10%);
+}
+
+.el-table {
+	border-radius: 0;
+}
+
+.el-table .cell {
+	font-size: 15px !important;
+	word-wrap: break-word !important;
+	text-align: center;
+}
+
+.el-table th,
+.el-table thead.is-group th {
+	background-color: #F4F8FE !important;
+	color: #4B5C8C !important;
+	font-size: 12px !important;
+}
+
+.el-table__fixed-header-wrapper tr:nth-last-child(2) th:not(:last-child){
+	border-right: 1px solid #C0D2EE !important;
+	/* border-bottom: 1px solid #C0D2EE !important; */
+}
+.el-table__header-wrapper tr+tr th:not(:last-child), 
+.el-table__fixed-header-wrapper tr+tr th:not(:last-child){
+	border-right: 1px solid #C0D2EE !important;
+}
+.el-table__header-wrapper tr th:not(:last-child), .el-table__fixed-header-wrapper tr th:not(:last-child){
+	border-right: 1px solid #C0D2EE !important;
+}
+
+.el-table__header-wrapper tr th:not(:last-child), .el-table__fixed-header-wrapper tr th:not(:last-child){
+	border-bottom: 1px solid #C0D2EE !important;
+}
+.el-table__header-wrapper tr:nth-last-child(2) th:not(:nth-last-child(2)){
+	border-right: 1px solid #C0D2EE !important;
+}
+.el-table td:last-child, .el-table__header-wrapper tr:nth-last-child(2) th:nth-last-child(2),  
+.el-table__header-wrapper tr+tr th:nth-last-child(2), 
+.el-table__header-wrapper tr th:not(.is-leaf){
+	border-right: 0 !important;
+}
+.el-table td{
+	border-right: 1px solid #C0D2EE;
+	border-bottom: 1px solid #C0D2EE;
+}
+
+
+/*合并表格样式*/
+
+.merge-table {
+	background-color: #fff;
+	font-size: 15px;
+	color: #35566F;
+	line-height: 50px;
+	text-align: center;
+	font-weight: bolder;
+	border-bottom: 1px solid #C0D2EE;
+}
+/*表格结果列中可单击的数据*/
+.link-text {
+	color: #216DFC;
+	cursor: pointer;
+	/* text-decoration: underline; */
+	font-size: 13px !important;
+	font-weight: bold;
+}
+/*自定义表格样式*/
+.custom-table-th {
+	width: 100%;
+	display: flex;
+	background-color: #F4F8FE;
+	color: #4B5C8C;
+	font-size: 12px;
+	height: 35px;
+	line-height: 32px;
+	text-align: center;
+}
+.custom-table-th div:not(:last-child){
+	border-right: 1px solid #C0D2EE;
+}
+
+.custom-table td {
+	background-color: #fff;
+	font-size: 12px;
+	color: #717e89;
+	line-height: 32px;
+	text-align: center;
+	border-bottom: 1px solid #C0D2EE;
+	border-right: 1px solid #C0D2EE;
+}
+.custom-table td:last-child, .custom-table tr td:last-child{
+	border-right: 0 !important;
+}
+
+.custom-table .tab-bg {
+	background-color: #F4F8FE !important;
+	color: #4B5C8C !important;
+	font-size: 12px !important;
+	border-right: 1px solid #C0D2EE !important;
+}
+
+.custom-table .tab-td-lB{
+	/* border-left: 1px solid #C0D2EE !important; */
+}
+
+/*表格下面的备注信息*/
+
+.remark-bottom {
+	line-height: 23px;
+	background: #fff;
+	padding: 5px 0px 0px 0px;
+}
+
+.remark-bottom .mLeft {
+	margin-left: 40px;
+}
+
+/*公共部分table单元格内间距*/
+.el-table .cell{
+	padding-left: 5px !important
+}
+.el-table .cell, .el-table th div{
+	padding-right: 5px !important
+}
+/*动态表格*/
+.dynamic-table .remark-bottom {
+	padding: 0px 0px 0px 1px !important
+}
+.dynamic-table .explain-text {
+	height: 25px !important;
+	margin-top: 3px !important;
+}
+.dynamic-table .content-area{
+	width: 100%;
+	overflow: auto;
+	padding-bottom: 8px;
+}
+.dynamic-table .one-row{
+	width: 100%;
+	display: flex;
+}
+.dynamic-table .el-table .cell{
+	/*line-height: 16px !important*/
+}
+.dynamic-table .el-table th>.cell{
+	/*line-height: 30px !important*/
+}
+.dynamic-table .el-table tbody tr:hover>td { 
+    background-color:none !important
+}
+/**内容太长省略显示鼠标悬浮效果**/
+.el-tooltip__popper{
+	max-width: 250px !important;
+	cursor: pointer !important;
+	color: #fff !important;
+    background-color: rgb(48, 65, 86) !important;
+}
+.padding0 .cell{
+	/* padding-top: 10px !important; */
+}
+/* table固定列下方空白处填补 */
+.el-table .el-table__fixed-body-wrapper{
+	padding-bottom: 10px !important;
+}
+.el-table--border{
+	border: 1px solid #C0D2EE !important;
+}
+.el-table--border::after, .el-table--group::after{
+	background-color: #C0D2EE;
+	z-index: 10;
+}
+.el-table--border::after, .el-table--group::after{
+	width: 0;
+}
+.el-table--border, .el-table--group{
+	border: none;
+}
+.el-table__header-wrapper th:first-child, .el-table__fixed-header-wrapper th:first-child{
+	border-radius: 0 !important;
+}
+.el-table--border th:last-of-type {
+	display: block !important;
+}
+
+.el-table--border .el-table__cell, .el-table__body-wrapper .el-table--border.is-scrolling-left~.el-table__fixed{
+	border-right: 1px solid #C0D2EE;
+}

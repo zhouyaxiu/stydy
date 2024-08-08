@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shensu.mybatis.mapper.student.ExcelImportResutlMapper">
+    <resultMap id="ExcelImportResult" type="com.shensu.mybatis.entity.studentInput.ExcelImportResult">
+        <id property="id" column="ID"></id>
+        <result property="schId" column="SCH_ID"></result>
+        <result property="name" column="NAME"></result>
+        <result property="cid" column="CID"></result>
+        <result property="className" column="CLASS_NAME"></result>
+        <result property="msg" column="MSG"></result>
+        <result property="addTime" column="ADD_TIME"></result>
+        <result property="claId" column="CLA_ID"></result>
+    </resultMap>
+
+    <insert id="saveBatchList">
+        INSERT INTO nur_import_error (SCH_ID,NAME,CID,CLASS_NAME,MSG,ADD_TIME,CLA_ID) VALUES
+        <foreach collection="list" item="bean" separator=",">
+            (#{bean.schId},#{bean.name},#{bean.cid},#{bean.className},#{bean.msg},NOW(),#{bean.claId})
+        </foreach>
+    </insert>
+
+    <select id="getListBySchIdAndYearAndGradeAndRound" resultMap="ExcelImportResult">
+        SELECT
+            ID,
+            NAME,
+            CID,
+            CLASS_NAME,
+            MSG
+        FROM
+            nur_import_error
+        WHERE
+            sch_id = #{schId}
+            and cla_id = #{claId}
+        order by ADD_TIME desc
+    </select>
+
+
+    <insert id="saveCheckAgainList">
+        INSERT INTO nur_import_again (CID,schid,stu_clacode,stu_stationcode) VALUES
+        <foreach collection="beans" item="bean" separator=",">
+            (#{bean.cid},#{bean.schId},#{bean.claId},#{bean.stationCode})
+        </foreach>
+    </insert>
+
+    <select id="getAllStuAgain" resultType="com.shensu.mybatis.entity.studentInput.ExcelImportResult">
+        SELECT
+            CID cid,
+            schid schId,
+            stu_clacode claId,
+            stu_stationcode stationCode
+        FROM
+            nur_import_again
+    </select>
+
+    <delete id="delAgainByCids">
+        delete from nur_import_again where  cid in
+           <foreach collection="cids" item="cid" open="(" close=")" separator=",">
+               #{cid}
+           </foreach>
+    </delete>
+</mapper>

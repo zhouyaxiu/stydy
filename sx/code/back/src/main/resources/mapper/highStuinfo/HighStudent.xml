@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shensu.mybatis.mapper.highStu.HighStuMapper">
+    <select id="findCheckStuds" resultType="com.shensu.mybatis.entity.highStudent.HighStudent">
+        select  * from  nur_stuinfo_high nsh inner join nur_class ns on ns.rowkey=nsh.stu_clacode
+        where 1=1
+         <if test="schId != null and schId != ''"> and nsh.schid =#{schId}</if>
+          <if test="claIds!=null and claIds.length>0">
+             and ns.rowkey in
+              <foreach collection="claIds" item="operaType" separator="," open="(" close=")">
+                     #{operaType}
+              </foreach>
+             </if>
+         <if test="startBirth != null and startBirth != ''">  and nsh.stu_birth >=#{startBirth}</if>
+         <if test="endBirth != null and endBirth != ''"> and nsh.stu_birth &lt;= #{endBirth}</if>
+     </select>
+
+    <select id="findAllCheckStuds" resultType="com.shensu.mybatis.entity.highStudent.HighStudent">
+        select  nsh.* from  nur_stuinfo_high nsh  inner join  nur_stucheck_result nsr on nsh.stu_no = nsr.stu_no
+       where nsr.roundId =#{roundId}
+    </select>
+
+    <insert id="insertCheckResult" parameterType="com.shensu.mybatis.entity.highStudent.HighStudCheck">
+        insert into nur_stucheck_result (roundId,stu_no,FirstDose,secondDose)  values
+        <foreach collection="list" item="checkResult" separator=",">
+           ( #{checkResult.roundId,jdbcType=VARCHAR},
+            #{checkResult.stuNo,jdbcType=VARCHAR},
+            #{checkResult.firstDose,jdbcType=VARCHAR},
+            #{checkResult.secondDose,jdbcType=VARCHAR})
+        </foreach>
+    </insert>
+
+    <select id="getStuBySchIdAndCId" resultType="com.shensu.mybatis.entity.highStudent.HighStudent">
+        SELECT
+            *
+        FROM
+            nur_stuinfo_high
+        WHERE
+            <if test="schId != null and schId !=''">
+                schid = #{schId}
+            </if>
+            <if test="cid !=null and cid !=''">
+                cid = #{cid}
+            </if>
+    </select>
+
+
+    <delete id="deleteStuCheckResult">
+        delete from  nur_stucheck_result  where roundId =#{roundId}
+    </delete>
+
+    <select id="findStuCheckResult"  resultType="com.shensu.mybatis.entity.highStudent.HighStuInfoAndCheck">
+        select
+            temp.round_name ,
+            nc.cla_nameyear ,
+            ns.sch_name ,
+            ns.sch_Id,
+            nc.cla_level ,
+            nc.cla_name,
+            nsh.stu_name ,
+            nsh.cid ,
+            nsh.f_reside_addr ,
+            nsh.stu_type ,
+            nsh.stu_no,
+            temp.FirstDose,
+            temp.secondDose,
+            temp.roundId
+        from
+                nur_stuinfo_high nsh
+                inner join nur_school ns on
+                nsh.schid = ns.sch_id
+                inner join nur_class nc on
+                nsh.stu_clacode  = nc.rowkey
+        inner join (
+                select
+                    nsr.* ,
+                    nr.round_name
+                from
+                    nur_stucheck_result nsr  inner join nur_round nr on nsr.roundId=nr.roundId
+                where 1=1 and nr.schIds like concat('%',#{schId}, '%')
+                <if test="roundName != null and roundName != ''"> and nr.round_name = #{roundName} </if>
+                <if test="vaccName != null and vaccName != ''"> and nr.round_VaccName =#{vaccName}</if>
+                <if test="nowYear != null and nowYear != ''"> and nr.round_year =#{nowYear} </if>
+            ) temp on  nsh.stu_no = temp.stu_no
+           where 1=1
+          <if test="claIds != null and claIds != '' ">
+              and  nc.rowkey in
+              <foreach collection="claIds" item="id" separator="," open="(" close=")">
+                  #{id}
+              </foreach>
+          </if>
+           <if test="stuName != null and stuName != ''">
+              and nsh.stu_name=#{stuName}
+           </if>
+        <if test="cid != null and cid != ''">
+            and nsh.cid=#{cid}
+        </if>
+    </select>
+  <update id="updateCheckResult">
+      update  nur_stucheck_result nsr set nsr.FirstDose=#{stuCheck.firstDose},nsr.secondDose=#{stuCheck.secondDose}
+      where nsr.stu_no=#{ stuNo} and nsr.roundId=#{roundId}
+  </update>
+ <delete id="deleteByRoundIdAndStuNos">
+    delete from nur_stucheck_result
+    where roundId=#{roundId}
+    and stu_no in
+     <foreach collection="stuNo" item="num" separator="," open="(" close=")">
+         #{num}
+     </foreach>
+ </delete>
+
+    <select id="queryBuZhongMess" resultType="com.shensu.mybatis.entity.highStudent.NoticeContent">
+        select
+            nsh.stu_parentname ,
+            ns.sch_name ,
+            nc.cla_name ,
+            nc.cla_shortname,
+            nc.cla_level ,
+            ns.sch_type ,
+            nsh.stu_name ,
+            nsh.stu_birth ,
+            nsh.stu_fathername ,
+            stu_mothername ,
+            ss.ORGAN_NAME stationName ,
+            ss.ORGAN_ADDRESS stationAddress,
+            ss.LINK_PHONE linkPhone,
+            temp.firstDose,
+            temp.secondDose
+        from
+            nur_stuinfo_high nsh
+                inner join nur_school ns on
+                nsh.schid = ns.sch_id
+                inner join nur_class nc on
+                nsh.stu_clacode = nc.rowkey
+                inner join sys_station ss  on ss.ORGAN_CODE  =ns.sch_stationcode
+            inner join(
+            select * from nur_stucheck_result nsr
+            where nsr.roundId =#{roundId}
+            and nsr.stu_no in
+        <foreach collection="stuNos" item="stu" separator="," open="(" close=")">
+            #{stu}
+        </foreach>
+            ) temp on nsh.stu_no =temp.stu_no
+
+
+    </select>
+
+    <select id="getStuByCid" resultType="com.shensu.mybatis.entity.highStudent.HighStudent">
+        select * from nur_stuinfo_high where cid = #{cid}
+    </select>
+
+    <select id="getLoseStuByCid" resultType="com.shensu.mybatis.entity.highStudent.HighStudent">
+        select
+            CID,
+            schid,
+            stu_clacode,
+            stu_stationcode
+        from
+            nur_import_again
+        where cid = #{cid}
+    </select>
+
+    <insert id="batchInsertStu" parameterType="com.shensu.mybatis.entity.highStudent.HighStudent">
+        INSERT INTO nur_stuinfo_high (
+            stu_no,
+            stu_imuno,
+            stu_name,
+            cid,
+            stu_birth,
+            stu_sex,
+            stu_type,
+            stu_phone,
+            stu_clacode,
+            schid,
+            stu_stationcode,
+            stu_belong_stationcode,
+            stu_addtime,
+            stu_updatetime,
+            f_reside_addr,
+            stu_mothername,
+            stu_fathername,
+            stu_parentname,
+            stu_father_phone,
+            stu_mother_phone,
+            mmr,
+            mmr_id,
+            var_one,
+            var_one_id,
+            var_two,
+            var_two_id,
+            flu_one,
+            flu_one_id
+        )
+        VALUES
+            <foreach collection="highStudents" item="bean" separator=",">
+                (
+                 #{bean.stuNo},
+                 #{bean.stuImuno},
+                 #{bean.stuName},
+                 #{bean.cid},
+                 #{bean.stuBirth},
+                 #{bean.stuSex},
+                 #{bean.stuType},
+                 #{bean.stuPhone},
+                 #{bean.stuClacode},
+                 #{bean.schid},
+                 #{bean.stuStationcode},
+                 #{bean.stuBelongStationcode},
+                 now(),
+                 now(),
+                 #{bean.fResideAddr},
+                 #{bean.stuMothername},
+                 #{bean.stuFathername},
+                 #{bean.stuParentname},
+                 #{bean.stuFatherPhone},
+                 #{bean.stuMotherPhone},
+                 #{bean.mmr},
+                 #{bean.mmrId},
+                 #{bean.varOne},
+                 #{bean.varOneId},
+                 #{bean.varTwo},
+                 #{bean.varTwoId},
+                 #{bean.fluOne},
+                 #{bean.fluOneId}
+                )
+            </foreach>
+    </insert>
+
+    <select id="findStuNumByClaId" resultType="int">
+        select count(*) from nur_stuinfo_high nsh
+        where nsh.stu_clacode=#{claId}
+    </select>
+
+    <delete id="deleteStuByClaIds">
+        delete from nur_stuinfo_high
+        where  stu_clacode in
+        <foreach collection="claIds" item="claId" separator="," open="(" close=")">
+            #{claId}
+        </foreach>
+    </delete>
+</mapper>

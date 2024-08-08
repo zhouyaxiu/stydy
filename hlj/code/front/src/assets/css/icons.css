@@ -1,0 +1,33 @@
+.ss-icon-leftTop{
+	background-image: url(../img/icon/icon-left.png);
+	width: 14px !important;
+	height: 15px !important;
+}
+.ss-icon-rightTop{
+	background-image: url(../img/icon/icon-right.png);
+	width: 14px !important;
+	height: 15px !important;
+	margin-right: -1px !important;
+}
+.ss-icon-divLeftTop{
+	background-image: url(../img/icon/icon-divLeft.png);
+	width: 78px !important;
+	height: 15px !important;
+	margin-top: 0px !important;
+}
+.ss-icon-divRightTop{
+	background-image: url(../img/icon/icon-divRight.png);
+	width: 114px !important;
+	height: 15px !important;
+	margin-right: 0px !important;
+	margin-top: 0px !important;
+}
+
+.ss-icon-navi{
+	background-image: url(../img/icon/icon_navi.png);
+	width: 27px !important;
+	height: 27px !important;
+	margin-left: 2px;
+	margin-right: 5px;
+	margin-top: 16px !important;
+}

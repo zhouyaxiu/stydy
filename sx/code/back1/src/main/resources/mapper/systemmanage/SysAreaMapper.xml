@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shensu.mybatis.mapper.systemmanage.SysAreaMapper">
+
+    <select id="findStationBySchId" resultType="com.shensu.mybatis.entity.systemmanage.VSysStation">
+        SELECT * FROM v_sys_station WHERE ID = (SELECT sch_stationid FROM nur_school WHERE sch_id = #{schId} LIMIT 1)
+    </select>
+
+    <select id="findStationByStationCode" resultType="com.shensu.mybatis.entity.systemmanage.VSysStation">
+        SELECT * FROM v_sys_station WHERE stationcode = #{stationCode} LIMIT 1
+    </select>
+
+    <!--
+    <select id="findStationMess" resultType="com.shensu.mybatis.entity.systemmanage.SysStation">
+        select organ_name organName ,ORGAN_ADDRESS organAddress,LINK_PHONE linkPhone
+        from sys_station where organ_code= #{areaCode}
+    </select>
+    -->
+
+</mapper>

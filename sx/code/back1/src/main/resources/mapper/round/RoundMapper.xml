@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shensu.mybatis.mapper.round.RoundMapper">
+    <select id="findMaxRoundId" resultType="java.lang.String">
+        select max(CAST(nr.roundId as SIGNED)) from nur_round nr
+    </select>
+    <select id="findRoundName" resultType="java.lang.String">
+        select  max(CAST(nr.round_name as SIGNED))  from  nur_round nr
+        where  nr.round_year  = #{nowYear}  and nr.round_VaccName =#{vaccName}
+    </select>
+
+    <select id="findRounds" resultType="com.shensu.mybatis.entity.round.Round">
+        select * from
+        nur_round nr
+        where 1=1
+        <if test='state!=null  and state=="0"'>
+            and nr.deleteState='0'
+        </if>
+        <if test="roundName!=null and roundName!='' ">
+            and nr.round_name = #{roundName}
+        </if>
+        <if test="nowYear!=null and nowYear!='' ">
+            and nr.round_year = #{nowYear}
+        </if>
+        <if test="vaccName!=null and vaccName!='' ">
+            and nr.round_VaccName = #{vaccName}
+        </if>
+        <if test="schId!=null and schId!='' ">
+            and nr.schIds like  concat('%', #{schId},'%')
+        </if>
+        order by nr.round_year desc , CAST(nr.round_name as SIGNED)  asc
+    </select>
+
+    <insert id="addRound" >
+        insert into nur_round(roundId,round_name,round_VaccName,round_year,if_task,startTime,endTime,areaCode,schIds,claIds,startBirth,endBirth,addtime,claLevels)
+        values(#{id},#{roundName},#{vaccName},#{nowYear},'0',#{startTime},#{endTime},#{areaCode},#{schId},#{claId},#{startBirth},#{endBirth},now(),#{claLevels})
+    </insert>
+
+    <update id="deleteRound" >
+        update  nur_round  ns set ns.deleteState ='1'
+        where ns.roundId =#{roundId}
+    </update>
+
+
+    <select id="findAllRounds" resultType="com.shensu.mybatis.entity.round.Round">
+        select * from nur_round nr where nr.if_task=#{state}  and   nr.deleteState='0'
+    </select>
+
+    <update id="updateRoundState">
+        update  nur_round set if_task='1'
+        where  roundId=${roundId}
+    </update>
+
+    <select id="getRoundById" resultType="com.shensu.mybatis.entity.round.Round">
+        select * from nur_round where roundId = #{id}
+    </select>
+
+    <select id="findRound" resultType="com.shensu.mybatis.entity.round.Round">
+        select * from nur_round  nr where 1=1
+        <if test="roundName!=null and roundName!='' ">
+            and  nr.round_name = #{roundName}
+        </if>
+        <if test="nowYear!=null and nowYear!='' ">
+            and nr.round_year = #{nowYear}
+        </if>
+        <if test="vaccName!=null and vaccName!='' ">
+            and nr.round_VaccName = #{vaccName}
+        </if>
+    </select>
+</mapper>

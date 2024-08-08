@@ -1,0 +1,29 @@
+spring:
+  profiles:
+    active: '@spring.profiles.active@'
+#mybatis:
+#  mapper-locations: classpath:mapper/**/*.xml
+#  configuration:
+#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: true
+    jdbc-type-for-null: 'null'
+
+
+pagehelper:
+  helper-dialect: mysql
+  reasonable: true
+  support-methods-arguments: true
+  params: count=countSql
+
+logging:
+  config: classpath:logback-spring.xml # logback日志配置
+  file:
+    path: ./log
+  level:
+    org:
+      springframework:
+        web: INFO
+

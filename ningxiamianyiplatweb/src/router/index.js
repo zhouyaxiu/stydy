@@ -34,7 +34,16 @@ const routes = [
       ...childrendata,
       ...usersetting,
       ...stat,
-      ...inoculation
+      ...inoculation,
+      {
+        path: "/excelwater",
+        name: "excelwater",
+        meta: {
+          title: "系统首页",
+        },
+        component: () =>
+          import(/* webpackChunkName: "dashboard" */ "../views/excelwater/index.vue"),
+      },
     ],
   },
   {

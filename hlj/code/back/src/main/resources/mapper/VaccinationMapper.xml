@@ -1,0 +1,493 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shensu.jsjm.mapper.VaccinationMapper">
+
+    <select id="getSameDayFreeVacc" resultType="int" parameterType="java.lang.String">
+        select count(1) from EPI_JZJL where FPropertyCode in('01','02') and FSHOTDATED = TO_CHAR(SYSDATE,'YYYY-MM-DD') and CITYCODE = #{areaCode}
+    </select>
+
+    <select id="getSameDayCharge" resultType="int" parameterType="java.lang.String">
+        <!--select count(1) from ${jzTableName} where FPropertyCode not in('01','02') and FSHOTDATED = date_format(now(), '%Y-%m-%d')-->
+        select count(1) from EPI_JZJL where FPropertyCode in('03','04','05','06','09') and FSHOTDATED = TO_CHAR(SYSDATE,'YYYY-MM-DD') and CITYCODE = #{areaCode}
+    </select>
+
+    <select id="getSameDayFreeJZJL" resultType="com.shensu.jsjm.model.JZJL" statementType="STATEMENT" parameterType="java.lang.String">
+        select FSTATIONCODE as stationCode from ${jzTableName} where FPropertyCode in('01','02') and FSHOTDATED = TO_CHAR(SYSDATE,'YYYY-MM-DD')
+    </select>
+
+    <select id="getSameDayChargeJZJL" resultType="com.shensu.jsjm.model.JZJL" statementType="STATEMENT" parameterType="java.lang.String">
+        <!--select FSTATIONCODE as stationCode from ${jzTableName} where FPropertyCode not in('01','02') and FSHOTDATED = date_format(now(), '%Y-%m-%d')-->
+        select FSTATIONCODE as stationCode from ${jzTableName} where FPropertyCode in('03','04','05','06','09') and FSHOTDATED = TO_CHAR(SYSDATE,'YYYY-MM-DD')
+    </select>
+
+
+    <select id="getVaccRateByCity" resultType="com.shensu.jsjm.model.EpiStatAge">
+        SELECT
+            SUM( CHILD_COUNT ) childCount,
+            sum( SZ_B001 ) szB001,
+            sum( SZ_OPV_1 ) szOPV1,
+            sum( SZ_OPV_2 ) szOPV2,
+            sum( SZ_OPV_3 ) szOPV3,
+            sum( SZ_OPV_4 ) szOPV4,
+            sum( SZ_DPT_1 ) szDPT1,
+            sum( SZ_DPT_2 ) szDPT2,
+            sum( SZ_DPT_3 ) szDPT3,
+            sum( SZ_DPT_4 ) szDPT4,
+            sum( SZ_MV_1 ) szMV1,
+            sum( SZ_MV_2 ) szMV2,
+            sum( SZ_MV_3 ) szMV3,
+            sum( SZ_B063 ) szB063,
+            sum( SZ_B064 ) szB064,
+            sum( SZ_B065 ) szB065,
+            sum( SZ_B032 ) szB032,
+            sum( SZ_B033 ) szB033,
+            sum( SZ_B040 ) szB040,
+            sum( SZ_B041 ) szB041,
+            sum( SZ_B045 ) szB045,
+            sum( SZ_B046 ) szB046,
+            sum( SZ_B069 ) szB069,
+            sum( SZ_B037 ) szB037,
+            sum( CASE WHEN MONTHS_BETWEEN &lt; 3 THEN SZ_OPV_1 WHEN MONTHS_BETWEEN &lt; 4 THEN SZ_ALL_OPV_2 ELSE SZ_ALL_OPV_3 END ) szAllOPV,
+            sum( SZ_ALL_OPV_4 ) szAllOPV4,
+            sum( CASE WHEN MONTHS_BETWEEN &lt; 4 THEN SZ_DPT_1 WHEN MONTHS_BETWEEN &lt; 5 THEN SZ_ALL_DPT_2 ELSE SZ_ALL_DPT_3 END ) szAllDPT,
+            sum( SZ_ALL_DPT_4 ) szAllDPT4,
+            sum( SZ_ALL_MV_2 ) szAllMV2,
+            sum( SZ_ALL_MV_3 ) szAllMV3,
+            sum( SZ_ALL_JEV_2 ) szAllJEV2,
+            sum( CASE WHEN MONTHS_BETWEEN &lt; 1 THEN SZ_B063 WHEN MONTHS_BETWEEN &lt; 6 THEN SZ_ALL_HEPB_2 ELSE SZ_ALL_HEPB_3 END ) szAllHEPB,
+            sum( CASE WHEN MONTHS_BETWEEN &lt; 9 THEN SZ_B040 ELSE SZ_ALL_MENA END ) szAllMENA,
+            sum( SZ_ALL_MENAC_2 ) szAllMENAC2,
+            sum(
+            CASE
+            WHEN MONTHS_BETWEEN &lt; 1 THEN
+            SZ_ALL_FIVE_LT_1
+            WHEN MONTHS_BETWEEN &lt; 3 THEN
+            SZ_ALL_FIVE_LT_3
+            WHEN MONTHS_BETWEEN &lt; 4 THEN
+            SZ_ALL_FIVE_LT_4
+            WHEN MONTHS_BETWEEN &lt; 5 THEN
+            SZ_ALL_FIVE_LT_5
+            WHEN MONTHS_BETWEEN &lt; 6 THEN
+            SZ_ALL_FIVE_LT_6 ELSE SZ_ALL_FIVE
+            END
+            ) szAllFive,
+            sum( SZ_ALL_FIVE_1 ) szAllFive1,
+            sum( SZ_ALL_FIVE_2 ) szAllFive2,
+            sum( SZ_ALL_FIVE_3 ) szAllFive3,
+            sum( SZ_ALL_EIGHT_1 ) szAllEight1,
+            sum( CASE WHEN MONTHS_BETWEEN &lt; 36 THEN SZ_ALL_EIGHT_1 WHEN MONTHS_BETWEEN &lt; 48 THEN SZ_ALL_EIGHT_5 ELSE SZ_ALL_EIGHT_2 END ) szAllEight2,
+            sum( SZ_ALL_EIGHT_3 ) szAllEight3,
+            sum( SZ_ALL_EIGHT_4 ) szAllEight4
+        FROM
+            EPI_STAT_HGBHG_AGE_RPT_CITY
+        WHERE
+            AGE_MONTH = #{age}
+            AND fisadult = '0'
+    </select>
+
+    <select id="getVaccRateByUnit" resultType="com.shensu.jsjm.model.EpiStatAge">
+        SELECT
+            SUM( CHILD_COUNT ) childCount,
+            sum( SZ_B001 ) szB001,
+            sum( SZ_OPV_1 ) szOPV1,
+            sum( SZ_OPV_2 ) szOPV2,
+            sum( SZ_OPV_3 ) szOPV3,
+            sum( SZ_OPV_4 ) szOPV4,
+            sum( SZ_DPT_1 ) szDPT1,
+            sum( SZ_DPT_2 ) szDPT2,
+            sum( SZ_DPT_3 ) szDPT3,
+            sum( SZ_DPT_4 ) szDPT4,
+            sum( SZ_MV_1 ) szMV1,
+            sum( SZ_MV_2 ) szMV2,
+            sum( SZ_MV_3 ) szMV3,
+            sum( SZ_B063 ) szB063,
+            sum( SZ_B064 ) szB064,
+            sum( SZ_B065 ) szB065,
+            sum( SZ_B032 ) szB032,
+            sum( SZ_B033 ) szB033,
+            sum( SZ_B040 ) szB040,
+            sum( SZ_B041 ) szB041,
+            sum( SZ_B045 ) szB045,
+            sum( SZ_B046 ) szB046,
+            sum( SZ_B069 ) szB069,
+            sum( SZ_B037 ) szB037,
+            sum( CASE WHEN MONTHS_BETWEEN &lt; 3 THEN SZ_OPV_1 WHEN MONTHS_BETWEEN &lt; 4 THEN SZ_ALL_OPV_2 ELSE SZ_ALL_OPV_3 END ) szAllOPV,
+            sum( SZ_ALL_OPV_4 ) szAllOPV4,
+            sum( CASE WHEN MONTHS_BETWEEN &lt; 4 THEN SZ_DPT_1 WHEN MONTHS_BETWEEN &lt; 5 THEN SZ_ALL_DPT_2 ELSE SZ_ALL_DPT_3 END ) szAllDPT,
+            sum( SZ_ALL_DPT_4 ) szAllDPT4,
+            sum( SZ_ALL_MV_2 ) szAllMV2,
+            sum( SZ_ALL_MV_3 ) szAllMV3,
+            sum( SZ_ALL_JEV_2 ) szAllJEV2,
+            sum( CASE WHEN MONTHS_BETWEEN &lt; 1 THEN SZ_B063 WHEN MONTHS_BETWEEN &lt; 6 THEN SZ_ALL_HEPB_2 ELSE SZ_ALL_HEPB_3 END ) szAllHEPB,
+            sum( CASE WHEN MONTHS_BETWEEN &lt; 9 THEN SZ_B040 ELSE SZ_ALL_MENA END ) szAllMENA,
+            sum( SZ_ALL_MENAC_2 ) szAllMENAC2,
+            sum(
+            CASE
+                WHEN MONTHS_BETWEEN &lt; 1 THEN
+                    SZ_ALL_FIVE_LT_1
+                WHEN MONTHS_BETWEEN &lt; 3 THEN
+                    SZ_ALL_FIVE_LT_3
+                WHEN MONTHS_BETWEEN &lt; 4 THEN
+                    SZ_ALL_FIVE_LT_4
+                WHEN MONTHS_BETWEEN &lt; 5 THEN
+                    SZ_ALL_FIVE_LT_5
+                WHEN MONTHS_BETWEEN &lt; 6 THEN
+                    SZ_ALL_FIVE_LT_6 ELSE SZ_ALL_FIVE
+                END
+                ) szAllFive,
+            sum( SZ_ALL_FIVE_1 ) szAllFive1,
+            sum( SZ_ALL_FIVE_2 ) szAllFive2,
+            sum( SZ_ALL_FIVE_3 ) szAllFive3,
+            sum( SZ_ALL_EIGHT_1 ) szAllEight1,
+            sum( CASE WHEN MONTHS_BETWEEN &lt; 36 THEN SZ_ALL_EIGHT_1 WHEN MONTHS_BETWEEN &lt; 48 THEN SZ_ALL_EIGHT_5 ELSE SZ_ALL_EIGHT_2 END ) szAllEight2,
+            sum( SZ_ALL_EIGHT_3 ) szAllEight3,
+            sum( SZ_ALL_EIGHT_4 ) szAllEight4
+        FROM
+            EPI_STAT_HGBHG_AGE_RPT_UNIT
+        WHERE
+            citycode=#{areaCode}
+            AND AGE_MONTH = #{age}
+            AND fisadult = '0'
+    </select>
+
+    <select id="getScanVaccinationRates" resultType="com.shensu.jsjm.model.ScanVaccinationRate">
+        SELECT
+            AREA_NAME as areaName,
+            (
+            SELECT
+                CASE WHEN sum(scan1.smjzcount) IS NULL THEN 0 ELSE sum(scan1.smjzcount ) END
+            FROM
+                epi_stat_scan_month scan1
+            WHERE
+                scan1.inoc_date &gt;= #{startDate}
+                AND scan1.inoc_date &lt;= #{endDate}
+              <choose>
+                  <when test="level == 0">AND scan1.citycode = s.area_code</when>
+                  <when test="level == 1">AND scan1.COUNTYCODE = s.area_code</when>
+              </choose>
+            ) scanCount,
+            (
+            SELECT
+                CASE WHEN sum(allImmun.szcount) IS NULL THEN 0 ELSE sum(allImmun.szcount) END
+            FROM
+                epi_stat_sz_month allImmun
+            WHERE
+                allImmun.inoc_date &gt;= #{startDate}
+                AND allImmun.inoc_date &lt;= #{endDate}
+                <choose>
+                    <when test="level == 0">AND allImmun.citycode = s.area_code</when>
+                    <when test="level == 1">AND allImmun.COUNTYCODE = s.area_code</when>
+                </choose>
+            ) szCount
+        FROM
+            sys_area s
+        WHERE
+            s.area_code =#{areaCode}
+    </select>
+
+    <select id="getScanVaccinationRatesByCountry" resultType="com.shensu.jsjm.model.ScanVaccinationRate">
+        SELECT
+            AREA_NAME as areaName,
+            (
+                SELECT
+                    CASE WHEN sum(scan1.smjzcount) IS NULL THEN 0 ELSE sum(scan1.smjzcount ) END
+                FROM
+                    epi_stat_scan_month scan1
+                WHERE
+                    scan1.inoc_date &gt;= #{startDate}
+                  AND scan1.inoc_date &lt;= #{endDate}
+                  AND scan1.COUNTYCODE = s.area_code
+            ) scanCount,
+            (
+                SELECT
+                    CASE WHEN sum(allImmun.szcount) IS NULL THEN 0 ELSE sum(allImmun.szcount) END
+                FROM
+                    epi_stat_sz_month allImmun
+                WHERE
+                    allImmun.inoc_date &gt;= #{startDate}
+                  AND allImmun.inoc_date &lt;= #{endDate}
+                  AND allImmun.COUNTYCODE = s.area_code
+            ) szCount
+        FROM
+            sys_area s
+        WHERE
+            s.area_code =#{areaCode}
+    </select>
+
+    <select id="getNIPVaccs" resultType="com.shensu.jsjm.model.NIPVacc">
+        select
+        AREA_NAME areaName ,
+        case
+        when sum(CHILD_COUNT) is null then 0
+        when sum(CHILD_COUNT) != 0 then ROUND(sum(SZ_ALL)/sum(CHILD_COUNT)*100,0)
+        end  SZPercent
+        from
+        sys_area sa
+        left join gj_jzjc_rpt_month_age_city ci on
+        <if test="0 == level">
+            sa.AREA_CODE = CITYCODE
+        </if>
+        <if test="1 == level">
+            sa.AREA_CODE = COUNTYCODE
+        </if>
+        and ci.AGE_SEGMENT &lt;=  7
+        where
+        RPT_MONTH = (select max(RPT_MONTH) from gj_jzjc_rpt_month_age_city) and
+        sa.SUP_ID = (select id from sys_area sa2 where AREA_CODE=#{areaCode})
+        group by
+        AREA_NAME
+    </select>
+
+    <select id="getVaccinationCounts" resultType="com.shensu.jsjm.model.GJJZJCRPT">
+        select
+        SUM(SZ_0201) SZ02,
+        SUM(SZ_0601) SZ06,
+        SUM(SZ_0401) SZ04,
+        SUM(SZ_0801) SZ08,
+        SUM(SZ_1401) SZ14,
+        SUM(SZ_1301) SZ13,
+        SUM(SZ_1201) SZ12,
+        SUM(SZ_1001) SZ10,
+        SUM(SZ_1801 + SZ_1802) SZ18,
+        SUM(SZ_1702 + SZ_1703 + SZ_1704) SZ17,
+        SUM(SZ_1901 + SZ_1903 ) SZ19,
+        SUM(SZ_2001) SZ20,
+        SUM(SZ_2301) SZ23,
+        SUM(SZ_2201) SZ22,
+        SUM(SZ_2401 + SZ_2402) SZ24,
+        SUM(SZ_2101_90 + SZ_2101_32 + SZ_2101_G6 + SZ_2101_FT + SZ_2101_33 + SZ_2109) SZ21,
+        SUM(SZ_2503 + SZ_2501) SZ25,
+        SUM(SZ_2801) SZ28,
+        SUM(SZ_3001) SZ30,
+        SUM(SZ_3701) SZ37,
+        SUM(SZ_3501) SZ35,
+        SUM(SZ_3801) SZ38,
+        SUM(SZ_4701) SZ47,
+        SUM(SZ_0303) SZ03,
+        SUM(SZ_5201) SZ52,
+        SUM(SZ_5001) SZ50,
+        SUM(SZ_4901) SZ49,
+        SUM(SZ_5301) SZ53,
+        SUM(SZ_5401) SZ54,
+        SUM(SZ_5501 + SZ_5502 + SZ_5503) SZ55,
+        SUM(SZ_2202 + SZ_2203) SZ2202
+        from
+        GJ_JZJC_RPT_LAST_YM2_UNIT
+        where
+        <if test="1 == level">
+            CITYCODE = #{areaCode} and
+        </if>
+        SUBSTR(RPT_MONTH, 1, 4) = TO_CHAR(SYSDATE, 'YYYY')
+    </select>
+
+
+
+    <select id="getWisdomBirthYear" resultType="com.shensu.jsjm.model.WisdomBirthYear">
+        SELECT years.year AS BirthYear, COALESCE(SUM(count), 0) AS count
+        FROM (
+        SELECT TO_CHAR(SYSDATE, 'YYYY') AS year
+        UNION ALL
+        SELECT TO_CHAR(SYSDATE, 'YYYY') - 1
+        UNION ALL
+        SELECT TO_CHAR(SYSDATE, 'YYYY') - 2
+        UNION ALL
+        SELECT TO_CHAR(SYSDATE, 'YYYY') - 3
+        UNION ALL
+        SELECT TO_CHAR(SYSDATE, 'YYYY') - 4
+        UNION ALL
+        SELECT TO_CHAR(SYSDATE, 'YYYY') - 5
+        UNION ALL
+        SELECT TO_CHAR(SYSDATE, 'YYYY') - 6
+        UNION ALL
+        SELECT TO_CHAR(SYSDATE, 'YYYY') - 7
+        UNION ALL
+        SELECT TO_CHAR(SYSDATE, 'YYYY') - 8
+        UNION ALL
+        SELECT TO_CHAR(SYSDATE, 'YYYY') - 9
+        UNION ALL
+        SELECT TO_CHAR(SYSDATE, 'YYYY') - 10
+        ) years
+        LEFT JOIN screen_booking_statistics_year a ON a.rpt_year = years.year <if test="1 == level">and a.citycode=#{areaCode}</if>
+
+        GROUP BY years.year order by year
+
+    </select>
+
+    <select id="getWisdomBirthMonth" resultType="com.shensu.jsjm.model.WisdomBirthMonth">
+
+        SELECT months.BirthMonth , COALESCE(SUM(count), 0) AS TOTAL
+        FROM (
+        select 1 BirthMonth union all
+        select 2 BirthMonth union all
+        select 3 BirthMonth union all
+        select 4 BirthMonth union all
+        select 5 BirthMonth union all
+        select 6 BirthMonth union all
+        select 7 BirthMonth union all
+        select 8 BirthMonth union all
+        select 9 BirthMonth union all
+        select 10 BirthMonth union all
+        select 11 BirthMonth union all
+        select 12 BirthMonth
+        ) months
+        LEFT JOIN screen_booking_statistics_month a ON a.rpt_year = TO_CHAR(SYSDATE, 'YYYY') and a.RPT_MONTH = months.BirthMonth <if test="1 == level">and a.citycode=#{areaCode}</if>
+        GROUP BY months.BirthMonth
+    </select>
+
+    <select id="getTodayShotPeople" resultType="java.lang.Long" parameterType="java.lang.String">
+        SELECT count(DISTINCT fchildno)
+        FROM jzjl_ymrq a
+        INNER JOIN v_sys_station b ON a.FSTATIONCODE = b.NEW_BASECODE
+        <where>
+            a.JZJL_TYPE = '1'
+            AND FSHOTDATED = TO_CHAR(SYSDATE, 'YYYY-mm-dd')
+            <if test="1 == level">
+                AND b.CITYCODE = #{areaCode}
+            </if>
+        </where>
+    </select>
+
+    <select id="getTodayShotJC" resultType="java.lang.Long" parameterType="java.lang.String">
+        select ifnull(CASE
+        WHEN sum(jzjccnt) &lt; 0 THEN 0
+        ELSE sum(jzjccnt)
+        END,0) AS jdcnt from screen_station_day_new
+        <where>
+            TO_CHAR(rq, 'YYYY-mm-dd') = TO_CHAR(SYSDATE, 'YYYY-mm-dd')
+            <if test="1 == level">
+                and stationcode in (
+                select NEW_BASECODE from v_sys_station where CITYCODE = #{areaCode}  )
+            </if>
+        </where>
+    </select>
+
+    <select id="getChildBook" resultType="long" >
+        SELECT sum(count) from (
+        select sum(CHILD_COUNT) count from epi_stat_childcount_rpt_city
+        <if test="1 == level">
+            where CITYCODE = #{areaCode}
+        </if>
+        union all
+        select ifnull(sum(jdcnt),0) AS count from screen_station_day_new
+        where TO_CHAR(rq, 'YYYY-mm-dd') = TO_CHAR(SYSDATE, 'YYYY-mm-dd')
+        <if test="1 == level">
+            and stationcode in (
+            select NEW_BASECODE from v_sys_station where CITYCODE = #{areaCode}  )
+        </if>
+        ) x
+    </select>
+
+    <select id="getChildBook06" resultType="long" >
+        SELECT sum(count) from (
+        select sum(CHILD_COUNT) count from epi_stat_childcount_rpt_city where
+        BIRTH &gt;= #{limitDate}
+        <if test="1 == level">
+            and CITYCODE = #{areaCode}
+        </if>
+        union all
+        select ifnull(sum(6_count),0) AS count from screen_station_day_new
+        where TO_CHAR(rq, 'YYYY-mm-dd') = TO_CHAR(SYSDATE, 'YYYY-mm-dd')
+        <if test="1 == level">
+            and stationcode in (
+            select NEW_BASECODE from v_sys_station where CITYCODE = #{areaCode}  )
+        </if>
+        ) x
+    </select>
+
+    <select id="getChildBook718" resultType="long" >
+        SELECT sum(count) from (
+        select sum(CHILD_COUNT) count from epi_stat_childcount_rpt_city where
+        BIRTH &lt;= #{limitDateStart} AND BIRTH &gt;= #{limitDateEnd}
+        <if test="1 == level">
+            and CITYCODE = #{areaCode}
+        </if>
+        union all
+        select ifnull(sum(18_count),0) AS count from screen_station_day_new
+        where TO_CHAR(rq, 'YYYY-mm-dd') = TO_CHAR(SYSDATE, 'YYYY-mm-dd')
+        <if test="1 == level">
+            and stationcode in (
+            select NEW_BASECODE from v_sys_station where CITYCODE = #{areaCode}  )
+        </if>
+        ) x
+    </select>
+    <select id="getChildBook18" resultType="long" >
+        SELECT sum(count) from (
+        select sum(CHILD_COUNT) count from epi_stat_childcount_rpt_city where
+        BIRTH &gt; #{limitDate}
+        <if test="1 == level">
+            and CITYCODE = #{areaCode}
+        </if>
+        union all
+        select ifnull(sum(19_count),0) AS count from screen_station_day_new
+        where TO_CHAR(rq, 'YYYY-mm-dd') = TO_CHAR(SYSDATE, 'YYYY-mm-dd')
+        <if test="1 == level">
+            and stationcode in (
+            select NEW_BASECODE from v_sys_station where CITYCODE = #{areaCode}  )
+        </if>
+        ) x
+    </select>
+
+    <select id="getTodayShotInfo" resultType="com.shensu.jsjm.model.WisdomTodayData">
+        SELECT a.CITYCODE as areaCode,a.CITYNAME as areaName,COUNT(b.FCHILDNO) as todayShotJCNumber,count(DISTINCT b.FCHILDNO) as todayShotPeopleNumber
+        FROM v_SYS_STATION a LEFT JOIN EPI_JZJL b on a.NEW_BASECODE = b.FSTATIONCODE and b.fshotdated = #{dateStr}
+        GROUP BY a.CITYCODE,a.CITYNAME
+    </select>
+
+    <select id="getTodayChildBook" resultType="com.shensu.jsjm.model.WisdomTodayData">
+        SELECT a.CITYCODE as areaCode,a.CITYNAME as areaName,COUNT(b.FCHILDNO) as todayChildBookNumber
+        FROM v_SYS_STATION a LEFT JOIN EPI_CHILDINFO b on a.ORGAN_CODE = b.STATIONCODE and b.BOOKINGDATE &gt;= TO_DATE(concat(#{dateStr},' 00:00:00'), 'YYYY-mm-dd hh24:mi:ss') and b.BOOKINGDATE &lt;= TO_DATE(concat(#{dateStr},' 23:59:59'), 'YYYY-mm-dd hh24:mi:ss')
+        GROUP BY a.CITYCODE,a.CITYNAME
+    </select>
+
+    <select id="getTotalChildBook" resultType="com.shensu.jsjm.model.WisdomTodayData">
+        SELECT
+            a.CITYCODE as areaCode,
+            a.CITYNAME as areaName,
+            COUNT(b.FCHILDNO) as childBookNumber,
+            SUM(CASE WHEN TRUNC(MONTHS_BETWEEN(SYSDATE, b.birth) / 12) BETWEEN 0 AND 6 THEN 1 ELSE 0 END) as childBook06Number,
+            SUM(CASE WHEN TRUNC(MONTHS_BETWEEN(SYSDATE, b.birth) / 12) BETWEEN 7 AND 18 THEN 1 ELSE 0 END) as childBook718Number,
+            SUM(CASE WHEN TRUNC(MONTHS_BETWEEN(SYSDATE, b.birth) / 12) > 18 THEN 1 ELSE 0 END) as childBook18Number
+        FROM
+            v_SYS_STATION a LEFT JOIN
+            EPI_CHILDINFO b on a.ORGAN_CODE = b.STATIONCODE and b.BOOKINGDATE is not null
+        GROUP BY
+            a.CITYCODE, a.CITYNAME
+    </select>
+
+    <insert id="insertVaccinationInfo">
+        insert into SCREEN_STATION_DAY_NEW (AREACODE,AREANAME,JDCNT,JZRSCNT,JZJCCNT,"total_count","6_count","18_count","19_count",RQ)
+        <foreach collection="list" item="item" separator="union all">
+            select #{item.areaCode},
+                   #{item.areaName},
+                   #{item.todayChildBookNumber},
+                   #{item.todayShotPeopleNumber},
+                   #{item.todayShotJCNumber},
+                   #{item.childBookNumber},
+                   #{item.childBook06Number},
+                   #{item.childBook718Number},
+                   #{item.childBook18Number},
+                   SYSDATE
+            from dual
+        </foreach>
+    </insert>
+    <delete id="deleteVaccinationInfo">
+        delete from SCREEN_STATION_DAY_NEW
+    </delete>
+
+    <select id="getVaccinationInfo" resultType="com.shensu.jsjm.model.WisdomTodayData">
+        select sum(JDCNT) as todayChildBookNumber,
+                sum(JZRSCNT) as todayShotPeopleNumber,
+                sum(JZJCCNT) as todayShotJCNumber,
+                sum("total_count") as childBookNumber,
+                sum("6_count") as childBook06Number,
+                sum("18_count") as childBook718Number,
+                sum("19_count") as childBook18Number
+        from SCREEN_STATION_DAY_NEW
+        <where>
+            <if test="areaCode != null and areaCode !=''">AREACODE = #{areaCode}</if>
+        </where>
+    </select>
+</mapper>
+

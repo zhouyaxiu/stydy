@@ -1,0 +1,1016 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shensu.mybatis.mapper.check.CheckInfoMapper">
+
+    <select id="queryStudentList" resultType="com.shensu.mybatis.entity.check.StudentBase">
+        <!--
+        查询条件: String areaCode, String schType, String schName, String year, String rounds, String grade, String clazz,
+        String isjz, String status, String name, String idcard, String code
+        查询结果: 查验状态、是否种全、学校名称、年份、轮次、所在年级、所在班级、儿童编码、手机号码、儿童姓名、性别、出生日期、是否有接种证、儿童条码、户籍类型、查验日期、
+        卡介苗1、乙肝疫苗1-3、脊灰疫苗1-4、百白破疫苗1-4、白破疫苗1、麻疹类疫苗1-2、流脑疫苗（A群流脑疫苗1-2，A＋C群流脑疫苗1-2）、乙脑疫苗1-2、甲肝疫苗1、*水痘疫苗1-2
+        -->
+        select
+            s.rowkey,cid,
+            c.sch_id,
+            c.sch_name,
+            stu_no,
+            stu_imuno,
+            stu_name,
+            stu_birth,
+            stu_sex,
+            stu_type,
+            academic_year,
+            rounds,
+            grade,
+            clazz_name,
+            stu_isjzz,
+            stu_isbjzz,
+            stu_parentname,
+            stu_phone,
+            stu_clacode,
+            stu_stationcode,
+            stu_streetcode,
+            stu_countycode,
+            stu_citycode,
+            stu_addtime,
+            stu_updatetime,first_stu_smrq,
+            stu_sourceid,
+            stu_isjz,
+            stu_isfull,
+            stu_isjz_origin,
+            stu_isfull_origin,
+            stu_parentname, stu_phone as stu_otherphone,
+            d001,
+            d063, d064, d065,
+            d009, d010, d011, d012,
+            d015, d016, d017, d018,
+            d037,
+            d059, d060,
+            d040, d041,
+            d045, d046,
+            d032, d033,
+            d073, d074,
+            d050, d132,
+            b063State, b063StateAfter,
+            b064State, b064StateAfter,
+            b065State, b065StateAfter,
+            b001State, b001StateAfter,
+            b009State, b009StateAfter,
+            b010State, b010StateAfter,
+            b011State, b011StateAfter,
+            b012State, b012StateAfter,
+            b015State, b015StateAfter,
+            b016State, b016StateAfter,
+            b017State, b017StateAfter,
+            b018State, b018StateAfter,
+            b037State, b037StateAfter,
+            b059State, b059StateAfter,
+            b060State, b060StateAfter,
+            b040State, b040StateAfter,
+            b041State, b041StateAfter,
+            b045State, b045StateAfter,
+            b046State, b046StateAfter,
+            b032State, b032StateAfter,
+            b033State, b033StateAfter,
+            b073State, b073StateAfter,
+            b074State, b074StateAfter,
+            b050State, b050StateAfter,
+            b132State, b132StateAfter
+        from nur_stuinfo s
+        left join nur_school c on c.sch_id = s.schid
+        <!--left join nur_class t on t.rowkey = s.stu_clacode-->
+        where  invalid_status !='1'
+            <if test="level != null and areaCode != null and areaCode != ''">
+                <if test="level == 1">
+                    and s.stu_citycode = #{areaCode}
+                </if>
+                <if test="level == 2">
+                    and s.stu_countycode = #{areaCode}
+                </if>
+                <if test="level == 3">
+                    and s.stu_streetcode = #{areaCode}
+                </if>
+                <if test="level >= 4">
+                    and s.stu_stationcode = #{areaCode}
+                </if>
+            </if>
+
+            <if test="schType != null and schType != ''">
+                and c.sch_type in
+                <foreach item="item" index="index" collection="schType.split(',')" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+
+            <if test="schId != null and schId != ''">
+                and s.schid = #{schId}
+            </if>
+
+            <if test="year != null and year != ''">
+                and s.academic_year = #{year}
+            </if>
+
+            <if test="rounds != null and rounds != ''">
+                and s.rounds = #{rounds}
+            </if>
+
+            <if test="grade != null and grade != ''">
+                and s.grade = #{grade}
+            </if>
+
+            <if test="clazz != null and clazz != ''">
+                and s.clazz_name = #{clazz}
+            </if>
+
+        <if test="isjz != null and isjz != ''">
+            and s.stu_isjz in
+            <foreach item="item" index="index" collection="isjz.split(',')" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+            <if test="status != null and status != ''">
+              ${status}
+            </if>
+            <if test="name != null and name != ''">
+                and s.stu_name = #{name}
+            </if>
+
+            <if test="idcard != null and idcard != ''">
+                and s.cid = #{idcard}
+            </if>
+
+            <if test="code != null and code != ''">
+                and s.stu_no = #{code}
+            </if>
+        order by stu_addtime
+    </select>
+
+    <select id="queryOneById" resultType="com.shensu.mybatis.entity.check.StudentBase">
+        select
+            rowkey,cid,
+            stu_no,
+            stu_imuno,
+            stu_name,
+            stu_birth,
+            stu_sex,
+            stu_type,
+            academic_year,
+            rounds,
+            grade,
+            clazz_name,
+            stu_isjzz,
+            stu_isbjzz,
+            stu_parentname,
+            stu_phone,
+            stu_clacode,
+            stu_stationcode,
+            stu_streetcode,
+            stu_countycode,
+            stu_citycode,
+            stu_addtime,
+            stu_updatetime,
+            stu_sourceid,
+            stu_isjz,
+            stu_isfull,
+            stu_isjz_origin,
+            stu_isfull_origin,
+            stu_parentname,stu_phone as stu_otherphone,
+            b001, b063, b064, b065, b009, b010, b011, b012,
+            b015, b016, b017, b018, b037, b093, b094, b040, b041, b045, b046,
+            b032, b033, b034, b035, b036, b069, b070, b071, b072, b050,
+            b132, b169, b170, b171, b172, b163, b164, b165, b166, b157,
+            b158, b159, b160, b027, b028, b029, b030, b031, b138, b139,
+            b140, b141, b147, b148, b073, b074, b075, b076, b133, b327,
+            b155, b059, b060, b089, b090, b096, b097,
+            d001,
+            d063,d064,d065,
+            d009,d010,d011,d012,
+            d015,d016,d017,d018,
+            d037,
+            d059,d060,
+            d040,d041,
+            d045,d046,
+            d032,d033,
+            d073,d074,
+            d050,d132
+        from nur_stuinfo
+        where rowkey = #{rowkey}
+    </select>
+
+    <select id="queryStuInfoByCode" resultType="com.shensu.mybatis.entity.check.Student">
+        select
+            rowkey,cid,stu_belong_stationcode,f_reside_addr,stu_fathername,stu_mothername,stu_father_phone,stu_mother_phone,
+            stu_no,
+            stu_imuno,
+            stu_name,
+            stu_birth,
+            stu_sex,
+            stu_type,
+            academic_year,
+            rounds,
+            grade,
+            clazz_name,
+            stu_isjzz,
+            stu_isbjzz,
+            stu_parentname,
+            stu_phone,
+            stu_clacode,
+            stu_stationcode,
+            stu_streetcode,
+            stu_countycode,
+            stu_citycode,
+            stu_addtime,
+            stu_updatetime,
+            last_stu_smrq,
+            first_stu_smrq,
+            stu_sourceid,
+            stu_isjz,
+            stu_isfull,
+            stu_isjz_origin,
+            stu_isfull_origin,
+            stu_parentname,stu_phone as stu_otherphone,
+            b001, b063, b064, b065, b009, b010, b011, b012,
+            b015, b016, b017, b018, b037, b093, b094, b040, b041, b045, b046,
+            b032, b033, b034, b035, b036, b069, b070, b071, b072, b050,
+            b132, b169, b170, b171, b172, b163, b164, b165, b166, b157,
+            b158, b159, b160, b027, b028, b029, b030, b031, b138, b139,
+            b140, b141, b147, b148, b073, b074, b075, b076, b133, b327,
+            b155, b059, b060, b089, b090, b096, b097,
+            b063State, b063StateAfter,
+            b064State, b064StateAfter,
+            b065State, b065StateAfter,
+            b001State, b001StateAfter,
+            b009State, b009StateAfter,
+            b010State, b010StateAfter,
+            b011State, b011StateAfter,
+            b012State, b012StateAfter,
+            b015State, b015StateAfter,
+            b016State, b016StateAfter,
+            b017State, b017StateAfter,
+            b018State, b018StateAfter,
+            b037State, b037StateAfter,
+            b059State, b059StateAfter,
+            b060State, b060StateAfter,
+            b040State, b040StateAfter,
+            b041State, b041StateAfter,
+            b045State, b045StateAfter,
+            b046State, b046StateAfter,
+            b032State, b032StateAfter,
+            b033State, b033StateAfter,
+            b073State, b073StateAfter,
+            b074State, b074StateAfter,
+            b050State, b050StateAfter,
+            b132State, b132StateAfter,
+            d001,
+            d063,d064,d065,
+            d009,d010,d011,d012,
+            d015,d016,d017,d018,
+            d037,
+            d059,d060,
+            d040,d041,
+            d045,d046,
+            d032,d033,
+            d073,d074,
+            d050,d132
+        from nur_stuinfo
+        where stu_no in
+        <foreach collection="childnoList" item="childno" open="(" separator="," close=")">
+            #{childno}
+        </foreach>
+    </select>
+
+    <select id="queryStuInfoByRowkey" resultType="com.shensu.mybatis.entity.check.Student">
+        select
+            rowkey,cid,
+            stu_no,
+            stu_imuno,
+            stu_name,
+            stu_birth,
+            stu_sex,
+            stu_type,
+            academic_year,
+            rounds,
+            grade,
+            clazz_name,
+            stu_isjzz,
+            stu_isbjzz,
+            stu_parentname,
+            stu_phone,
+            stu_clacode,
+            stu_stationcode,
+            stu_streetcode,
+            stu_countycode,
+            stu_citycode,
+            stu_addtime,
+            stu_updatetime,
+            last_stu_smrq,
+            first_stu_smrq,
+            stu_sourceid,
+            stu_isjz,
+            stu_isfull,
+            stu_isjz_origin,
+            stu_isfull_origin,
+            stu_parentname,stu_phone as stu_otherphone,
+            b001, b063, b064, b065, b009, b010, b011, b012,
+            b015, b016, b017, b018, b037, b093, b094, b040, b041, b045, b046,
+            b032, b033, b034, b035, b036, b069, b070, b071, b072, b050,
+            b132, b169, b170, b171, b172, b163, b164, b165, b166, b157,
+            b158, b159, b160, b027, b028, b029, b030, b031, b138, b139,
+            b140, b141, b147, b148, b073, b074, b075, b076, b133, b327,
+            b155, b059, b060, b089, b090, b096, b097,
+            b063State, b063StateAfter,
+            b064State, b064StateAfter,
+            b065State, b065StateAfter,
+            b001State, b001StateAfter,
+            b009State, b009StateAfter,
+            b010State, b010StateAfter,
+            b011State, b011StateAfter,
+            b012State, b012StateAfter,
+            b015State, b015StateAfter,
+            b016State, b016StateAfter,
+            b017State, b017StateAfter,
+            b018State, b018StateAfter,
+            b037State, b037StateAfter,
+            b059State, b059StateAfter,
+            b060State, b060StateAfter,
+            b040State, b040StateAfter,
+            b041State, b041StateAfter,
+            b045State, b045StateAfter,
+            b046State, b046StateAfter,
+            b032State, b032StateAfter,
+            b033State, b033StateAfter,
+            b073State, b073StateAfter,
+            b074State, b074StateAfter,
+            b050State, b050StateAfter,
+            b132State, b132StateAfter,
+            d001,
+            d063,d064,d065,
+            d009,d010,d011,d012,
+            d015,d016,d017,d018,
+            d037,
+            d059,d060,
+            d040,d041,
+            d045,d046,
+            d032,d033,
+            d073,d074,
+            d050,d132
+        from nur_stuinfo
+        where rowkey in
+        <foreach collection="rowkeyList" item="rowkey" open="(" separator="," close=")">
+            #{rowkey}
+        </foreach>
+    </select>
+
+    <select id="queryReplantRosterList" resultType="com.shensu.mybatis.entity.check.Student">
+        select
+            s.rowkey,cid,
+            sch_name,
+            academic_year,
+            rounds,
+            grade,
+            clazz_name,
+            stu_name,
+            stu_no,
+            stu_birth,
+            stu_phone,
+            B063State,
+            B064State,
+            B065State,
+            B001State,
+            B009State,
+            B010State,
+            B011State,
+            B012State,
+            B015State,
+            B016State,
+            B017State,
+            B018State,
+            B037State,
+            B059State,
+            B060State,
+            B040State,
+            B041State,
+            B045State,
+            B046State,
+            B032State,
+            B033State,
+            B073State,
+            B074State,
+            B063StateAfter,
+            B064StateAfter,
+            B065StateAfter,
+            B001StateAfter,
+            B009StateAfter,
+            B010StateAfter,
+            B011StateAfter,
+            B012StateAfter,
+            B015StateAfter,
+            B016StateAfter,
+            B017StateAfter,
+            B018StateAfter,
+            B037StateAfter,
+            B038StateAfter,
+            B039StateAfter,
+            B059StateAfter,
+            B060StateAfter,
+            B040StateAfter,
+            B041StateAfter,
+            B045StateAfter,
+            B046StateAfter,
+            B032StateAfter,
+            B033StateAfter,
+            B073StateAfter,
+            B074StateAfter
+        from nur_stuinfo s
+        left join nur_school c on c.sch_id = s.schid
+        where
+            stu_isjz = '1' and c.invalid_status != '1'
+            <if test="level != null and areaCode != null and areaCode != ''">
+                <if test="level == 1">
+                    and s.stu_citycode = #{areaCode}
+                </if>
+                <if test="level == 2">
+                    and s.stu_countycode = #{areaCode}
+                </if>
+                <if test="level == 3">
+                    and s.stu_streetcode = #{areaCode}
+                </if>
+                <if test="level >= 4">
+                    and s.stu_stationcode = #{areaCode}
+                </if>
+            </if>
+
+            <if test="schType != null and schType != ''">
+                and c.sch_type in
+                <foreach item="item" index="index" collection="schType.split(',')" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+
+            <if test="schId != null and schId != ''">
+                and s.schid = #{schId}
+            </if>
+
+            <if test="year != null and year != ''">
+                and s.academic_year = #{year}
+            </if>
+
+            <if test="rounds != null and rounds != ''">
+                and s.rounds = #{rounds}
+            </if>
+
+            <if test="grade != null and grade != ''">
+                and s.grade = #{grade}
+            </if>
+        <if test="className != null and className != ''">
+            and s.clazz_name = #{className}
+        </if>
+
+        order by stu_addtime
+    </select>
+
+    <select id="queryReplantVaccinumStat" resultType="com.shensu.mybatis.entity.check.ReplantVacStatBean">
+        SELECT
+            COUNT(IF(stu_isjz is NOT NULL,s.rowkey,NULL)) studentCount, <!-- 实际查验人数 -->
+            COUNT(IF(stu_isjzz ='1',s.rowkey,NULL)) hasNotCard, <!-- 无证人数 -->
+            COUNT(IF(stu_isjzz ='1' AND stu_isbjzz='0',s.rowkey,NULL)) hasCard, <!-- 已补证人数 -->
+            COUNT(IF(stu_isjz_origin = '1' OR stu_isjzz ='1' ,s.rowkey,NULL)) needReplant, <!-- 需补种人数 -->
+            COUNT(IF(stu_isjz_origin = '1' AND stu_isfull = '0',s.rowkey,NULL)) hasReplant, <!-- 已补种全人数 -->
+            <!-- 卡介 -->
+            COUNT(IF(B001State ='1',TRUE,NULL)) B001NeedReplant, <!-- 卡介补种 -->
+            COUNT(IF(B001State ='1' AND B001StateAfter ='11',TRUE,NULL)) B001HasReplant, <!-- 卡介补种完 -->
+
+            <!-- 乙肝1 -->
+            COUNT(IF(B063State ='1',TRUE,NULL)) B063NeedReplant,
+            COUNT(IF(B063State ='1' AND B063StateAfter ='11',TRUE,NULL)) B063HasReplant,
+            <!-- 乙肝2 -->
+            COUNT(IF(B064State ='1',TRUE,NULL)) B064NeedReplant,
+            COUNT(IF(B064State ='1' AND B064StateAfter ='11',TRUE,NULL)) B064HasReplant,
+            <!-- 乙肝3 -->
+            COUNT(IF(B065State ='1',TRUE,NULL)) B065NeedReplant,
+            COUNT(IF(B065State ='1' AND B065StateAfter ='11',TRUE,NULL)) B065HasReplant,
+
+            <!-- 脊灰1 -->
+            COUNT(IF(B009State ='1',TRUE,NULL)) B009NeedReplant,
+            COUNT(IF(B009State ='1' AND B009StateAfter ='11',TRUE,NULL)) B009HasReplant,
+            <!-- 脊灰2 -->
+            COUNT(IF(B010State ='1',TRUE,NULL)) B010NeedReplant,
+            COUNT(IF(B010State ='1' AND B010StateAfter ='11',TRUE,NULL)) B010HasReplant,
+            <!-- 脊灰3 -->
+            COUNT(IF(B011State ='1',TRUE,NULL)) B011NeedReplant,
+            COUNT(IF(B011State ='1'AND B011StateAfter ='11',TRUE,NULL)) B011HasReplant,
+            <!-- 脊灰4 -->
+            COUNT(IF(B012State ='1',TRUE,NULL)) B012NeedReplant,
+            COUNT(IF(B012State ='1' AND B012StateAfter ='11',TRUE,NULL)) B012HasReplant,
+
+            <!-- 百白破1 -->
+            COUNT(IF(B015State ='1',TRUE,NULL)) B015NeedReplant,
+            COUNT(IF(B015State ='1' AND B015StateAfter ='11',TRUE,NULL)) B015HasReplant,
+            <!-- 百白破2 -->
+            COUNT(IF(B016State ='1',TRUE,NULL)) B016NeedReplant,
+            COUNT(IF(B016State ='1' AND B016StateAfter ='11',TRUE,NULL)) B016HasReplant,
+            <!-- 百白破3 -->
+            COUNT(IF(B017State ='1',TRUE,NULL)) B017NeedReplant,
+            COUNT(IF(B017State ='1' AND B017StateAfter ='11',TRUE,NULL)) B017HasReplant,
+            <!-- 百白破4 -->
+            COUNT(IF(B018State ='1',TRUE,NULL)) B018NeedReplant,
+            COUNT(IF(B018State ='1' AND B018StateAfter ='11',TRUE,NULL)) B018HasReplant,
+
+            <!-- 白破1 -->
+            COUNT(IF(B037State ='1',TRUE,NULL)) B037NeedReplant,
+            COUNT(IF(B037State ='1' AND B037StateAfter ='11',TRUE,NULL)) B037HasReplant,
+            <!-- 白破2 -->
+            '0'  as B038NeedReplant,
+            COUNT(IF(B038StateAfter ='11',TRUE,NULL)) B038HasReplant,
+            <!-- 白破3 -->
+            '0' as  B039NeedReplant,
+            COUNT(IF(B039StateAfter ='11',TRUE,NULL)) B039HasReplant,
+
+            <!-- 麻疹类疫苗1 -->
+            COUNT(IF(B059State ='1',TRUE,NULL)) B059NeedReplant,
+            COUNT(IF(B059State ='1' AND B059StateAfter ='11',TRUE,NULL)) B059HasReplant,
+            <!-- 麻疹类疫苗2 -->
+            COUNT(IF(B060State ='1',TRUE,NULL)) B060NeedReplant,
+            COUNT(IF(B060State ='1' AND B060StateAfter ='11',TRUE,NULL)) B060HasReplant,
+
+            <!-- A群流脑疫苗1 -->
+            COUNT(IF(B040State ='1',TRUE,NULL)) B040NeedReplant,
+            COUNT(IF(B040State ='1' AND B040StateAfter ='11',TRUE,NULL)) B040HasReplant,
+            <!-- A群流脑疫苗2 -->
+            COUNT(IF(B041State ='1',TRUE,NULL)) B041NeedReplant,
+            COUNT(IF(B041State ='1'AND B041StateAfter ='11',TRUE,NULL)) B041HasReplant,
+
+            <!-- A+C群流脑疫苗1 -->
+            COUNT(IF(B045State ='1',TRUE,NULL)) B045NeedReplant,
+            COUNT(IF(B045State ='1' AND B045StateAfter ='11',TRUE,NULL)) B045HasReplant,
+            <!-- A+C群流脑疫苗2 -->
+            COUNT(IF(B046State ='1',TRUE,NULL)) B046NeedReplant,
+            COUNT(IF(B046State ='1' AND B046StateAfter ='11',TRUE,NULL)) B046HasReplant,
+
+            <!-- 乙脑1 -->
+            COUNT(IF(B032State ='1',TRUE,NULL)) B032NeedReplant,
+            COUNT(IF(B032State ='1' AND B032StateAfter ='11',TRUE,NULL)) B032HasReplant,
+            <!-- 乙脑2 -->
+            COUNT(IF(B033State ='1',TRUE,NULL)) B033NeedReplant,
+            COUNT(IF(B033State ='1' AND B033StateAfter ='11',TRUE,NULL)) B033HasReplant,
+
+            <!-- 甲肝 -->
+            COUNT(IF(B073State ='1',TRUE,NULL)) B073NeedReplant,
+            COUNT(IF(B073State ='1' AND B073StateAfter ='11',TRUE,NULL)) B073HasReplant,
+            COUNT(IF(B074State ='1',TRUE,NULL)) B074NeedReplant,
+            COUNT(IF(B074State ='1' AND B074StateAfter ='11',TRUE,NULL)) B074HasReplant
+        FROM nur_stuinfo s
+        LEFT JOIN nur_school c ON c.sch_id = s.schid
+        WHERE  invalid_status !='1'
+        <if test="level != null and areaCode != null and areaCode != ''">
+            <if test="level == 1">
+                and s.stu_citycode = #{areaCode}
+            </if>
+            <if test="level == 2">
+                and s.stu_countycode = #{areaCode}
+            </if>
+            <if test="level == 3">
+                and s.stu_streetcode = #{areaCode}
+            </if>
+            <if test="level >= 4">
+                and s.stu_stationcode = #{areaCode}
+            </if>
+        </if>
+
+        <if test="schType != null and schType != ''">
+            and c.sch_type in
+            <foreach item="item" index="index" collection="schType.split(',')" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+
+        <if test="year != null and year != ''">
+            and s.academic_year = #{year}
+        </if>
+
+        <if test="rounds != null and rounds != ''">
+            and s.rounds = #{rounds}
+        </if>
+
+        <if test="birthStart != null and birthStart != '' and birthEnd != null and birthEnd != ''">
+            and s.stu_birth <![CDATA[ >= ]]> #{birthStart} AND B001 <![CDATA[ <= ]]> #{birthEnd}
+        </if>
+
+        <if test="isFull != null and isFull != ''">
+            and s.rounds = #{isFull}
+        </if>
+
+        <if test="schId != null and schId != ''">
+            and s.schid = #{schId}
+        </if>
+        <if test="grade != null and grade != ''">
+            and s.grade = #{grade}
+        </if>
+        <if test="className != null and className != ''">
+            and s.clazz_name = #{className}
+        </if>
+
+        <!-- 补种时间 -->
+        <if test="replantStart != null and replantStart != '' and replantEnd != null and replantEnd != ''">
+            and (
+                   (B001 <![CDATA[ >= ]]> #{replantStart, jdbcType=VARCHAR} and B001 <![CDATA[ <= ]]> #{replantEnd, jdbcType=VARCHAR})
+                or (B063 <![CDATA[ >= ]]> #{replantStart, jdbcType=VARCHAR} and B063 <![CDATA[ <= ]]> #{replantEnd, jdbcType=VARCHAR})
+                or (B064 <![CDATA[ >= ]]> #{replantStart, jdbcType=VARCHAR} and B064 <![CDATA[ <= ]]> #{replantEnd, jdbcType=VARCHAR})
+                or (B065 <![CDATA[ >= ]]> #{replantStart, jdbcType=VARCHAR} and B065 <![CDATA[ <= ]]> #{replantEnd, jdbcType=VARCHAR})
+
+                or (B009 <![CDATA[ >= ]]> #{replantStart, jdbcType=VARCHAR} and B009 <![CDATA[ <= ]]> #{replantEnd, jdbcType=VARCHAR})
+                or (B010 <![CDATA[ >= ]]> #{replantStart, jdbcType=VARCHAR} and B010 <![CDATA[ <= ]]> #{replantEnd, jdbcType=VARCHAR})
+                or (B011 <![CDATA[ >= ]]> #{replantStart, jdbcType=VARCHAR} and B011 <![CDATA[ <= ]]> #{replantEnd, jdbcType=VARCHAR})
+                or (B012 <![CDATA[ >= ]]> #{replantStart, jdbcType=VARCHAR} and B012 <![CDATA[ <= ]]> #{replantEnd, jdbcType=VARCHAR})
+
+                or (B015 <![CDATA[ >= ]]> #{replantStart, jdbcType=VARCHAR} and B015 <![CDATA[ <= ]]> #{replantEnd, jdbcType=VARCHAR})
+                or (B016 <![CDATA[ >= ]]> #{replantStart, jdbcType=VARCHAR} and B016 <![CDATA[ <= ]]> #{replantEnd, jdbcType=VARCHAR})
+                or (B017 <![CDATA[ >= ]]> #{replantStart, jdbcType=VARCHAR} and B017 <![CDATA[ <= ]]> #{replantEnd, jdbcType=VARCHAR})
+                or (B018 <![CDATA[ >= ]]> #{replantStart, jdbcType=VARCHAR} and B018 <![CDATA[ <= ]]> #{replantEnd, jdbcType=VARCHAR})
+
+                or (B037 <![CDATA[ >= ]]> #{replantStart, jdbcType=VARCHAR} and B037 <![CDATA[ <= ]]> #{replantEnd, jdbcType=VARCHAR})
+                <!--
+                or (B038 <![CDATA[ >= ]]> #{replantStart, jdbcType=VARCHAR} and B038 <![CDATA[ <= ]]> #{replantEnd, jdbcType=VARCHAR})
+                or (B039 <![CDATA[ >= ]]> #{replantStart, jdbcType=VARCHAR} and B039 <![CDATA[ <= ]]> #{replantEnd, jdbcType=VARCHAR})
+                -->
+
+                or (B059 <![CDATA[ >= ]]> #{replantStart, jdbcType=VARCHAR} and B059 <![CDATA[ <= ]]> #{replantEnd, jdbcType=VARCHAR})
+                or (B060 <![CDATA[ >= ]]> #{replantStart, jdbcType=VARCHAR} and B060 <![CDATA[ <= ]]> #{replantEnd, jdbcType=VARCHAR})
+
+                or (B040 <![CDATA[ >= ]]> #{replantStart, jdbcType=VARCHAR} and B040 <![CDATA[ <= ]]> #{replantEnd, jdbcType=VARCHAR})
+                or (B041 <![CDATA[ >= ]]> #{replantStart, jdbcType=VARCHAR} and B041 <![CDATA[ <= ]]> #{replantEnd, jdbcType=VARCHAR})
+
+                or (B045 <![CDATA[ >= ]]> #{replantStart, jdbcType=VARCHAR} and B045 <![CDATA[ <= ]]> #{replantEnd, jdbcType=VARCHAR})
+                or (B046 <![CDATA[ >= ]]> #{replantStart, jdbcType=VARCHAR} and B046 <![CDATA[ <= ]]> #{replantEnd, jdbcType=VARCHAR})
+
+                or (B032 <![CDATA[ >= ]]> #{replantStart, jdbcType=VARCHAR} and B032 <![CDATA[ <= ]]> #{replantEnd, jdbcType=VARCHAR})
+                or (B033 <![CDATA[ >= ]]> #{replantStart, jdbcType=VARCHAR} and B033 <![CDATA[ <= ]]> #{replantEnd, jdbcType=VARCHAR})
+
+                or (B069 <![CDATA[ >= ]]> #{replantStart, jdbcType=VARCHAR} and B069 <![CDATA[ <= ]]> #{replantEnd, jdbcType=VARCHAR})
+
+                or (B050 <![CDATA[ >= ]]> #{replantStart, jdbcType=VARCHAR} and B050 <![CDATA[ <= ]]> #{replantEnd, jdbcType=VARCHAR})
+                or (B132 <![CDATA[ >= ]]> #{replantStart, jdbcType=VARCHAR} and B132 <![CDATA[ <= ]]> #{replantEnd, jdbcType=VARCHAR})
+            )
+        </if>
+
+    </select>
+
+    <select id="queryVacCertCheckStat" resultType="com.shensu.mybatis.entity.check.AreaCdcUserVacData">
+        select
+            <!--vs.cityname area_name, 单位名称-->
+        <if test="areaCode != null and areaCode != '' and areaLevel != null and areaLevel != ''">
+            <if test="areaLevel == 0">
+                vss.CITYCODE as areaCode, vss.CITYNAME as areaName,
+            </if>
+            <if test="areaLevel == 1">
+                vss.countyCode as areaCode,vss.COUNTYNAME as areaName,
+            </if>
+            <if test="areaLevel == 2">
+                vss.supcode as areaCode,vss.SUPNAME as areaName,
+            </if>
+            <if test="areaLevel == 3">
+                vss.StationCode as areaCode,vss.STATIONNAME as areaName,
+            </if>
+            <if test="areaLevel == 4">
+              s.sch_id as areaCode,s.sch_name as areaName,
+            </if>
+        </if>
+            <!--(select area_name from sys_area where area_code = vs.citycode) area_name, 单位名称-->
+            count(DISTINCT c.schid) need_cy_sch_num, <!--托幼机构小学应查验数-->
+            count(DISTINCT CASE WHEN length( c.first_stu_smrq ) > 0 THEN c.schid ELSE NULL END) cy_sch_num, <!--已查验的学校数-->
+            count(c.rowkey) stu_cy_num, <!--辖区需查验学生数-->
+            count(c.rowkey) real_cy_num, <!--查验人数-->
+            sum(case when c.stu_isjzz = '0' then 1 else 0 end) has_card_num, <!--有预防接种证人数-->
+            sum(case when (stu_isjzz ='1' or stu_isjz_origin='2' or stu_isjz_origin is null)  and c.stu_isbjzz = '0' then 1 else 0 end) patch_card_num, <!--补预防接种证人数-->
+
+            sum(case when  stu_isjz_origin = '1'  then 1 else 0 end) need_replant_num, <!--需补种疫苗人数-->
+            sum( CASE WHEN  c.stu_isjz_origin = '0' THEN 1 ELSE 0 END )  qcjz_count, <!--完成全程接种人数-->
+            sum(case when stu_isjz_origin = '1' AND stu_isfull = '0' then 1 else 0 end) has_replant, <!--完成全程补种人数-->
+
+            sum(case when c.B001State = '1' and c.B001StateAfter = '11' then 1 else 0 end) kajie_has, <!--卡介苗补种剂次-->
+            sum(case when c.B001State = '1'  then 1 else 0 end) kajie_need, <!--卡介苗应补种剂次-->
+
+            sum(case when (c.B063State = '1' and c.B063StateAfter = '11') or (c.B064State = '1' and c.B064StateAfter = '11') or (c.B065State = '1' and c.B065StateAfter = '11') then 1 else 0 end) yigan_has, <!--乙肝补种剂次-->
+            sum(case when (c.B063State = '1')  or (c.B064State = '1' ) or (c.B065State = '1') then 1 else 0 end) yigan_Need, <!--乙肝应补种剂次-->
+
+            sum(case when (c.B009State = '1' and c.B009StateAfter = '11') or (c.B010State = '1' and c.B010StateAfter = '11') or (c.B011State = '1' and c.B011StateAfter = '11') or (c.B012State = '1' and c.B012StateAfter = '11') then 1 else 0 end) jihui_has, <!--脊灰补种剂次-->
+            sum(case when (c.B009State = '1')  or (c.B010State = '1' ) or (c.B011State = '1' ) or (c.B012State = '1' ) then 1 else 0 end) jihui_need, <!--脊灰应补种剂次-->
+
+            sum(case when (c.B015State = '1' and c.B015StateAfter = '11') or (c.B016State = '1' and c.B016StateAfter = '11') or (c.B017State = '1' and c.B017StateAfter = '11') or (c.B018State = '1' and c.B018StateAfter = '11') then 1 else 0 end) baibaipo_has, <!--百白破补种剂次-->
+            sum(case when (c.B015State = '1' ) or (c.B016State = '1' ) or (c.B017State = '1') or (c.B018State = '1' ) then 1 else 0 end) baibaipo_need, <!--百白破应补种剂次-->
+
+            sum(case when (c.B037State = '1' and c.B037StateAfter = '11') then 1 else 0 end) baipo_has, <!--白破补种剂次,只有B037-->
+            sum(case when c.B037State = '1'  then 1 else 0 end) baipo_need, <!--白破应补种剂次-->
+
+            sum(case when (c.B059State = '1' and c.B059StateAfter = '11') or (c.B060State = '1' and c.B060StateAfter = '11') then 1 else 0 end) mafeng_has, <!--麻腮风补种剂次-->
+            sum(case when (c.B059State = '1' ) or (c.B060State = '1' ) then 1 else 0 end) mafeng_need, <!--麻腮风应补种剂次-->
+
+            sum(case when (c.B040State = '1' and c.B040StateAfter = '11') or (c.B041State = '1' and c.B041StateAfter = '11') then 1 else 0 end) aqunliunao_has, <!--A群流脑补种剂次-->
+            sum(case when (c.B040State = '1' ) or (c.B041State = '1' ) then 1 else 0 end) aqunliunao_need, <!--A群流脑应补种剂次-->
+
+            sum(case when (c.B045State = '1' and c.B045StateAfter = '11') or (c.B046State = '1' and c.B046StateAfter = '11') then 1 else 0 end) acqunliunao_has, <!--A群C群流脑补种剂次-->
+            sum(case when (c.B045State = '1' ) or (c.B046State = '1' ) then 1 else 0 end) acqunliunao_need, <!--A群C群流脑应补种剂次-->
+
+            sum(case when (c.B032State = '1' and c.B032StateAfter = '11') or (c.B033State = '1' and c.B033StateAfter = '11') then 1 else 0 end) yinaojiandu_has, <!--乙脑补种剂次-->
+            sum(case when (c.B032State = '1' ) or (c.B033State = '1' ) then 1 else 0 end) yinaojiandu_need, <!--乙脑应补种剂次-->
+
+            sum(case when (c.B073State = '1' and c.B073StateAfter = '11') or (c.B074State = '1' and c.B074StateAfter = '11') then 1 else 0 end) jiaganjiandu_has, <!--甲肝补种剂次-->
+            sum(case when c.B073State = '1' or  c.B074State = '1' then 1 else 0 end) jiaganjiandu_need <!--甲肝应补种剂次-->
+
+        FROM    nur_school s  inner  join nur_stuinfo c on c.schId = s.sch_id
+                 inner join  v_sys_station vss  on vss.STATIONCODE =s.sch_stationcode
+        WHERE   s.invalid_status !='1'
+        <!--LENGTH(s.sch_id) > 0-->
+        <!--页面查询条件：选择地区（地区控件）-->
+        <if test="areaCode != null and areaCode != '' and areaLevel != null and areaLevel != ''">
+            <if test="areaLevel == 1">
+                AND c.stu_citycode = #{areaCode, jdbcType=VARCHAR}
+            </if>
+            <if test="areaLevel == 2">
+                AND c.stu_countycode = #{areaCode, jdbcType=VARCHAR}
+            </if>
+            <if test="areaLevel == 3">
+                AND c.stu_streetcode = #{areaCode, jdbcType=VARCHAR}
+            </if>
+            <if test="areaLevel >= 4">
+                AND c.stu_stationcode = #{areaCode, jdbcType=VARCHAR}
+            </if>
+        </if>
+        <!--学年-->
+        <if test="year != null and year != ''">
+            and c.academic_year = #{year}
+        </if>
+        <!--轮次-->
+        <if test="rounds != null and rounds != ''">
+            and c.rounds = #{rounds}
+        </if>
+
+        <!--学校类型-->
+        <if test="schType != null and schType != ''">
+            and s.sch_type in
+            <foreach item="item" index="index" collection="schType.split(',')" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+
+        GROUP BY
+        <if test="areaCode != null and areaCode != '' and areaLevel != null and areaLevel != ''">
+            <if test="areaLevel == 0">
+                vss.cityCode
+            </if>
+            <if test="areaLevel == 1">
+                vss.countyCode
+            </if>
+            <if test="areaLevel == 2">
+                vss.supcode
+            </if>
+            <if test="areaLevel == 3">
+                vss.StationCode
+            </if>
+            <if test="areaLevel == 4">
+               s.sch_id
+            </if>
+        </if>
+    </select>
+
+    <select id="queryReplateMess" resultType="com.shensu.mybatis.entity.check.Student">
+        select
+            sch_name,cid,
+            grade,
+            clazz_name,
+            stu_name,
+            stu_no,
+            stu_sex,
+            stu_birth,
+            stu_phone,
+            stu_parentname,
+            stu_fathername stuFathername,
+            stu_mothername  stuMothername,
+            stu_father_phone stuFatherPhone,
+            stu_mother_phone stuMotherPhone,
+            f_reside_addr,
+            stu_isjz,
+            stu_isfull,
+            s.stu_belong_stationcode stuBelongStationcode,
+            cv.organ_name belong_school_station,
+            d001,
+            d063, d064, d065,
+            d009, d010, d011, d012,
+            d015, d016, d017, d018,
+            d037,
+            d059, d060,
+            d040, d041,
+            d045, d046,
+            d032, d033,
+            d073,d074,
+            d050, d132,
+            b063State, b063StateAfter,
+            b064State, b064StateAfter,
+            b065State, b065StateAfter,
+            b001State, b001StateAfter,
+            b009State, b009StateAfter,
+            b010State, b010StateAfter,
+            b011State, b011StateAfter,
+            b012State, b012StateAfter,
+            b015State, b015StateAfter,
+            b016State, b016StateAfter,
+            b017State, b017StateAfter,
+            b018State, b018StateAfter,
+            b037State, b037StateAfter,
+            b059State, b059StateAfter,
+            b060State, b060StateAfter,
+            b040State, b040StateAfter,
+            b041State, b041StateAfter,
+            b045State, b045StateAfter,
+            b046State, b046StateAfter,
+            b032State, b032StateAfter,
+            b033State, b033StateAfter,
+            b073State, b073StateAfter,
+            b074State, b074StateAfter,
+            b050State, b050StateAfter,
+            b132State, b132StateAfter
+        from nur_stuinfo s
+        left join nur_school c on c.sch_id = s.schid
+        left join sys_station cv on cv.organ_code = c.sch_stationcode
+        where  c.invalid_status !='1'
+        <choose>
+            <when test="rowkeyList != null and rowkeyList.size > 0">
+                and rowkey in
+                <foreach collection="rowkeyList" item="rowkey" open="(" separator="," close=")">
+                    #{rowkey}
+                </foreach>
+            </when >
+            <otherwise>
+                <if test="level != null and areaCode != null and areaCode != ''">
+                    <if test="level == 1">
+                        and s.stu_citycode = #{areaCode}
+                    </if>
+                    <if test="level == 2">
+                        and s.stu_countycode = #{areaCode}
+                    </if>
+                    <if test="level == 3">
+                        and s.stu_streetcode = #{areaCode}
+                    </if>
+                    <if test="level >= 4">
+                        and s.stu_stationcode = #{areaCode}
+                    </if>
+                </if>
+
+                <if test="schType != null and schType != ''">
+                    and c.sch_type in
+                    <foreach item="item" index="index" collection="schType.split(',')" open="(" separator="," close=")">
+                        #{item}
+                    </foreach>
+                </if>
+
+                <if test="schId != null and schId != ''">
+                    and s.schid = #{schId}
+                </if>
+
+                <if test="year != null and year != ''">
+                    and s.academic_year = #{year}
+                </if>
+
+                <if test="rounds != null and rounds != ''">
+                    and s.rounds = #{rounds}
+                </if>
+
+                <if test="grade != null and grade != ''">
+                    and s.grade = #{grade}
+                </if>
+
+                <if test="clazz != null and clazz != ''">
+                    and s.clazz_name like concat('%', #{clazz}, '%')
+                </if>
+
+                <if test="isjz != null and isjz != ''">
+                    and s.stu_isjz = #{isjz}
+                </if>
+
+                <if test="status != null and status != ''">
+                    and s.stu_isjz = #{status}
+                </if>
+
+                <if test="isjzz != null and isjzz != ''">
+                    and s.stu_isjz = #{isjzz}
+                </if>
+
+                <if test="name != null and name != ''">
+                    and s.stu_name = #{name}
+                </if>
+
+                <if test="idcard != null and idcard != ''">
+                    and s.cid = #{idcard}
+                </if>
+
+                <if test="code != null and code != ''">
+                    and s.stu_no = #{code}
+                </if>
+            </otherwise>
+        </choose>
+        order by stu_addtime
+    </select>
+
+    <delete id="batchDeleteByIds">
+        delete from nur_stuinfo
+        where rowkey in
+        <foreach collection="rowkeyList" item="rowkey" open="(" separator="," close=")">
+            #{rowkey}
+        </foreach>
+    </delete>
+
+    <update id="batchUpdate">
+        update nur_stuinfo
+        set academic_year=#{year}, grade=#{grade}, clazz_name=#{clazz}, rounds=#{rounds}
+        where rowkey in
+        <foreach collection="rowkeyList" item="rowkey" open="(" separator="," close=")">
+            #{rowkey}
+        </foreach>
+    </update>
+
+    <update id="updateCheckInfo">
+        update nur_stuinfo
+        set stu_sex=#{stuSex},stu_type=#{stuType},stu_no=#{stuNo},stu_sourceid=#{stuSourceid},stu_imuno=#{stuImuno},cid=#{cid},
+        stu_parentname=#{stuParentname},stu_name=#{stuName},f_reside_addr=#{fResideAddr},stu_fathername=#{stuFathername},
+        stu_mothername=#{stuMothername},stu_phone=#{stuPhone}, stu_father_phone=#{stuFatherPhone},
+            stu_mother_phone=#{stuMotherPhone},
+        stu_belong_stationcode=#{stuBelongStationcode},
+        stu_updatetime=SYSDATE(),last_stu_smrq=#{lastStuSmrq},
+        stu_birth=#{stuBirth},stu_isbjzz=#{stuIsbjzz},
+        stu_isjz=#{stuIsjz},stu_isfull=#{stuIsfull},
+        <if test="stuIsjzOrigin != '' and stuIsjzOrigin != null">
+            stu_isjz_origin=#{stuIsjzOrigin},
+            stu_isfull_origin=#{stuIsfullOrigin},
+        </if>
+        <if test="firstStuSmrq !=null and firstStuSmrq !=''">
+            first_stu_smrq=#{firstStuSmrq},
+        </if>
+        <if test="stuIsjzz !=null and stuIsjzz !=''">
+            stu_isjzz=#{stuIsjzz},
+        </if>
+        B001=#{b001},B063=#{b063},B064=#{b064},B065=#{b065},B009=#{b009},B010=#{b010},B011=#{b011},B012=#{b012},
+        B015=#{b015},B016=#{b016},B017=#{b017},B018=#{b018},B037=#{b037},B093=#{b093},B094=#{b094},B040=#{b040},
+        B041=#{b041},B045=#{b045},B046=#{b046},B032=#{b032},B033=#{b033},B069=#{b069},B050=#{b050},B169=#{b169},
+        B170=#{b170},B171=#{b171},B172=#{b172},B163=#{b163},B164=#{b164},B165=#{b165},B166=#{b166},B157=#{b157},
+        B158=#{b158},B159=#{b159},B160=#{b160},B027=#{b027},B028=#{b028},B029=#{b029},B030=#{b030},B138=#{b138},
+        B139=#{b139},B140=#{b140},B141=#{b141},B147=#{b147},B148=#{b148},B073=#{b073},B133=#{b133},B155=#{b155},
+        B059=#{b059},B060=#{b060},B089=#{b089},B090=#{b090},B096=#{b096},B097=#{b097},B132=#{b132},B074=#{b074},
+        B031=#{b031},B034=#{b034},B035=#{b035},B036=#{b036},B070=#{b070},B071=#{b071},B072=#{b072},B075=#{b075},
+        B076=#{b076},B327=#{b327},
+        D063=#{d063}, D064=#{d064}, D065=#{d065}, D001=#{d001}, D009=#{d009}, D010=#{d010}, D011=#{d011}, D012=#{d012},
+        D015=#{d015}, D016=#{d016}, D017=#{d017}, D018=#{d018}, D037=#{d037}, D059=#{d059}, D060=#{d060}, D040=#{d040},
+        D041=#{d041}, D045=#{d045}, D046=#{d046}, D032=#{d032}, D033=#{d033}, D073=#{d073}, D074=#{d074}, D050=#{d050}, D132=#{d132},
+        B063State=#{b063State},
+        B064State=#{b064State},
+        B065State=#{b065State},
+        B001State=#{b001State},
+        B009State=#{b009State},
+        B010State=#{b010State},
+        B011State=#{b011State},
+        B012State=#{b012State},
+        B015State=#{b015State},
+        B016State=#{b016State},
+        B017State=#{b017State},
+        B018State=#{b018State},
+        B037State=#{b037State},
+        B059State=#{b059State},
+        B060State=#{b060State},
+        B040State=#{b040State},
+        B041State=#{b041State},
+        B045State=#{b045State},
+        B046State=#{b046State},
+        B032State=#{b032State},
+        B033State=#{b033State},
+        B073State=#{b073State},
+        B074State=#{b074State},
+        B050State=#{b050State},
+        B132State=#{b132State},
+        B063StateAfter=#{b063StateAfter},
+        B064StateAfter=#{b064StateAfter},
+        B065StateAfter=#{b065StateAfter},
+        B001StateAfter=#{b001StateAfter},
+        B009StateAfter=#{b009StateAfter},
+        B010StateAfter=#{b010StateAfter},
+        B011StateAfter=#{b011StateAfter},
+        B012StateAfter=#{b012StateAfter},
+        B015StateAfter=#{b015StateAfter},
+        B016StateAfter=#{b016StateAfter},
+        B017StateAfter=#{b017StateAfter},
+        B018StateAfter=#{b018StateAfter},
+        B037StateAfter=#{b037StateAfter},
+        B059StateAfter=#{b059StateAfter},
+        B060StateAfter=#{b060StateAfter},
+        B040StateAfter=#{b040StateAfter},
+        B041StateAfter=#{b041StateAfter},
+        B045StateAfter=#{b045StateAfter},
+        B046StateAfter=#{b046StateAfter},
+        B032StateAfter=#{b032StateAfter},
+        B033StateAfter=#{b033StateAfter},
+        B073StateAfter=#{b073StateAfter},
+        B074StateAfter=#{b074StateAfter},
+        B050StateAfter=#{b050StateAfter},
+        B132StateAfter=#{b132StateAfter}
+        where rowkey=#{rowkey}
+    </update>
+
+</mapper>

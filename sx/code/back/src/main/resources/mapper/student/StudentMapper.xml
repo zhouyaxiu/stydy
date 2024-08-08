@@ -1,0 +1,1415 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shensu.mybatis.mapper.student.StudentMapper">
+
+
+    <insert id="batchInsertStudent">
+        INSERT INTO nur_stuinfo (stu_no, stu_imuno, stu_name, stu_birth,
+        stu_sex, stu_type, stu_isjzz, stu_isbjzz, stu_parentname,last_stu_schname,last_stu_smrq,
+        stu_phone,stu_stationcode,   stu_addtime, stu_updatetime,first_stu_smrq,
+        stu_sourceid, stu_isjz, stu_isfull, B001, B063, B064, B065, B009, B010, B011, B012, B015, B016, B017, B018,
+        B037, B093, B094, B040, B041, B045, B046, B032, B033, B069, B050, B169, B170, B171, B172, B163, B164, B165,
+        B166, B157, B158, B159, B160, B027, B028, B029, B030, B138, B139, B140, B141, B147, B148, B073, B133, B155,
+        B059, B060, B089, B090, B096, B097, B063State, B064State, B065State, B001State, B009State, B010State, B011State,
+        B012State, B015State, B016State, B017State, B018State, B037State, B059State, B060State, B040State, B041State, B045State,
+        B046State, B032State, B033State, FPPDW, FPPDH, isbzoper, schid,B132,B327,B074,
+        D063,D064,D065,D009,D010,D011,D012,D015,D016,D017,D018,D037,D059,D060,D040,D041,D045,D046,
+        D032,D033,D050,D132,STU_ISJZ_ORIGIN,STU_ISFULL_ORIGIN,academic_year,rounds,grade,clazz_name,cid,stu_belong_stationcode,
+        f_reside_addr,stu_fathername,stu_mothername,stu_father_phone,stu_mother_phone,B073State,B074State,D073,D074
+        )
+        VALUES
+        <foreach collection="students" item="bean" separator=",">
+           (
+            #{bean.stuNo,jdbcType=VARCHAR},
+            #{bean.stuImuno,jdbcType=VARCHAR},
+            #{bean.stuName,jdbcType=VARCHAR},
+            #{bean.stuBirth,jdbcType=VARCHAR},
+            #{bean.stuSex,jdbcType=VARCHAR},
+            #{bean.stuType,jdbcType=VARCHAR},
+            #{bean.stuIsjzz,jdbcType=VARCHAR},
+            #{bean.stuIsbjzz,jdbcType=VARCHAR},
+            #{bean.stuParentname,jdbcType=VARCHAR},
+            #{bean.lastStuSchname,jdbcType=VARCHAR},
+            #{bean.lastStuSmrq,jdbcType=VARCHAR},
+            #{bean.stuPhone,jdbcType=VARCHAR},
+            #{bean.stuStationcode,jdbcType=VARCHAR},
+            NOW(),
+            NOW(),
+            #{bean.firstStuSmrq},
+            #{bean.stuSourceid,jdbcType=VARCHAR},
+            #{bean.stuIsjz,jdbcType=VARCHAR},
+            #{bean.stuIsfull,jdbcType=VARCHAR},
+            #{bean.b001,jdbcType=VARCHAR},
+            #{bean.b063,jdbcType=VARCHAR},
+            #{bean.b064,jdbcType=VARCHAR},
+            #{bean.b065,jdbcType=VARCHAR},
+            #{bean.b009,jdbcType=VARCHAR},
+            #{bean.b010,jdbcType=VARCHAR},
+            #{bean.b011,jdbcType=VARCHAR},
+            #{bean.b012,jdbcType=VARCHAR},
+            #{bean.b015,jdbcType=VARCHAR},
+            #{bean.b016,jdbcType=VARCHAR},
+            #{bean.b017,jdbcType=VARCHAR},
+            #{bean.b018,jdbcType=VARCHAR},
+            #{bean.b037,jdbcType=VARCHAR},
+            #{bean.b093,jdbcType=VARCHAR},
+            #{bean.b094,jdbcType=VARCHAR},
+            #{bean.b040,jdbcType=VARCHAR},
+            #{bean.b041,jdbcType=VARCHAR},
+            #{bean.b045,jdbcType=VARCHAR},
+            #{bean.b046,jdbcType=VARCHAR},
+            #{bean.b032,jdbcType=VARCHAR},
+            #{bean.b033,jdbcType=VARCHAR},
+            #{bean.b069,jdbcType=VARCHAR},
+            #{bean.b050,jdbcType=VARCHAR},
+            #{bean.b169,jdbcType=VARCHAR},
+            #{bean.b170,jdbcType=VARCHAR},
+            #{bean.b171,jdbcType=VARCHAR},
+            #{bean.b172,jdbcType=VARCHAR},
+            #{bean.b163,jdbcType=VARCHAR},
+            #{bean.b164,jdbcType=VARCHAR},
+            #{bean.b165,jdbcType=VARCHAR},
+            #{bean.b166,jdbcType=VARCHAR},
+            #{bean.b157,jdbcType=VARCHAR},
+            #{bean.b158,jdbcType=VARCHAR},
+            #{bean.b159,jdbcType=VARCHAR},
+            #{bean.b160,jdbcType=VARCHAR},
+            #{bean.b027,jdbcType=VARCHAR},
+            #{bean.b028,jdbcType=VARCHAR},
+            #{bean.b029,jdbcType=VARCHAR},
+            #{bean.b030,jdbcType=VARCHAR},
+            #{bean.b138,jdbcType=VARCHAR},
+            #{bean.b139,jdbcType=VARCHAR},
+            #{bean.b140,jdbcType=VARCHAR},
+            #{bean.b141,jdbcType=VARCHAR},
+            #{bean.b147,jdbcType=VARCHAR},
+            #{bean.b148,jdbcType=VARCHAR},
+            #{bean.b073,jdbcType=VARCHAR},
+            #{bean.b133,jdbcType=VARCHAR},
+            #{bean.b155,jdbcType=VARCHAR},
+            #{bean.b059,jdbcType=VARCHAR},
+            #{bean.b060,jdbcType=VARCHAR},
+            #{bean.b089,jdbcType=VARCHAR},
+            #{bean.b090,jdbcType=VARCHAR},
+            #{bean.b096,jdbcType=VARCHAR},
+            #{bean.b097,jdbcType=VARCHAR},
+            #{bean.b063State,jdbcType=VARCHAR},
+            #{bean.b064State,jdbcType=VARCHAR},
+            #{bean.b065State,jdbcType=VARCHAR},
+            #{bean.b001State,jdbcType=VARCHAR},
+            #{bean.b009State,jdbcType=VARCHAR},
+            #{bean.b010State,jdbcType=VARCHAR},
+            #{bean.b011State,jdbcType=VARCHAR},
+            #{bean.b012State,jdbcType=VARCHAR},
+            #{bean.b015State,jdbcType=VARCHAR},
+            #{bean.b016State,jdbcType=VARCHAR},
+            #{bean.b017State,jdbcType=VARCHAR},
+            #{bean.b018State,jdbcType=VARCHAR},
+            #{bean.b037State,jdbcType=VARCHAR},
+            #{bean.b059State,jdbcType=VARCHAR},
+            #{bean.b060State,jdbcType=VARCHAR},
+            #{bean.b040State,jdbcType=VARCHAR},
+            #{bean.b041State,jdbcType=VARCHAR},
+            #{bean.b045State,jdbcType=VARCHAR},
+            #{bean.b046State,jdbcType=VARCHAR},
+            #{bean.b032State,jdbcType=VARCHAR},
+            #{bean.b033State,jdbcType=VARCHAR},
+            #{bean.FPPDW,jdbcType=VARCHAR},
+            #{bean.FPPDH,jdbcType=VARCHAR},
+            #{bean.isbzoper,jdbcType=VARCHAR},
+            #{bean.schid,jdbcType=VARCHAR},
+            #{bean.b132,jdbcType=VARCHAR},
+            #{bean.b327,jdbcType=VARCHAR},
+            #{bean.b074,jdbcType=VARCHAR},
+            #{bean.d063,jdbcType=VARCHAR},
+            #{bean.d064,jdbcType=VARCHAR},
+            #{bean.d065,jdbcType=VARCHAR},
+
+            #{bean.d009,jdbcType=VARCHAR},
+            #{bean.d010,jdbcType=VARCHAR},
+            #{bean.d011,jdbcType=VARCHAR},
+            #{bean.d012,jdbcType=VARCHAR},
+            #{bean.d015,jdbcType=VARCHAR},
+            #{bean.d016,jdbcType=VARCHAR},
+            #{bean.d017,jdbcType=VARCHAR},
+            #{bean.d018,jdbcType=VARCHAR},
+            #{bean.d037,jdbcType=VARCHAR},
+            #{bean.d059,jdbcType=VARCHAR},
+            #{bean.d060,jdbcType=VARCHAR},
+            #{bean.d040,jdbcType=VARCHAR},
+            #{bean.d041,jdbcType=VARCHAR},
+            #{bean.d045,jdbcType=VARCHAR},
+            #{bean.d046,jdbcType=VARCHAR},
+            #{bean.d032,jdbcType=VARCHAR},
+            #{bean.d033,jdbcType=VARCHAR},
+            #{bean.d050,jdbcType=VARCHAR},
+            #{bean.d132,jdbcType=VARCHAR},
+            #{bean.stuIsjzOrigin,jdbcType=VARCHAR},
+            #{bean.stuIsfullOrigin,jdbcType=VARCHAR},
+            #{bean.academicYear},
+            #{bean.rounds},
+            #{bean.grade},
+            #{bean.clazzName},
+            #{bean.cid},
+            #{bean.stuBelongStationcode},
+            #{bean.fResideAddr},
+            #{bean.stuFathername},
+            #{bean.stuMothername},
+            #{bean.stuFatherPhone},
+            #{bean.stuMotherPhone},
+            #{bean.b073State},
+            #{bean.b074State},
+            #{bean.d073},
+            #{bean.d074}
+            )
+        </foreach>
+    </insert>
+
+    <select id="getManualStuSchIdAndYearAndGradeAndRoundAndClass" resultType="com.shensu.mybatis.entity.check.StudentBase">
+      SELECT
+       sch_name,
+       academic_year as stuclayear,
+       rounds as stuSeq,
+       grade as stuClalevel,
+       clazz_name as stuClassname,
+       stu_name,
+       stu_birth,
+       stu_sex,
+       stu_phone,
+       cid
+      FROM
+       nur_stuinfo stu
+        LEFT JOIN nur_school sch ON stu.schid = sch.sch_id
+      where
+          stu_isjz = '2'
+        and  sch_id = #{schId}
+        and year= #{year}
+        and grade = #{grade}
+        and round = #{round}
+        and clazz_name = #{className}
+    </select>
+
+
+   <select id="getStuBySchIdAndStuNoOrCid" resultType="com.shensu.mybatis.entity.check.StudentBase">
+    SELECT
+     sch_name,
+     academic_year as stuclayear,
+     rounds as stuSeq,
+     grade as stuClalevel,
+     clazz_name as stuClassname,
+     stu_name,
+     stu_birth,
+     stu_sex,
+     stu_phone,
+     cid
+    FROM
+     nur_stuinfo stu
+      LEFT JOIN nur_school sch ON stu.schid = sch.sch_id
+    where
+        1=1
+        <if test="schId !=null and schId!=''">
+            and stu.schid = #{schId}
+        </if>
+        <if test="stuNo !=null and stuNo!=''">
+         and stu.stu_no = #{stuNo}
+        </if>
+        <if test="cid !=null and cid!=''">
+         and stu.cid = #{cid}
+        </if>
+   </select>
+
+    <select id="getOneStuByStuNoAndSchId" resultType="com.shensu.mybatis.entity.check.Student">
+        select ns.*,
+               nc.SCH_STATIONNAME stuStationname,
+               nc.SCH_NAME schname
+        from nur_stuinfo ns
+                 left  join nur_school nc  on ns.SCHID=nc.SCH_ID
+        where
+            ns.stu_no=#{stuNo} and ns.schId=#{schId}
+           order by STU_UPDATETIME desc limit 1
+    </select>
+
+    <select id="getOneStuByCidAndSchId" resultType="com.shensu.mybatis.entity.check.Student">
+        select ns.*,
+               nc.SCH_STATIONNAME stuStationname,
+               nc.SCH_NAME schname
+        from nur_stuinfo ns
+                 left  join nur_school nc  on ns.SCHID=nc.SCH_ID
+        where
+            ns.cid=#{cid} and ns.schId=#{schId}
+         order by STU_UPDATETIME desc  LIMIT 1
+    </select>
+
+
+    <delete id="deleteStuByRowkey">
+        delete from nur_stuinfo
+        where rowkey = #{rowkey}
+    </delete>
+
+
+  <update id="updateBatchByIds">
+    update nur_stuinfo
+        <trim prefix="set" suffixOverrides=",">
+            <trim prefix="stu_no=case " suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.stuNo != null and bean.stuNo !=''">
+                        when rowkey=#{bean.rowkey} then #{bean.stuNo}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="stu_imuno =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.stuImuno != null and bean.stuImuno !=''">
+                        when rowkey=#{bean.rowkey} then #{bean.stuImuno}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="stu_name =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.stuName != null and bean.stuName !=''">
+                        when rowkey=#{bean.rowkey} then #{bean.stuName}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="stu_birth =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.stuBirth != null and bean.stuBirth !=''">
+                        when rowkey=#{bean.rowkey} then #{bean.stuBirth}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="stu_sex =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.stuSex != null and bean.stuSex !=''">
+                        when rowkey=#{bean.rowkey} then #{bean.stuSex}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="stu_type =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.stuType != null and bean.stuType !=''">
+                        when rowkey=#{bean.rowkey} then #{bean.stuType}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="stu_parentname =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.stuParentname != null and bean.stuParentname !=''">
+                        when rowkey=#{bean.rowkey} then #{bean.stuParentname}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="stu_phone =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.stuPhone != null and bean.stuPhone !=''">
+                        when rowkey=#{bean.rowkey} then #{bean.stuPhone}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="stu_updatetime =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.stuUpdatetime != null and bean.stuUpdatetime !=''">
+                        when rowkey=#{bean.rowkey} then now()
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="stu_sourceid =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.stuSourceid != null and bean.stuSourceid !=''">
+                        when rowkey=#{bean.rowkey} then #{bean.stuSourceid}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="stu_isjz =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.stuIsjz != null and bean.stuIsjz !=''">
+                        when rowkey=#{bean.rowkey} then #{bean.stuIsjz}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="stu_isfull =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.stuIsfull != null and bean.stuIsfull !=''">
+                        when rowkey=#{bean.rowkey} then #{bean.stuIsfull}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="B001 =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.b001 != null and bean.b001 !=''">
+                        when rowkey=#{bean.rowkey} then #{bean.b001}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="B063 =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.b063 != null and bean.b063 !=''">
+                        when rowkey=#{bean.rowkey} then #{bean.b063}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="B064 =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.b064 != null and bean.b064 !=''">
+                        when rowkey=#{bean.rowkey} then #{bean.b064}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="B065 =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.b065 != null and bean.b065 !=''">
+                        when rowkey=#{bean.rowkey} then #{bean.b065}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="B009 =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.b009 != null and bean.b009 !=''">
+                        when rowkey=#{bean.rowkey} then #{bean.b009}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="B010 =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.b010 != null and bean.b010 !=''">
+                        when rowkey=#{bean.rowkey} then #{bean.b010}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="B011 =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.b011 != null and bean.b011 !=''">
+                        when rowkey=#{bean.rowkey} then #{bean.b011}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="B012 =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.b012 != null and bean.b012 !=''">
+                        when rowkey=#{bean.rowkey} then #{bean.b012}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="B015 =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.b015 != null and bean.b015 !=''">
+                        when rowkey=#{bean.rowkey} then #{bean.b015}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="B016 =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.b016 != null and bean.b016 !=''">
+                        when rowkey=#{bean.rowkey} then #{bean.b016}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="B017 =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.b017 != null and bean.b017 !=''">
+                        when rowkey=#{bean.rowkey} then #{bean.b017}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="B018 =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.b018 != null and bean.b018 !=''">
+                        when rowkey=#{bean.rowkey} then #{bean.b018}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="B037 =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.b037 != null and bean.b037 !=''">
+                        when rowkey=#{bean.rowkey} then #{bean.b037}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="B093 =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.b093 != null and bean.b093 !=''">
+                        when rowkey=#{bean.rowkey} then #{bean.b093}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="B094 =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.b094 != null and bean.b094 !=''">
+                        when rowkey=#{bean.rowkey} then #{bean.b094}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="B040 =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.b040 != null and bean.b040 !=''">
+                        when rowkey=#{bean.rowkey} then #{bean.b040}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="B041 =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.b041 != null and bean.b041 !=''">
+                        when rowkey=#{bean.rowkey} then #{bean.b041}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="B045 =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.b045 != null and bean.b045 !=''">
+                        when rowkey=#{bean.rowkey} then #{bean.b045}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="B046 =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.b046 != null and bean.b046 !=''">
+                        when rowkey=#{bean.rowkey} then #{bean.b046}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="B032 =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.b032 != null and bean.b032 !=''">
+                        when rowkey=#{bean.rowkey} then #{bean.b032}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="B033 =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.b033 != null and bean.b033 !=''">
+                        when rowkey=#{bean.rowkey} then #{bean.b033}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="B069 =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.b069 != null and bean.b069 !=''">
+                        when rowkey=#{bean.rowkey} then #{bean.b069}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="B050 =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.b050 != null and bean.b050 !=''">
+                        when rowkey=#{bean.rowkey} then #{bean.b050}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="B169 =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.b169 != null and bean.b169 !=''">
+                        when rowkey=#{bean.rowkey} then #{bean.b169}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="B170 =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.b170 != null and bean.b170 !=''">
+                        when rowkey=#{bean.rowkey} then #{bean.b170}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="B171 =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.b171 != null and bean.b171 !=''">
+                        when rowkey=#{bean.rowkey} then #{bean.b171}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="B172 =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.b172 != null and bean.b172 !=''">
+                        when rowkey=#{bean.rowkey} then #{bean.b172}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="B163 =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.b163 != null and bean.b163 !=''">
+                        when rowkey=#{bean.rowkey} then #{bean.b163}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="B164 =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.b164 != null and bean.b164 !=''">
+                        when rowkey=#{bean.rowkey} then #{bean.b164}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="B165 =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.b165 != null and bean.b165 !=''">
+                        when rowkey=#{bean.rowkey} then #{bean.b165}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="B166 =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.b166 != null and bean.b166 !=''">
+                        when rowkey=#{bean.rowkey} then #{bean.b166}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="B157 =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.b157 != null and bean.b157 !=''">
+                        when rowkey=#{bean.rowkey} then #{bean.b157}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="B158 =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.b158 != null and bean.b158 !=''">
+                        when rowkey=#{bean.rowkey} then #{bean.b158}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="B159 =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.b159 != null and bean.b159 !=''">
+                        when rowkey=#{bean.rowkey} then #{bean.b159}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="B160 =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.b160 != null and bean.b160 !=''">
+                        when rowkey=#{bean.rowkey} then #{bean.b160}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="B027 =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.b027 != null and bean.b027 !=''">
+                        when rowkey=#{bean.rowkey} then #{bean.b027}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="B028 =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.b028 != null and bean.b028 !=''">
+                        when rowkey=#{bean.rowkey} then #{bean.b028}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="B029 =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.b029 != null and bean.b029 !=''">
+                        when rowkey=#{bean.rowkey} then #{bean.b029}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="B030 =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.b030 != null and bean.b030 !=''">
+                        when rowkey=#{bean.rowkey} then #{bean.b030}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="B138 =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.b138 != null and bean.b138 !=''">
+                        when rowkey=#{bean.rowkey} then #{bean.b138}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="B139 =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.b139 != null and bean.b139 !=''">
+                        when rowkey=#{bean.rowkey} then #{bean.b139}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="B140 =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.b140 != null and bean.b140 !=''">
+                        when rowkey=#{bean.rowkey} then #{bean.b140}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="B141 =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.b141 != null and bean.b141 !=''">
+                        when rowkey=#{bean.rowkey} then #{bean.b141}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="B147 =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.b147 != null and bean.b147 !=''">
+                        when rowkey=#{bean.rowkey} then #{bean.b147}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="B148 =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.b148 != null and bean.b148 !=''">
+                        when rowkey=#{bean.rowkey} then #{bean.b148}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="B073 =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.b073 != null and bean.b073 !=''">
+                        when rowkey=#{bean.rowkey} then #{bean.b073}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="B133 =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.b133 != null and bean.b133 !=''">
+                        when rowkey=#{bean.rowkey} then #{bean.b133}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="B155 =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.b155 != null and bean.b155 !=''">
+                        when rowkey=#{bean.rowkey} then #{bean.b155}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="B059 =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.b059 != null and bean.b059 !=''">
+                        when rowkey=#{bean.rowkey} then #{bean.b059}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="B060 =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.b060 != null and bean.b060 !=''">
+                        when rowkey=#{bean.rowkey} then #{bean.b060}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="B089 =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.b089 != null and bean.b089 !=''">
+                        when rowkey=#{bean.rowkey} then #{bean.b089}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="B090 =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.b090 != null and bean.b090 !=''">
+                        when rowkey=#{bean.rowkey} then #{bean.b090}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="B096 =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.b096 != null and bean.b096 !=''">
+                        when rowkey=#{bean.rowkey} then #{bean.b096}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="B097 =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.b097 != null and bean.b097 !=''">
+                        when rowkey=#{bean.rowkey} then #{bean.b097}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="B063State =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.b063State != null and bean.b063State !=''">
+                        when rowkey=#{bean.rowkey} then #{bean.b063State}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="B064State =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.b064State != null and bean.b064State !=''">
+                        when rowkey=#{bean.rowkey} then #{bean.b064State}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="B065State =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.b065State != null and bean.b065State !=''">
+                        when rowkey=#{bean.rowkey} then #{bean.b065State}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="B001State =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.b001State != null and bean.b001State !=''">
+                        when rowkey=#{bean.rowkey} then #{bean.b001State}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="B009State =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.b009State != null and bean.b009State !=''">
+                        when rowkey=#{bean.rowkey} then #{bean.b009State}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="B010State =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.b010State != null and bean.b010State !=''">
+                        when rowkey=#{bean.rowkey} then #{bean.b010State}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="B011State =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.b011State != null and bean.b011State !=''">
+                        when rowkey=#{bean.rowkey} then #{bean.b011State}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="B012State =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.b012State != null and bean.b012State !=''">
+                        when rowkey=#{bean.rowkey} then #{bean.b012State}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="B015State =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.b015State != null and bean.b015State !=''">
+                        when rowkey=#{bean.rowkey} then #{bean.b015State}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="B016State =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.b016State != null and bean.b016State !=''">
+                        when rowkey=#{bean.rowkey} then #{bean.b016State}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="B017State =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.b017State != null and bean.b017State !=''">
+                        when rowkey=#{bean.rowkey} then #{bean.b017State}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="B018State =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.b018State != null and bean.b018State !=''">
+                        when rowkey=#{bean.rowkey} then #{bean.b018State}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="B037State =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.b037State != null and bean.b037State !=''">
+                        when rowkey=#{bean.rowkey} then #{bean.b037State}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="B059State =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.b059State != null and bean.b059State !=''">
+                        when rowkey=#{bean.rowkey} then #{bean.b059State}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="B060State =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.b060State != null and bean.b060State !=''">
+                        when rowkey=#{bean.rowkey} then #{bean.b060State}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="B040State =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.b040State != null and bean.b040State !=''">
+                        when rowkey=#{bean.rowkey} then #{bean.b040State}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="B041State =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.b041State != null and bean.b041State !=''">
+                        when rowkey=#{bean.rowkey} then #{bean.b041State}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="B045State =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.b045State != null and bean.b045State !=''">
+                        when rowkey=#{bean.rowkey} then #{bean.b045State}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="B046State =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.b046State != null and bean.b046State !=''">
+                        when rowkey=#{bean.rowkey} then #{bean.b046State}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="B032State =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.b032State != null and bean.b032State !=''">
+                        when rowkey=#{bean.rowkey} then #{bean.b032State}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="B033State =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.b033State != null and bean.b033State !=''">
+                        when rowkey=#{bean.rowkey} then #{bean.b033State}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="FPPDW =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.FPPDW != null and bean.FPPDW !=''">
+                        when rowkey=#{bean.rowkey} then #{bean.FPPDW}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="FPPDH =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.FPPDH != null and bean.FPPDH !=''">
+                        when rowkey=#{bean.rowkey} then #{bean.FPPDH}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="isbzoper =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.isbzoper != null and bean.isbzoper !=''">
+                        when rowkey=#{bean.rowkey} then #{bean.isbzoper}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="B132 =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.b132 != null and bean.b132 !=''">
+                        when rowkey=#{bean.rowkey} then #{bean.b132}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="B074 =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.b074 != null and bean.b074 !=''">
+                        when rowkey=#{bean.rowkey} then #{bean.b074}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="B327 =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.b327 != null and bean.b327 !=''">
+                        when rowkey=#{bean.rowkey} then #{bean.b327}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="B063StateAfter =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.b063StateAfter != null and bean.b063StateAfter !=''">
+                        when rowkey=#{bean.rowkey} then #{bean.b063StateAfter}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="B064StateAfter =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.b064StateAfter != null and bean.b064StateAfter !=''">
+                        when rowkey=#{bean.rowkey} then #{bean.b064StateAfter}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="B065StateAfter =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.b065StateAfter != null and bean.b065StateAfter !=''">
+                        when rowkey=#{bean.rowkey} then #{bean.b065StateAfter}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="B001StateAfter =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.b001StateAfter != null and bean.b001StateAfter !=''">
+                        when rowkey=#{bean.rowkey} then #{bean.b001StateAfter}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="B009StateAfter =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.b009StateAfter != null and bean.b009StateAfter !=''">
+                        when rowkey=#{bean.rowkey} then #{bean.b009StateAfter}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="B010StateAfter =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.b010StateAfter != null and bean.b010StateAfter !=''">
+                        when rowkey=#{bean.rowkey} then #{bean.b010StateAfter}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="B011StateAfter =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.b011StateAfter != null and bean.b011StateAfter !=''">
+                        when  rowkey=#{bean.rowkey} then #{bean.b011StateAfter}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="B012StateAfter =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.b012StateAfter != null and bean.b012StateAfter !=''">
+                        when  rowkey=#{bean.rowkey} then #{bean.b012StateAfter}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="B015StateAfter =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.b015StateAfter != null and bean.b015StateAfter !=''">
+                        when  rowkey=#{bean.rowkey} then #{bean.b015StateAfter}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="B016StateAfter =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.b016StateAfter != null and bean.b016StateAfter !=''">
+                        when  rowkey=#{bean.rowkey} then #{bean.b016StateAfter}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="B017StateAfter =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.b017StateAfter != null and bean.b017StateAfter !=''">
+                        when  rowkey=#{bean.rowkey} then #{bean.b017StateAfter}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="B018StateAfter =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.b018StateAfter != null and bean.b018StateAfter !=''">
+                        when  rowkey=#{bean.rowkey} then #{bean.b018StateAfter}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="B037StateAfter =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.b037StateAfter != null and bean.b037StateAfter !=''">
+                        when  rowkey=#{bean.rowkey} then #{bean.b037StateAfter}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="B038StateAfter =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.b038StateAfter != null and bean.b038StateAfter !=''">
+                        when  rowkey=#{bean.rowkey} then #{bean.b038StateAfter}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="B039StateAfter =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.b039StateAfter != null and bean.b039StateAfter !=''">
+                        when  rowkey=#{bean.rowkey} then #{bean.b039StateAfter}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="B059StateAfter =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.b059StateAfter != null and bean.b059StateAfter !=''">
+                        when  rowkey=#{bean.rowkey} then #{bean.b059StateAfter}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="B060StateAfter =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.b060StateAfter != null and bean.b060StateAfter !=''">
+                        when  rowkey=#{bean.rowkey} then #{bean.b060StateAfter}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="B040StateAfter =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.B040StateAfter != null and bean.B040StateAfter !=''">
+                        when  rowkey=#{bean.rowkey} then #{bean.b040StateAfter}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="B041StateAfter =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.b041StateAfter != null and bean.b041StateAfter !=''">
+                        when  rowkey=#{bean.rowkey} then #{bean.b041StateAfter}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="B045StateAfter =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.b045StateAfter != null and bean.b045StateAfter !=''">
+                        when  rowkey=#{bean.rowkey} then #{bean.b045StateAfter}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="B046StateAfter =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.b046StateAfter != null and bean.b046StateAfter !=''">
+                        when  rowkey=#{bean.rowkey} then #{bean.b046StateAfter}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="B032StateAfter =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.b032StateAfter != null and bean.b032StateAfter !=''">
+                        when  rowkey=#{bean.rowkey} then #{bean.b032StateAfter}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="B033StateAfter =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.b033StateAfter != null and bean.b033StateAfter !=''">
+                        when  rowkey=#{bean.rowkey} then #{bean.b033StateAfter}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="B034 =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.b034 != null and bean.b034 !=''">
+                        when  rowkey=#{bean.rowkey} then #{bean.b034}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="B031 =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.b031 != null and bean.b031 !=''">
+                        when  rowkey=#{bean.rowkey} then #{bean.b031}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="B035 =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.b035 != null and bean.b035 !=''">
+                        when  rowkey=#{bean.rowkey} then #{bean.b035}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="B036 =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.b036 != null and bean.b036 !=''">
+                        when  rowkey=#{bean.rowkey} then #{bean.b036}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="B070 =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.b070 != null and bean.b070 !=''">
+                        when  rowkey=#{bean.rowkey} then #{bean.b070}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="B071 =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.b071 != null and bean.b071 !=''">
+                        when  rowkey=#{bean.rowkey} then #{bean.b071}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="B072 =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.b072 != null and bean.b072 !=''">
+                        when  rowkey=#{bean.rowkey} then #{bean.b072}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="B075 =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.b075 != null and bean.b075 !=''">
+                        when  rowkey=#{bean.rowkey} then #{bean.b075}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="B076 =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.b076 != null and bean.b076 !=''">
+                        when  rowkey=#{bean.rowkey} then #{bean.b076}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="D063 =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.d063 != null and bean.d063 !=''">
+                        when  rowkey=#{bean.rowkey} then #{bean.d063}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="D064 =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.d064 != null and bean.d064 !=''">
+                        when  rowkey=#{bean.rowkey} then #{bean.d064}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="D065 =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.d065 != null and bean.d065 !=''">
+                        when  rowkey=#{bean.rowkey} then #{bean.d065}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="D001 =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.d001 != null and bean.d001 !=''">
+                        when  rowkey=#{bean.rowkey} then #{bean.d001}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="D009 =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.d009 != null and bean.d009 !=''">
+                        when  rowkey=#{bean.rowkey} then #{bean.d009}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="D010 =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.d010 != null and bean.d010 !=''">
+                        when  rowkey=#{bean.rowkey} then #{bean.d010}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="D011 =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.d011 != null and bean.d011 !=''">
+                        when  rowkey=#{bean.rowkey} then #{bean.d011}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="D012 =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.d012 != null and bean.d012 !=''">
+                        when  rowkey=#{bean.rowkey} then #{bean.d012}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="D015 =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.d015 != null and bean.d015 !=''">
+                        when  rowkey=#{bean.rowkey} then #{bean.d015}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="D016 =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.d016 != null and bean.d016 !=''">
+                        when  rowkey=#{bean.rowkey} then #{bean.d016}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="D017 =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.d017 != null and bean.d017 !=''">
+                        when  rowkey=#{bean.rowkey} then #{bean.d017}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="D018 =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.d018 != null and bean.d018 !=''">
+                        when  rowkey=#{bean.rowkey} then #{bean.d018}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="D037 =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.d037 != null and bean.d037 !=''">
+                        when  rowkey=#{bean.rowkey} then #{bean.d037}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="D059 =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.d059 != null and bean.d059 !=''">
+                        when  rowkey=#{bean.rowkey} then #{bean.d059}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="D060 =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.d060 != null and bean.d060 !=''">
+                        when  rowkey=#{bean.rowkey} then #{bean.d060}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="D040 =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.d040 != null and bean.d040 !=''">
+                        when  rowkey=#{bean.rowkey} then #{bean.d040}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="D041 =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.d041 != null and bean.d041 !=''">
+                        when  rowkey=#{bean.rowkey} then #{bean.d041}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="D045 =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.d045 != null and bean.d045 !=''">
+                        when  rowkey=#{bean.rowkey} then #{bean.d045}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="D046 =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.d046 != null and bean.d046 !=''">
+                        when  rowkey=#{bean.rowkey} then #{bean.d046}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="D032 =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.d032 != null and bean.d032 !=''">
+                        when  rowkey=#{bean.rowkey} then #{bean.d032}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="D033 =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.d033 != null and bean.d033 !=''">
+                        when  rowkey=#{bean.rowkey} then #{bean.d033}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="D050 =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.d050 != null and bean.d050 !=''">
+                        when  rowkey=#{bean.rowkey} then #{bean.d050}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="D132 =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.d132 != null and bean.d132 !=''">
+                        when  rowkey=#{bean.rowkey} then #{bean.d132}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="academic_year =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.academicYear != null and bean.academicYear !=''">
+                        when  rowkey=#{bean.rowkey} then #{bean.academicYear}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="rounds =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.rounds != null and bean.rounds !=''">
+                        when  rowkey=#{bean.rowkey} then #{bean.rounds}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="grade =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.grade != null and bean.grade !=''">
+                        when  rowkey=#{bean.rowkey} then #{bean.grade}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="clazz_name =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.clazzName != null and bean.clazzName !=''">
+                        when  rowkey=#{bean.rowkey} then #{bean.clazzName}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="cid =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.cid != null and bean.cid !=''">
+                        when  rowkey=#{bean.rowkey} then #{bean.cid}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="stu_belong_stationcode =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.stuBelongStationcode != null and bean.stuBelongStationcode !=''">
+                        when  rowkey=#{bean.rowkey} then #{bean.stuBelongStationcode}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="f_reside_addr =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.fResideAddr != null and bean.fResideAddr !=''">
+                        when  rowkey=#{bean.rowkey} then #{bean.fResideAddr}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="stu_fathername =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.stuFathername != null and bean.stuFathername !=''">
+                        when rowkey=#{bean.rowkey} then #{bean.stuFathername}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="stu_mothername =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.stuMothername != null and bean.stuMothername !=''">
+                        when rowkey=#{bean.rowkey} then #{bean.stuMothername}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="stu_father_phone =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.stuFatherPhone != null and bean.stuFatherPhone !=''">
+                        when rowkey=#{bean.rowkey} then #{bean.stuFatherPhone}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="stu_mother_phone =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.stuMotherPhone != null and bean.stuMotherPhone !=''">
+                        when rowkey=#{bean.rowkey} then #{bean.stuMotherPhone}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="B073State =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.b073State != null and bean.b073State !=''">
+                        when rowkey=#{bean.rowkey} then #{bean.b073State}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="B073StateAfter =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.b073StateAfter != null and bean.b073StateAfter !=''">
+                        when rowkey=#{bean.rowkey} then #{bean.b073StateAfter}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="B074State =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.b074State != null and bean.b074State !=''">
+                        when rowkey=#{bean.rowkey} then #{bean.b074State}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="B074StateAfter =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.b074StateAfter != null and bean.b074StateAfter !=''">
+                        when rowkey=#{bean.rowkey} then #{bean.b074StateAfter}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="D073 =case" suffix="end,">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.d073 != null and bean.d073 !=''">
+                        when rowkey=#{bean.rowkey} then #{bean.d073}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="D074 =case" suffix="end">
+                <foreach collection="list" item="bean" >
+                    <if test="bean.d074 != null and bean.d074 !=''">
+                        when rowkey=#{bean.rowkey} then #{bean.d074}
+                    </if>
+                </foreach>
+            </trim>
+        </trim>
+    where rowkey in
+        <foreach collection="list" item="bean" open="(" close=")" separator=",">
+            #{bean.rowkey}
+        </foreach>
+  </update>
+
+</mapper>

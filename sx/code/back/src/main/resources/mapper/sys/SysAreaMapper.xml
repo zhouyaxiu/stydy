@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shensu.mybatis.mapper.systemmanage.SysAreaMapper">
+
+    <sql id="Base_Column_List_Area">
+        ID id,area_code as areacode,area_name as areaname,sup_id as supid,update_date as updatedate,update_user as updateuser,table_status as tablestatus
+    </sql>
+
+
+    <sql id="Base_Column_List_Station">
+        id, organ_code areacode, organ_name areaname, area_id supid,update_date as updatedate,update_user as updateuser,table_status as tablestatus
+    </sql>
+
+    <select id="findStationBySchId" resultType="com.shensu.mybatis.entity.systemmanage.VSysStation">
+        SELECT * FROM v_sys_station WHERE ID = (SELECT sch_stationid FROM nur_school WHERE sch_id = #{schId} LIMIT 1)
+    </select>
+
+    <select id="findStationByStationCode" resultType="com.shensu.mybatis.entity.systemmanage.VSysStation">
+        SELECT * FROM v_sys_station WHERE stationcode = #{stationCode} LIMIT 1
+    </select>
+
+    <sql id="showArea">
+        <if test="areaCode != null and areaCode != '' and areaLevel != null and areaLevel != ''">
+            <if test="areaLevel == 0">
+                vs.cityName  as  areaName,vs.cityCode as areaCode
+            </if>
+            <if test="areaLevel == 1">
+                vs.countyName as areaName,vs.countyCode as areaCode
+            </if>
+            <if test="areaLevel == 2">
+                vs.supName as  areaName, vs.supCode as  areaCode
+            </if>
+            <if test="areaLevel == 3">
+                vs.stationName as areaName,vs.stationCode as areaCode
+            </if>
+            <if test="areaLevel == 4">
+                vs.stationName as areaName,vs.stationCode as areaCode
+            </if>
+        </if>
+    </sql>
+
+    <select id="findByAreaCode" resultType="com.shensu.mybatis.entity.systemmanage.SysArea">
+        select
+        <include refid="Base_Column_List_Area"/>
+        from sys_area where AREA_CODE = #{areacode}
+        order by AREA_CODE
+    </select>
+
+    <select id="listChildByAreaID" resultType="com.shensu.mybatis.entity.systemmanage.SysArea">
+        select
+        <include refid="Base_Column_List_Area"/>
+        from sys_area where SUP_ID = #{areaId}
+        order by area_code
+    </select>
+
+    <select id="listByAreaId" resultType="com.shensu.mybatis.entity.systemmanage.SysStation">
+        select  id, organ_code organCode, organ_name organName, area_id areaId,update_date as updatedate,update_user as updateuser,table_status as tablestatus
+        from sys_station
+        where (AREA_ID = #{areaID})
+        order by ORGAN_CODE
+    </select>
+
+
+    <select id="findStationByAreaCode" resultType="com.shensu.mybatis.entity.systemmanage.SysArea">
+        select
+        <include refid="Base_Column_List_Station"/>
+        from sys_station where organ_code= #{areacode}
+        order by organ_code
+
+    </select>
+
+    <select id="findSupAreaByStationId" resultType="com.shensu.mybatis.entity.systemmanage.SysArea">
+        select
+        <include refid="Base_Column_List_Area"/>
+        from sys_area where id = #{systionId}
+        order by area_code
+    </select>
+
+
+    <!--<select id="findStationMess" resultType="com.shensu.mybatis.entity.systemmanage.SysStation">
+        select organ_name organName ,ORGAN_ADDRESS organAddress,LINK_PHONE linkPhone
+        from sys_station where organ_code= #{areaCode}
+    </select>-->
+
+    <select id="findCodeAndName" resultType="com.shensu.mybatis.entity.systemmanage.AreaCodeAndName">
+        select  <include refid="showArea"></include>
+        from  v_sys_station vs
+        where 1=1
+        <if test="areaCode != null and areaCode != '' and areaLevel != null and areaLevel != ''">
+            <if test="areaLevel == 1">
+              and   cityCode=#{areaCode}
+            </if>
+            <if test="areaLevel == 2">
+              and   vs.countyCode=#{areaCode}
+            </if>
+            <if test="areaLevel == 3">
+              and   vs.supCode=#{areaCode}
+            </if>
+            <if test="areaLevel == 4">
+             and    vs.stationCode=#{areaCode}
+            </if>
+        </if>
+        group by
+
+        <if test="areaCode != null and areaCode != '' and areaLevel != null and areaLevel != ''">
+            <if test="areaLevel == 0">
+                vs.cityName
+            </if>
+            <if test="areaLevel == 1">
+                vs.countyName
+            </if>
+            <if test="areaLevel == 2">
+                vs.supName
+            </if>
+            <if test="areaLevel == 3">
+                vs.stationName
+            </if>
+            <if test="areaLevel == 4">
+                vs.stationName
+            </if>
+        </if>
+    </select>
+
+   <select id="findAllArea" resultType="com.shensu.mybatis.entity.systemmanage.SysArea">
+     select
+         ID id,
+         AREA_CODE areacode,
+         BASE_CODE newBaseCode,
+         AREA_NAME areaname,
+         SUP_ID supid,
+         UPDATE_DATE updatedate,
+         UPDATE_USER updateuser,
+         TABLE_STATUS tablestatus,
+         lng ,
+         lat,
+         CN_CODE cnCode,
+         CN_NAME cnName,
+         FULL_CN_NAME fullCnName
+        from sys_area
+   </select>
+   <select id="findAllAreaCount" resultType="int">
+       select count(*) from sys_area
+   </select>
+
+    <select id="findAllStationCount" resultType="int">
+        select count(*) from sys_station
+    </select>
+
+    <select id="findAllStation" resultType="com.shensu.mybatis.entity.systemmanage.SysStation">
+        select
+            ID,AREA_ID,ORGAN_CODE,ORGAN_NAME,ORGAN_SORTNAME,BEGIN_DATE,END_DATE,PASSWORD,MARK,FSYSINI,FSHOWORDER,ORGAN_ADDRESS,
+            LINK_MAN,LINK_PHONE,CLINIC_DAY,IF_SUPERVISE,NEW_BASECODE,ORGAN_PHONETICIZE,UPDATE_DATE,UPDATE_USER,TABLE_STATUS,
+            ACCOUNT,BASE_CODE,EXAM_FLAG,NOUSE,CLIENTVER,ISRAB,IS_CITY,YWCLASS,GLCLASS,JZDW_AREA,JZDWYWLX,CN_CODE,CN_NAME,
+            FULL_CN_NAME
+            from sys_station
+    </select>
+
+    <insert id="bashInsertAllArea">
+        INSERT INTO sys_area
+        (ID, AREA_CODE, BASE_CODE, AREA_NAME, SUP_ID, UPDATE_DATE, UPDATE_USER, TABLE_STATUS,
+        lng, lat, CN_CODE, CN_NAME, FULL_CN_NAME) VALUES
+        <foreach collection="list" item="bean" separator=",">
+        (#{bean.id},#{bean.areacode}, #{bean.newBaseCode}, #{bean.areaname},#{bean.supid}, #{bean.updatedate},
+        #{bean.updateuser},  #{bean.tablestatus}, #{bean.lng}, #{bean.lat}, #{bean.cnCode},  #{bean.cnName},
+        #{bean.fullCnName})
+        </foreach>
+    </insert>
+
+    <insert id="bashInsertAllStation">
+        INSERT INTO sys_station(
+            ID,AREA_ID,ORGAN_CODE,ORGAN_NAME,ORGAN_SORTNAME,BEGIN_DATE,
+            END_DATE,PASSWORD,MARK,FSYSINI,FSHOWORDER,ORGAN_ADDRESS,
+            LINK_MAN,LINK_PHONE,CLINIC_DAY,IF_SUPERVISE,NEW_BASECODE,
+            ORGAN_PHONETICIZE,UPDATE_DATE,UPDATE_USER,TABLE_STATUS, ACCOUNT,
+            BASE_CODE,EXAM_FLAG,NOUSE,CLIENTVER,ISRAB,IS_CITY,YWCLASS,GLCLASS,JZDW_AREA,JZDWYWLX,
+            CN_CODE,CN_NAME,FULL_CN_NAME)
+        VALUES
+        <foreach collection="list" item="bean" separator=",">
+            (#{bean.id},#{bean.areaId}, #{bean.organCode},#{bean.organName},#{bean.organSortName},#{bean.beginDate},
+             #{bean.endDate},#{bean.password},#{bean.mark}, #{bean.fsysini}, #{bean.fshoworder},#{bean.organAddress},
+             #{bean.linkMan},#{bean.linkPhone}, #{bean.clinicDay}, #{bean.ifSupervise},#{bean.newBaseCode},
+             #{bean.organPhoneTicize},#{bean.updateDate}, #{bean.updateUser}, #{bean.tableStatus}, #{bean.account},
+             #{bean.baseCode},#{bean.examFlag},#{bean.nouse},#{bean.clientVer},#{bean.isRab},#{bean.isCity},
+             #{bean.ywclass},#{bean.glclass},#{bean.jzdwArea},#{bean.jzdwywlx},#{bean.cnCode},#{bean.cnName},#{bean.fullCnName}
+             )
+        </foreach>
+    </insert>
+
+</mapper>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shensu.mybatis.mapper.check.SaasInfoMapper">
+    <resultMap id="infoBean" type="com.shensu.mybatis.entity.check.InfoBeanSaas">
+        <result column="FCHILDNO" property="fchildno"></result>
+        <result column="IMUNO" property="imuno"></result>
+        <result column="NAME" property="name"></result>
+        <result column="CID" property="cid"></result>
+        <result column="BIRTH" property="birth"></result>
+        <result column="SEX" property="sex"></result>
+        <result column="REGTYPE" property="regtype"></result>
+        <result column="MOBPHONE" property="phone"></result>
+        <result column="STATIONCODE" property="stationcode"></result>
+        <result column="REGADDR" property="fResideAddr"></result>
+        <result column="MOTHERNAME" property="motherName"></result>
+        <result column="FATHERNAME" property="fatherName"></result>
+        <result column="FMOTHERMOBILE" property="motherPhone"></result>
+        <result column="FFATHERMOBILE" property="fatherPhone"></result>
+    </resultMap>
+
+    <select id="queryInfoSaasByCid" resultMap="infoBean">
+        select
+            fchildno,
+            imuno,
+            name,
+            cid,
+            birth,
+            mobphone,
+            stationcode,
+            regaddr,
+            mothername,
+            fathername,
+            fmothermobile,
+            ffathermobile,
+            stationcode, unitname,
+            case when sex='未知的性别' then '0'
+                 when sex='男性' then '1'
+                 when sex='女性' then '2'
+                 when sex='未说明的性别' then '9' end as sex,
+            case when regtype='本县' then '1'
+                 when regtype='本市' then '3'
+                 when regtype='本省' then '4'
+                 when regtype='外省' then '5'
+                 when regtype='国外' then '6' end as regtype
+        from epi_childinfo
+        where cid = #{cid}
+    </select>
+</mapper>

@@ -1,0 +1,65 @@
+/* 打印样式 */
+@media print {
+  @page {
+    size: auto;
+  }
+
+  body,
+  html {
+    height: auto !important;
+  }
+}
+.notice .btn{
+  margin:30px 100px 20px;
+  text-align: center;
+}
+.notice .btn .el-button{
+  background: #4365e3;
+  width:inherit;
+  color:#fff;
+  border-radius: 16px;
+  padding: 0 20px;
+  height: 48px;
+  line-height: 48px;
+  font-size: 16px!important;
+}
+.notice .flex{
+  display:flex;font-size:14px;
+}
+.notice .flex span{
+  flex:1
+}
+.notice .labelStyle{
+  background:#ecf0ff;border-radius:6px 6px 0 0;
+}
+.notice .edit{
+  min-height:initial;
+}
+.notice .el-descriptions-item__label,.notice tr:first-child th:last-child{
+  height: inherit!important;
+  display: flex;
+}
+.notice tr:first-child th:last-child .title{
+  flex:1;
+  color:#2337d8;
+  font-size:16px;
+  font-weight:bold;
+}
+.notice tr:first-child th:last-child .info{
+  color:#333;
+}
+.notice .edit .el-textarea{
+  width:95%;
+}
+.notice .edit .el-textarea textarea{
+  border-color:#fff!important;
+  color:#333;
+  text-indent:20px;
+}
+.notice .bluetext{
+  color:#4365e3;
+  text-decoration: underline;
+}
+.notice .redtext{
+  color:#333;
+}

@@ -1,0 +1,1 @@
+import{_ as s}from"./index.143fdacc.js";import{b as a,c as n,e as o,k as t,w as e}from"./vendor.cc783c3b.js";var r=s({},[["render",function(s,r){const i=a("ss-condition-area"),c=a("ss-info-setting-show"),d=a("ss-custom-area");return n(),o("div",null,[t(i,{isShowBtn:!1}),t(d,null,{default:e((()=>[t(c,{height:"600px"})])),_:1})])}]]);export{r as default};

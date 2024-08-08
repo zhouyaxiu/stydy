@@ -1,0 +1,94 @@
+.condition-row {
+	display: flex;
+	line-height: 48px;
+	font-size: 14px;
+	color: #4B5C8C;
+}
+
+.condition-row .item {
+	display: flex;
+}
+.condition-row .item .el-select__caret{
+	line-height: inherit;
+}
+
+.condition-row .mLeft {
+	margin-left: 24px;
+}
+
+.condition-row .label {
+	/* margin-right: 8px; */
+	white-space: nowrap;
+	text-align: right;
+    width: 120px;
+}
+.condition-row .label .red {
+	margin-right: 4px;
+	color:Red;
+}
+.condition-row .el-input input {
+	border-radius: 4px !important;
+	/*height: 32px !important;
+	font-size: 12px !important;*/
+}
+
+.condition-row .el-radio {
+	margin-right: 10px !important;
+}
+
+.condition-row .el-checkbox {
+	color: #4B5C8C;
+	margin-right: 10px !important;
+}
+
+.condition-row .el-input input {
+	font-size: 14px !important;
+	padding-right: 8px !important;
+	line-height: 38px !important;
+	height: 38px !important;
+}
+
+.condition-row .el-input,
+.el-checkbox__label,
+.el-select-dropdown__item,
+.el-radio__label {
+	font-size: 14px !important;
+}
+.specForm{
+	margin-bottom: 3px !important;
+}
+.select-btn-row{
+	display: flex;
+    background: #F5F7FA;
+    margin-bottom: 5px;
+    margin-top: -6px;
+}
+.select-text{
+	font-size: 14px;
+	padding: 0 20px;
+	overflow: hidden;
+	color: #606266;
+	height: 34px;
+	line-height: 34px;
+	font-weight: bold;
+	cursor: pointer;
+}
+.select-check-option {
+	float: left;
+	margin-left: 4px;
+	color: #8492a6;
+	font-size: 13px;
+	display: inline-block;
+	width: 120px;
+	position: relative;
+	left: -20px;
+	z-index: 1000;
+	padding-left: 25px;
+}
+.explain-label{
+	color: #697681;
+	line-height: 32px;
+}
+.w200{
+	width:200px;
+}

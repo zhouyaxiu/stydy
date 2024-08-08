@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shensu.jsjm.mapper.AreaMapper">
+
+    <select id="getChildrenStations" resultType="com.shensu.jsjm.model.AreaBean">
+        select
+               id,
+               organ_code as code,
+               organ_name as simpleName,
+               NEW_BASECODE as baseCode,
+               CASE WHEN israb IS NULL THEN '0' ELSE israb END as israb,
+               concat(organ_name,NEW_BASECODE) as name
+        from sys_station
+        where area_id = (select id from sys_area where area_code=#{code})
+        order by organ_code
+    </select>
+
+    <select id="getChildrenCys" resultType="com.shensu.jsjm.model.AreaBean">
+        select
+               hos_code as id,
+               hos_code as code,
+               new_basecode as baseCode,
+               hos_name as simpleName,
+               concat(hos_name,NEW_BASECODE) as name
+        from sys_hos
+        where sup_code = #{code}
+        order by hos_code
+    </select>
+
+    <select id="getChildrenVillages" resultType="com.shensu.jsjm.model.AreaBean">
+        select
+               id,
+               area_code as code,
+               area_name as simpleName,
+               area_code as baseCode,
+               concat(area_name,area_code) as name
+        from sys_village
+        where station_id = #{id}
+        order by area_code
+    </select>
+
+    <select id="getChildrenAreas" resultType="com.shensu.jsjm.model.AreaBean">
+        select
+               id,
+               area_name as simpleName,
+               area_code as code,
+               concat(area_name,SUBSTR(area_code,10)) as name
+        from sys_area
+        where sup_id = (select id from sys_area where area_code=#{code})
+        order by area_code
+    </select>
+
+    <select id="getSimpleChildrenAreas" resultType="com.shensu.jsjm.model.SimpleAreaBean">
+        select
+            area_name as name,
+            area_code as code
+        from sys_area
+        where sup_id = (select id from sys_area where area_code=#{code})
+        order by area_code
+    </select>
+    <select id="getTotal" resultType="com.shensu.jsjm.vo.TotalOutputVo">
+        select
+            sum(jdcnt) as todayBuildingNum,
+            sum(jzcnt) as todayJzNum,
+            sum(transcnt) as todayTransferNum,
+            0 as preCheckNum,
+            0 as preRegisterNum,
+            0 as preJzNum,
+            0 as finishRemainNum,
+            0 as todayFinish
+        from screen_station_day_new
+        where
+            TO_CHAR(rq, 'YYYY-mm-dd') = TO_CHAR(CURRENT_DATE, 'YYYY-mm-dd')
+            and ( regexp_like ( new_basecode, #{template1} ) OR regexp_like ( new_basecode, #{template2} ) )
+    </select>
+
+    <select id="getYDJZNum" resultType="integer">
+        SELECT
+            count( DISTINCT a.fchildno )
+        FROM
+            jzjl_ymrq a
+                left join epi_childinfo_stat_ind3 c on a.fchildno =c.FCHILDNO
+                left JOIN v_sys_station b ON a.FSTATIONCODE = b.NEW_BASECODE
+        WHERE
+            a.JZJL_TYPE = '1'
+          AND FSHOTDATED = TO_CHAR(SYSDATE, 'YYYY-mm-dd')
+          and c.STATIONCODE != b.STATIONCODE
+	        AND b.CITYCODE = #{code}
+    </select>
+</mapper>
+

@@ -1015,6 +1015,22 @@ const onSubmit = () => {
                   "moduleUrl": "inoculation/coverageReport",
                   "onOff": "1",
                   "index": "/inoculation/coverageReport"
+                },
+                {
+                  "supId": "161",
+                  "updateDate": "2020-11-03 16:08:33",
+                  "moduleCode": "M0161",
+                  "moduleShortName": "导出水印excel",
+                  "moduleName": "导出水印excel",
+                  "updateUser": "导出水印excel",
+                  "tableStatus": "0",
+                  "supModules": [],
+                  "moduleExplain": "导出水印excel",
+                  "containOptions": "6",
+                  "id": "161",
+                  "moduleUrl": "excelwater",
+                  "onOff": "1",
+                  "index": "/excelwater"
                 }
               ],
               "supId": "102",
